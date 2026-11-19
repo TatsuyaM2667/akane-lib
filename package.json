@@ -39,5 +39,10 @@
     "typescript": "~5.7.0",
     "vite": "^6.0.0",
     "vite-plugin-dts": "^4.5.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/<YOUR_GITHUB_USERNAME>/akane-lib.git"
+  },
+  "homepage": "https://github.com/<YOUR_GITHUB_USERNAME>/akane-lib#readme"
 }
