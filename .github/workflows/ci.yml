@@ -1,4 +1,4 @@
-name: CI (Type Check & Build)
+name: CI (Type Check, Test & Build)
 
 on:
   push:
@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   verify:
-    name: Type Check & Library Build
+    name: Type Check, Test & Library Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -34,6 +34,9 @@ jobs:
 
       - name: Type check (tsc)
         run: npx tsc -b --noEmit
+
+      - name: Run unit tests (Vitest)
+        run: npm test
 
       - name: Build library & declaration files
         run: npm run build
