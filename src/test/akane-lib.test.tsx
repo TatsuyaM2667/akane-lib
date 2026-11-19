@@ -1,5 +1,5 @@
 import { describe, expect, it, vi, afterEach } from 'vitest';
-import { act, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
   AkaneThemeProvider,
@@ -13,6 +13,8 @@ import {
   NotebookMemo,
   WhiteLilySeal,
   TrainWindowFrame,
+  SakuraThiefOverlay,
+  RainRippleButton,
 } from '../index';
 
 afterEach(() => {
@@ -82,9 +84,8 @@ describe('LetterCard & TrainWindowFrame & WhiteLilySeal', () => {
 });
 
 describe('CassettePlayer', () => {
-  it('再生ボタン押下で時間が進み、onTimeUpdate が呼ばれ、一時停止で停止する', async () => {
+  it('再生ボタン押下で時間が進み、onTimeUpdate が呼ばれ、一時停止で停止する', () => {
     vi.useFakeTimers();
-    const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
     const handleTimeUpdate = vi.fn();
 
     render(
@@ -100,7 +101,7 @@ describe('CassettePlayer', () => {
     expect(handleTimeUpdate).toHaveBeenLastCalledWith(0);
 
     // 再生開始
-    await user.click(screen.getByRole('button', { name: '再生' }));
+    fireEvent.click(screen.getByRole('button', { name: '再生' }));
     expect(screen.getByRole('button', { name: '一時停止' })).toBeInTheDocument();
 
     // 3秒経過
@@ -111,7 +112,7 @@ describe('CassettePlayer', () => {
     expect(handleTimeUpdate).toHaveBeenLastCalledWith(3);
 
     // 一時停止してさらに2秒経過しても進まないことを確認
-    await user.click(screen.getByRole('button', { name: '一時停止' }));
+    fireEvent.click(screen.getByRole('button', { name: '一時停止' }));
     expect(screen.getByRole('button', { name: '再生' })).toBeInTheDocument();
 
     act(() => {
@@ -120,7 +121,7 @@ describe('CassettePlayer', () => {
     expect(screen.getByText('00:03 / 00:05')).toBeInTheDocument();
 
     // 再開して durationSec(5秒) に達すると 00:00 に戻る
-    await user.click(screen.getByRole('button', { name: '再生' }));
+    fireEvent.click(screen.getByRole('button', { name: '再生' }));
     act(() => {
       vi.advanceTimersByTime(2000);
     });
