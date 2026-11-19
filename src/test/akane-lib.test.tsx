@@ -1,5 +1,5 @@
-import { describe, expect, it, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { describe, expect, it, vi, afterEach } from 'vitest';
+import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
   AkaneThemeProvider,
@@ -7,12 +7,17 @@ import {
   getSkyPhaseFromDate,
   TwilightSky,
   LetterCard,
+  CassettePlayer,
   BookmarkRibbon,
   LyricLines,
   NotebookMemo,
   WhiteLilySeal,
   TrainWindowFrame,
 } from '../index';
+
+afterEach(() => {
+  vi.useRealTimers();
+});
 
 describe('getSkyPhaseFromDate', () => {
   it('時間帯に応じて正しい SkyPhase を返す', () => {
@@ -73,6 +78,54 @@ describe('LetterCard & TrainWindowFrame & WhiteLilySeal', () => {
     expect(screen.getByText('夏の終わりの匂いがした。')).toBeInTheDocument();
     expect(screen.getByText('エイミーへ')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '白い百合を一輪' })).toBeInTheDocument();
+  });
+});
+
+describe('CassettePlayer', () => {
+  it('再生ボタン押下で時間が進み、onTimeUpdate が呼ばれ、一時停止で停止する', async () => {
+    vi.useFakeTimers();
+    const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
+    const handleTimeUpdate = vi.fn();
+
+    render(
+      <CassettePlayer
+        side="A"
+        title="第一夜 — 夢の記憶"
+        durationSec={5}
+        onTimeUpdate={handleTimeUpdate}
+      />
+    );
+
+    expect(screen.getByText('00:00 / 00:05')).toBeInTheDocument();
+    expect(handleTimeUpdate).toHaveBeenLastCalledWith(0);
+
+    // 再生開始
+    await user.click(screen.getByRole('button', { name: '再生' }));
+    expect(screen.getByRole('button', { name: '一時停止' })).toBeInTheDocument();
+
+    // 3秒経過
+    act(() => {
+      vi.advanceTimersByTime(3000);
+    });
+    expect(screen.getByText('00:03 / 00:05')).toBeInTheDocument();
+    expect(handleTimeUpdate).toHaveBeenLastCalledWith(3);
+
+    // 一時停止してさらに2秒経過しても進まないことを確認
+    await user.click(screen.getByRole('button', { name: '一時停止' }));
+    expect(screen.getByRole('button', { name: '再生' })).toBeInTheDocument();
+
+    act(() => {
+      vi.advanceTimersByTime(2000);
+    });
+    expect(screen.getByText('00:03 / 00:05')).toBeInTheDocument();
+
+    // 再開して durationSec(5秒) に達すると 00:00 に戻る
+    await user.click(screen.getByRole('button', { name: '再生' }));
+    act(() => {
+      vi.advanceTimersByTime(2000);
+    });
+    expect(screen.getByText('00:00 / 00:05')).toBeInTheDocument();
+    expect(handleTimeUpdate).toHaveBeenLastCalledWith(0);
   });
 });
 
