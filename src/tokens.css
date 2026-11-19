@@ -1,0 +1,40 @@
+:root,
+[data-akane-phase="dusk"],
+[data-akane-phase="twilight"],
+[data-akane-phase="dawn"] {
+  /* Palette: 茜（夕暮れ）と群青（夜明け・海） */
+  --akane-crimson: #b73b3a;      /* 茜さす空 */
+  --akane-dusk: #e07a5f;         /* 夕焼けの残照 */
+  --akane-ultramarine: #1e2d40;  /* 夜明け前の群青 */
+  --akane-sea: #3d5a80;          /* 夏の海・雨上がり */
+
+  /* Paper & Ink: 便箋とインク（昼〜夕暮れ・夜明け） */
+  --akane-paper: #f7f4ee;        /* 少し黄みがかった古紙・便箋 */
+  --akane-paper-border: #dfd8ca; /* 紙の折り目・境界線 */
+  --akane-ink: #24211e;          /* 滲んだ黒インク */
+  --akane-ink-muted: #6e675f;    /* 色褪せた文字・注釈 */
+  --akane-accent: #b73b3a;       /* 署名や栞のアクセント */
+  --akane-shadow: rgba(30, 45, 64, 0.12);
+
+  /* Typography */
+  --akane-font-serif: "Shippori Mincho", "Noto Serif JP", "Yu Mincho", serif;
+  --akane-tracking-poetic: 0.14em;
+  --akane-leading-poetic: 2.1;
+}
+
+/* 深夜（night）: 群青の夜空と月明かりの配色 */
+[data-akane-phase="night"] {
+  --akane-paper: #162130;        /* 夜の群青・濃紺の便箋 */
+  --akane-paper-border: #2c3e55; /* 月光が当たる薄い境界線 */
+  --akane-ink: #e8ecf2;          /* 月明かりに浮かぶ銀白の文字 */
+  --akane-ink-muted: #8fa1b8;    /* 夜霧に溶ける注釈色 */
+  --akane-accent: #e07a5f;       /* 暗がりに灯る淡い茜色 */
+  --akane-shadow: rgba(5, 10, 18, 0.45);
+}
+
+/* 夜明け（dawn）は少しだけ朝霧がかった柔らかいトーンに微調整 */
+[data-akane-phase="dawn"] {
+  --akane-paper: #f3f5f8;
+  --akane-paper-border: #d5dce6;
+  --akane-accent: #3d5a80;
+}

@@ -1,0 +1,193 @@
+.akane-sky {
+  min-height: 100vh;
+  width: 100%;
+  transition: background 2.4s ease, color 1.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.akane-sky--dusk {
+  background: linear-gradient(170deg, #3d5a80 0%, #c85a53 55%, #e89974 100%);
+}
+
+.akane-sky--twilight {
+  background: linear-gradient(170deg, #1e2d40 0%, #3d5a80 55%, #b73b3a 100%);
+}
+
+.akane-sky--night {
+  background: linear-gradient(170deg, #0f1722 0%, #1e2d40 65%, #2b3f59 100%);
+}
+
+.akane-sky--dawn {
+  background: linear-gradient(170deg, #2b3f59 0%, #6d85a6 50%, #e5b89b 100%);
+}
+
+/* コンテンツは背景パーティクルより前面に配置 */
+.akane-sky__content {
+  position: relative;
+  z-index: 1;
+}
+
+/* 環境アニメーションレイヤー */
+.akane-sky__ambient {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* 1. dusk: 静かな雨粒 */
+.akane-ambient-rain {
+  position: absolute;
+  top: -15%;
+  width: 1px;
+  height: 64px;
+  background: linear-gradient(
+    to bottom,
+    rgba(247, 244, 238, 0),
+    rgba(247, 244, 238, 0.28)
+  );
+  transform: rotate(10deg);
+  animation: akane-rain-fall linear infinite;
+}
+
+@keyframes akane-rain-fall {
+  0% {
+    transform: translate3d(0, -10vh, 0) rotate(10deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate3d(-40px, 115vh, 0) rotate(10deg);
+    opacity: 0;
+  }
+}
+
+/* 2. twilight: 茜空に漂う光塵 */
+.akane-ambient-ember {
+  position: absolute;
+  bottom: -5%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 226, 198, 0.55) 0%,
+    rgba(224, 122, 95, 0) 70%
+  );
+  animation: akane-ember-drift ease-in-out infinite;
+}
+
+@keyframes akane-ember-drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.8);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.75;
+  }
+  75% {
+    opacity: 0.45;
+  }
+  100% {
+    transform: translate3d(24px, -75vh, 0) scale(1.15);
+    opacity: 0;
+  }
+}
+
+/* 3. night: 淡い星屑と蛍火 */
+.akane-ambient-star {
+  position: absolute;
+  border-radius: 50%;
+  background-color: #f7f4ee;
+  box-shadow: 0 0 6px rgba(247, 244, 238, 0.45);
+  animation: akane-star-twinkle ease-in-out infinite;
+}
+
+.akane-ambient-star--firefly {
+  background-color: #f3e59a;
+  box-shadow: 0 0 10px rgba(243, 229, 154, 0.55);
+  animation: akane-firefly-float ease-in-out infinite;
+}
+
+@keyframes akane-star-twinkle {
+  0%, 100% {
+    opacity: 0.12;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 0.65;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes akane-firefly-float {
+  0%, 100% {
+    opacity: 0.1;
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    opacity: 0.6;
+    transform: translate3d(14px, -18px, 0);
+  }
+}
+
+/* 4. dawn: 朝霧の揺らぎ */
+.akane-ambient-mist {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 85%,
+    rgba(243, 245, 248, 0.24) 0%,
+    rgba(243, 245, 248, 0) 68%
+  );
+  animation: akane-mist-breathe 12s ease-in-out infinite;
+}
+
+@keyframes akane-mist-breathe {
+  0%, 100% {
+    opacity: 0.35;
+    transform: translateY(8px) scale(1);
+  }
+  50% {
+    opacity: 0.75;
+    transform: translateY(-8px) scale(1.04);
+  }
+}
+
+/* OSの視覚効果軽減設定を尊重 */
+@media (prefers-reduced-motion: reduce) {
+  .akane-sky__ambient {
+    display: none;
+  }
+}
+
+/* 第一夜モチーフ: 遠くで静かに開く夜花火 */
+.akane-ambient-firework {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px dashed rgba(247, 244, 238, 0.35);
+  box-shadow: 0 0 18px rgba(224, 122, 95, 0.25);
+  animation: akane-firework-bloom ease-out infinite;
+}
+
+@keyframes akane-firework-bloom {
+  0% {
+    transform: scale(0.15);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.65;
+  }
+  75% {
+    opacity: 0.25;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}

@@ -1,0 +1,43 @@
+.akane-letter {
+  background-color: var(--akane-paper);
+  color: var(--akane-ink);
+  border: 1px solid var(--akane-paper-border);
+  padding: 2.5rem 3rem;
+  font-family: var(--akane-font-serif);
+  line-height: var(--akane-leading-poetic);
+  letter-spacing: var(--akane-tracking-poetic);
+  box-shadow: 0 10px 30px var(--akane-shadow);
+  position: relative;
+  transition:
+    background-color 1.4s ease,
+    color 1.4s ease,
+    border-color 1.4s ease,
+    box-shadow 1.4s ease;
+}
+
+.akane-letter--vertical {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  max-height: 460px;
+  overflow-x: auto;
+}
+
+.akane-letter__date {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--akane-ink-muted);
+  margin-bottom: 1.5rem;
+  transition: color 1.4s ease;
+}
+
+.akane-letter__body {
+  font-size: 1rem;
+}
+
+.akane-letter__signature {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: var(--akane-accent);
+  text-align: right;
+  transition: color 1.4s ease;
+}

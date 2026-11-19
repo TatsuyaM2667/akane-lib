@@ -1,0 +1,73 @@
+.akane-lyrics {
+  font-family: var(--akane-font-serif);
+  color: var(--akane-ink);
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+  padding: 1.5rem 2rem;
+  max-width: 540px;
+  transition: color 1.4s ease;
+}
+
+.akane-lyrics--vertical {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  max-width: none;
+  max-height: 420px;
+  overflow-x: auto;
+  padding: 2rem 1.5rem;
+}
+
+.akane-lyrics__line {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: var(--akane-leading-poetic);
+  letter-spacing: 0.22em;
+  opacity: 0.16;
+  filter: blur(3.5px);
+  transform: translateY(4px);
+  transition:
+    opacity 1.4s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 1.4s cubic-bezier(0.22, 1, 0.36, 1),
+    letter-spacing 1.4s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1.2s ease,
+    color 1.4s ease;
+}
+
+.akane-lyrics--interactive .akane-lyrics__line {
+  cursor: pointer;
+}
+
+.akane-lyrics--interactive .akane-lyrics__line:hover {
+  opacity: 0.65;
+  filter: blur(1px);
+}
+
+/* 既に通り過ぎた一節（記憶の残滓として淡く残る） */
+.akane-lyrics__line--past {
+  opacity: 0.42;
+  filter: blur(0.6px);
+  letter-spacing: var(--akane-tracking-poetic);
+  transform: translateY(0);
+}
+
+/* 現在浮かび上がっている一節（インクが紙に定着する瞬間） */
+.akane-lyrics__line--active {
+  opacity: 1;
+  filter: blur(0);
+  letter-spacing: var(--akane-tracking-poetic);
+  transform: translateY(0);
+  text-shadow: 0 0 18px rgba(183, 59, 58, 0.18);
+}
+
+[data-akane-phase="night"] .akane-lyrics__line--active {
+  text-shadow: 0 0 18px rgba(232, 236, 242, 0.28);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .akane-lyrics__line {
+    filter: none;
+    transform: none;
+    transition: opacity 0.3s ease;
+  }
+}

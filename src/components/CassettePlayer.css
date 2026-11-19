@@ -1,0 +1,122 @@
+.akane-cassette {
+  width: 340px;
+  background-color: var(--akane-paper);
+  color: var(--akane-ink);
+  border: 1px solid var(--akane-paper-border);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  font-family: var(--akane-font-serif);
+  box-shadow: 0 12px 28px var(--akane-shadow);
+  user-select: none;
+  transition:
+    background-color 1.4s ease,
+    color 1.4s ease,
+    border-color 1.4s ease,
+    box-shadow 1.4s ease;
+}
+
+.akane-cassette__label {
+  border-bottom: 1px solid var(--akane-accent);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  transition: border-color 1.4s ease;
+}
+
+.akane-cassette__side {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--akane-accent);
+  letter-spacing: 0.1em;
+  transition: color 1.4s ease;
+}
+
+.akane-cassette__title {
+  font-size: 0.95rem;
+  letter-spacing: var(--akane-tracking-poetic);
+}
+
+.akane-cassette__window {
+  background-color: #121720;
+  border-radius: 4px;
+  padding: 0.9rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.akane-cassette__reel {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 3px dashed #dfd8ca;
+  display: grid;
+  place-items: center;
+}
+
+.akane-cassette__reel--spinning {
+  animation: akane-spin 3.2s linear infinite;
+}
+
+.akane-cassette__reel-core {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: #f7f4ee;
+}
+
+.akane-cassette__tape-bar {
+  flex: 1;
+  height: 6px;
+  background-color: #2c3542;
+  margin: 0 1rem;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.akane-cassette__tape-progress {
+  height: 100%;
+  background-color: var(--akane-dusk);
+  transition: width 0.3s linear;
+}
+
+.akane-cassette__controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.akane-cassette__btn {
+  background: transparent;
+  border: 1px solid var(--akane-ink-muted);
+  color: var(--akane-ink);
+  font-family: var(--akane-font-serif);
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  padding: 0.35rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.akane-cassette__btn:hover {
+  border-color: var(--akane-accent);
+  color: var(--akane-accent);
+}
+
+.akane-cassette__time {
+  font-size: 0.8rem;
+  color: var(--akane-ink-muted);
+  letter-spacing: 0.08em;
+}
+
+@keyframes akane-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
