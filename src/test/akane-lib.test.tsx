@@ -171,3 +171,24 @@ describe('NotebookMemo', () => {
     });
   });
 });
+
+describe('SakuraThiefOverlay & RainRippleButton', () => {
+  it('桜吹雪レイヤーの切り替えと雨紋ボタンのクリックが動作する', async () => {
+    const user = userEvent.setup();
+    const handleClick = vi.fn();
+
+    const { container } = render(
+      <SakuraThiefOverlay density="gust">
+        <RainRippleButton onClick={handleClick}>雨とカプチーノ</RainRippleButton>
+      </SakuraThiefOverlay>
+    );
+
+    expect(container.querySelector('.akane-sakura__layer--gust')).toBeInTheDocument();
+
+    const btn = screen.getByRole('button', { name: '雨とカプチーノ' });
+    await user.click(btn);
+
+    expect(handleClick).toHaveBeenCalledTimes(1);
+    expect(container.querySelectorAll('.akane-ripple-btn__ring').length).toBe(2);
+  });
+});

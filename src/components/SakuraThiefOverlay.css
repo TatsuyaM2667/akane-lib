@@ -1,0 +1,77 @@
+.akane-sakura {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.akane-sakura__layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.akane-sakura__petal {
+  position: absolute;
+  top: -10%;
+  border-radius: 150% 0 150% 0;
+  background: linear-gradient(135deg, #fff5f7 0%, #f7cad0 60%, #e5989b 100%);
+  box-shadow: 0 2px 6px rgba(229, 152, 155, 0.25);
+  opacity: 0;
+  animation: akane-sakura-fall linear infinite;
+}
+
+[data-akane-phase="night"] .akane-sakura__petal {
+  background: linear-gradient(135deg, #f3e9ec 0%, #d8b4be 65%, #9e7b86 100%);
+  box-shadow: 0 0 8px rgba(243, 233, 236, 0.22);
+}
+
+.akane-sakura__layer--gust .akane-sakura__petal {
+  animation-name: akane-sakura-gust;
+}
+
+@keyframes akane-sakura-fall {
+  0% {
+    transform: translate3d(0, -5vh, 0) rotate(0deg) rotateY(0deg);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.85;
+  }
+  85% {
+    opacity: 0.75;
+  }
+  100% {
+    transform: translate3d(90px, 110vh, 0) rotate(320deg) rotateY(180deg);
+    opacity: 0;
+  }
+}
+
+@keyframes akane-sakura-gust {
+  0% {
+    transform: translate3d(-10vw, 10vh, 0) rotate(0deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.9;
+  }
+  85% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate3d(110vw, 75vh, 0) rotate(540deg);
+    opacity: 0;
+  }
+}
+
+.akane-sakura__content {
+  position: relative;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .akane-sakura__layer {
+    display: none;
+  }
+}

@@ -33,3 +33,9 @@ export type { TrainWindowFrameProps } from './components/TrainWindowFrame';
 
 export { NotebookMemo } from './components/NotebookMemo';
 export type { NotebookMemoProps, FountainInk } from './components/NotebookMemo';
+
+export { SakuraThiefOverlay } from './components/SakuraThiefOverlay';
+export type { SakuraThiefOverlayProps } from './components/SakuraThiefOverlay';
+
+export { RainRippleButton } from './components/RainRippleButton';
+export type { RainRippleButtonProps } from './components/RainRippleButton';
