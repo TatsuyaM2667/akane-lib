@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="akane-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1e2d40" />
+      <stop offset="55%" stop-color="#b73b3a" />
+      <stop offset="100%" stop-color="#e88d77" />
+    </linearGradient>
+  </defs>
+  <!-- 茜空から深夜へ移ろう円窓 -->
+  <circle cx="32" cy="32" r="30" fill="url(#akane-sky)" />
+  <!-- 白い百合の花弁シルエット -->
+  <g fill="none" stroke="#f7f4ee" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M32 12 C27 21, 27 30, 32 38 C37 30, 37 21, 32 12 Z" />
+    <path d="M32 38 C24 33, 16 27, 14 19 C22 21, 29 27, 32 38 Z" />
+    <path d="M32 38 C40 33, 48 27, 50 19 C42 21, 35 27, 32 38 Z" />
+    <path d="M32 38 C25 40, 19 43, 17 48 C24 46, 29 43, 32 38 Z" />
+    <path d="M32 38 C39 40, 45 43, 47 48 C40 46, 35 43, 32 38 Z" />
+    <line x1="32" y1="38" x2="32" y2="52" />
+  </g>
+</svg>
