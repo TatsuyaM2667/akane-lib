@@ -4,6 +4,8 @@
 [![Publish Package](https://github.com/TatsuyaM2667/akane-lib/actions/workflows/publish.yml/badge.svg)](https://github.com/TatsuyaM2667/akane-lib/actions/workflows/publish.yml)
 [![npm version](https://img.shields.io/npm/v/@tatsuyamiura2667/akane-lib.svg)](https://www.npmjs.com/package/@tatsuyamiura2667/akane-lib)
 
+現在の安定版: **0.4.8**
+
 ヨルシカの楽曲・物語（『エルマ』『エイミー』『第一夜』など）の情景から着想を得た、詩的な React UI コンポーネントライブラリです。  
 茜さす夕暮れから群青の深夜へと移ろう空の配色、便箋の質感、カセットテープ、夜列車の車窓、万年筆の手帳などを宣言的なコンポーネントとして提供します。雪海の記号が降る「テレパス」や、夜景の妬みを描く「昼鳶」のダークな情景も追加しました。
 
@@ -12,7 +14,7 @@
 - **ドキュメントサイト / インタラクティブデモ**: https://TatsuyaM2667.github.io/akane-lib/
 - **コンポーネントカタログ (Storybook)**: https://TatsuyaM2667.github.io/akane-lib/storybook/
 
-ドキュメントサイトでは、導入方法、8つの空の時間帯、全16コンポーネントの API とライブプレビュー、モチーフ辞典、よくある質問を掲載しています。
+ドキュメントサイトでは、導入方法、8つの空の時間帯、全16コンポーネントの API とライブプレビュー、12ストーリーの Storybook、モチーフ辞典、よくある質問を掲載しています。
 
 ---
 
@@ -350,6 +352,18 @@ import { RelicScene, WhisperText } from '@tatsuyamiura2667/akane-lib';
 | `count` | `number` | `14` | 浮遊物の個数（0〜40） |
 | `children` | `ReactNode` | - | 手前に重ねる内容 |
 | `className` | `string` | `''` | 追加クラス名 |
+
+---
+
+## リリースノート
+
+### 0.4.8
+
+- `SakuraThiefOverlay` に `petalCount` と `oilPaint` を追加し、花びらの枚数を 0〜160 で調整可能にしました。
+- 画像不要の `OilPaintTexture` を追加し、空・紙・花びらへ筆致と厚塗りを重ねられるようにしました。
+- 空の時間帯を 8 種類（群青 / 第一夜 / 夜明け / 朝霧 / 白昼 / 夕凪 / 金色 / 茜さす）へ拡張し、月・星・雲・露・夕日・遠花火を追加しました。
+- `WhisperText` と CSS 3D の `RelicScene` を追加し、テレパスの雪海と昼鳶のダークな夜景を演出できるようにしました。
+- ドキュメントサイト、Storybook（12 ストーリー）、モチーフ辞典、FAQ を全コンポーネント・全フェーズに追従させました。
 
 ---
 

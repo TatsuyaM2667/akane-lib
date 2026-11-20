@@ -112,7 +112,7 @@ function SiteFooter() {
           <a href="./storybook/">Storybook</a>
           <a href="#/faq">FAQ</a>
         </nav>
-        <p className="docs-footer__meta">MIT License · v0.4.7 · ヨルシカの物語に着想を得た非公式ライブラリ</p>
+        <p className="docs-footer__meta">MIT License · v0.4.8 · ヨルシカの物語に着想を得た非公式ライブラリ</p>
       </div>
     </footer>
   );
