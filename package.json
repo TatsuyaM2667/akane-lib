@@ -57,5 +57,9 @@
     "type": "git",
     "url": "git+https://github.com/<YOUR_GITHUB_USERNAME>/akane-lib.git"
   },
-  "homepage": "https://github.com/<YOUR_GITHUB_USERNAME>/akane-lib#readme"
+  "homepage": "https://github.com/<YOUR_GITHUB_USERNAME>/akane-lib#readme",
+  "overrides": {
+    "glob": "^14.0.2",
+    "minimatch": "^11.0.1"
+  }
 }
