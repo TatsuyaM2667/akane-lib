@@ -6,34 +6,6 @@ on:
       - 'v*'
 
 jobs:
-  publish-github-packages:
-    name: Publish to GitHub Packages
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          registry-url: 'https://npm.pkg.github.com'
-          scope: '@tatsuyamiura2667'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build library
-        run: npm run build
-
-      - name: Publish to GitHub Packages
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
   publish-npm:
     name: Publish to npmjs.org
     runs-on: ubuntu-latest
@@ -48,7 +20,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          registry-url: 'https://registry.npmjs.org'
 
       - name: Update npm CLI for Trusted Publishing (OIDC)
         run: npm install -g npm@latest
@@ -61,8 +32,8 @@ jobs:
 
   create-release:
     name: Create GitHub Release
-    needs: [publish-github-packages, publish-npm]
-    if: ${{ !cancelled() && needs.publish-github-packages.result == 'success' }}
+    needs: publish-npm
+    if: ${{ always() && !cancelled() }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
