@@ -27,12 +27,47 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Publish to npm
+      - name: Publish to npmjs.org
         run: npm publish --provenance --access public
+
+  publish-github-packages:
+    name: Publish to GitHub Packages
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@tatsuyam2667'
+
+      - name: Rewrite scope for GitHub Packages
+        run: |
+          node -e '
+            const fs = require("fs");
+            const pkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
+            pkg.name = "@tatsuyam2667/akane-lib";
+            pkg.publishConfig = { registry: "https://npm.pkg.github.com" };
+            fs.writeFileSync("package.json", JSON.stringify(pkg, null, 2) + "\n");
+          '
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Publish to GitHub Packages
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   create-release:
     name: Create GitHub Release
-    needs: publish-npm
+    needs: [publish-npm, publish-github-packages]
     if: ${{ always() && !cancelled() }}
     runs-on: ubuntu-latest
     permissions:
@@ -50,7 +85,11 @@ jobs:
           body: |
             ## Installation
             ```bash
+            # From npmjs.org
             npm install @tatsuyamiura2667/akane-lib@${{ github.ref_name }}
+
+            # From GitHub Packages
+            npm install @tatsuyam2667/akane-lib@${{ github.ref_name }} --registry=[https://npm.pkg.github.com](https://npm.pkg.github.com)
             ```
 
             ## Links
