@@ -15,6 +15,8 @@ import {
   TrainWindowFrame,
   SakuraThiefOverlay,
   RainRippleButton,
+  GhostFlowerRefraction,
+  TypewriterCensorText,
 } from '../index';
 
 afterEach(() => {
@@ -100,18 +102,15 @@ describe('CassettePlayer', () => {
     expect(screen.getByText('00:00 / 00:05')).toBeInTheDocument();
     expect(handleTimeUpdate).toHaveBeenLastCalledWith(0);
 
-    // 再生開始
     fireEvent.click(screen.getByRole('button', { name: '再生' }));
     expect(screen.getByRole('button', { name: '一時停止' })).toBeInTheDocument();
 
-    // 3秒経過
     act(() => {
       vi.advanceTimersByTime(3000);
     });
     expect(screen.getByText('00:03 / 00:05')).toBeInTheDocument();
     expect(handleTimeUpdate).toHaveBeenLastCalledWith(3);
 
-    // 一時停止してさらに2秒経過しても進まないことを確認
     fireEvent.click(screen.getByRole('button', { name: '一時停止' }));
     expect(screen.getByRole('button', { name: '再生' })).toBeInTheDocument();
 
@@ -120,7 +119,6 @@ describe('CassettePlayer', () => {
     });
     expect(screen.getByText('00:03 / 00:05')).toBeInTheDocument();
 
-    // 再開して durationSec(5秒) に達すると 00:00 に戻る
     fireEvent.click(screen.getByRole('button', { name: '再生' }));
     act(() => {
       vi.advanceTimersByTime(2000);
@@ -191,5 +189,52 @@ describe('SakuraThiefOverlay & RainRippleButton', () => {
 
     expect(handleClick).toHaveBeenCalledTimes(1);
     expect(container.querySelectorAll('.akane-ripple-btn__ring').length).toBe(2);
+  });
+});
+
+describe('GhostFlowerRefraction', () => {
+  it('水面の揺らぎ強度と残像アニメーションクラスが適用される', () => {
+    const { container } = render(
+      <GhostFlowerRefraction intensity="mirage" afterimage caustics>
+        <span>花に亡霊の記憶</span>
+      </GhostFlowerRefraction>
+    );
+
+    const wrapper = container.querySelector('[data-refraction-intensity="mirage"]');
+    expect(wrapper).toBeInTheDocument();
+    expect(wrapper).toHaveClass('akane-refraction--afterimage');
+    expect(container.querySelector('.akane-refraction__caustics')).toBeInTheDocument();
+    expect(screen.getByText('花に亡霊の記憶')).toBeInTheDocument();
+  });
+});
+
+describe('TypewriterCensorText', () => {
+  it('タイプライター打鍵と検閲黒塗りのクリック解除が動作する', () => {
+    vi.useFakeTimers();
+    const handleComplete = vi.fn();
+
+    render(
+      <TypewriterCensorText
+        text="言葉は[[思想犯]]のように"
+        speedMs={50}
+        onComplete={handleComplete}
+      />
+    );
+
+    // 1文字ずつ進行
+    for (let i = 0; i < 11; i++) {
+      act(() => {
+        vi.advanceTimersByTime(50);
+      });
+    }
+
+    expect(handleComplete).toHaveBeenCalledTimes(1);
+
+    const redacted = screen.getByRole('button', { name: '検閲された言葉（クリックで表示）' });
+    expect(redacted).toHaveTextContent('思想犯');
+    expect(redacted).not.toHaveClass('akane-censor-text__redact--revealed');
+
+    fireEvent.click(redacted);
+    expect(redacted).toHaveClass('akane-censor-text__redact--revealed');
   });
 });

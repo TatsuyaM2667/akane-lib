@@ -1,0 +1,82 @@
+.akane-censor-text {
+  font-family: var(--akane-font-serif);
+  color: var(--akane-ink);
+  line-height: 2.1;
+  letter-spacing: 0.12em;
+  font-size: 0.98rem;
+  white-space: pre-wrap;
+}
+
+.akane-censor-text__redact {
+  position: relative;
+  display: inline-block;
+  padding: 0 0.25em;
+  margin: 0 0.1em;
+  border-radius: 2px;
+  background-color: var(--akane-ink);
+  color: transparent;
+  user-select: none;
+  cursor: pointer;
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.akane-censor-text__redact::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, 0.08) 0px,
+    rgba(255, 255, 255, 0.08) 2px,
+    transparent 2px,
+    transparent 5px
+  );
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+.akane-censor-text__redact--interactive:hover,
+.akane-censor-text__redact--revealed {
+  background-color: rgba(183, 59, 58, 0.14);
+  color: var(--akane-accent);
+  user-select: text;
+  box-shadow: inset 0 -1px 0 var(--akane-accent);
+}
+
+.akane-censor-text__redact--interactive:hover::after,
+.akane-censor-text__redact--revealed::after {
+  opacity: 0;
+}
+
+[data-akane-phase="night"] .akane-censor-text__redact {
+  background-color: #0b111a;
+  box-shadow: 0 0 0 1px rgba(224, 122, 95, 0.35);
+}
+
+[data-akane-phase="night"] .akane-censor-text__redact--interactive:hover,
+[data-akane-phase="night"] .akane-censor-text__redact--revealed {
+  background-color: rgba(224, 122, 95, 0.18);
+  color: var(--akane-accent);
+}
+
+.akane-censor-text__caret {
+  display: inline-block;
+  width: 2px;
+  height: 1.05em;
+  margin-left: 2px;
+  vertical-align: -0.15em;
+  background-color: var(--akane-accent);
+  animation: akane-caret-blink 0.9s steps(1) infinite;
+}
+
+@keyframes akane-caret-blink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+}
