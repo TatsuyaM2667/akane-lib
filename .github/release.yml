@@ -1,0 +1,13 @@
+changelog:
+  categories:
+    - title: 新機能 (Features)
+      labels:
+        - enhancement
+        - feat
+    - title: バグ修正 (Bug Fixes)
+      labels:
+        - bug
+        - fix
+    - title: その他の変更
+      labels:
+        - "*"
