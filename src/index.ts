@@ -48,3 +48,16 @@ export type {
 
 export { TypewriterCensorText } from './components/TypewriterCensorText';
 export type { TypewriterCensorTextProps } from './components/TypewriterCensorText';
+
+export { OilPaintTexture } from './components/OilPaintTexture';
+export type {
+  OilPaintTextureProps,
+  OilPaintVariant,
+  OilPaintIntensity,
+} from './components/OilPaintTexture';
+
+export { WhisperText } from './components/WhisperText';
+export type { WhisperTextProps, WhisperVariant } from './components/WhisperText';
+
+export { RelicScene } from './components/RelicScene';
+export type { RelicSceneProps, RelicVariant } from './components/RelicScene';

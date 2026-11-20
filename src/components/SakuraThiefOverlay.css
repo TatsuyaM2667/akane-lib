@@ -16,14 +16,30 @@
   position: absolute;
   top: -10%;
   border-radius: 150% 0 150% 0;
-  background: linear-gradient(135deg, #fff5f7 0%, #f7cad0 60%, #e5989b 100%);
-  box-shadow: 0 2px 6px rgba(229, 152, 155, 0.25);
+  background:
+    repeating-linear-gradient(
+      118deg,
+      rgba(255, 255, 255, 0.26) 0 1px,
+      transparent 1px 3px
+    ),
+    radial-gradient(circle at 25% 30%, rgba(255, 255, 255, 0.45), transparent 55%),
+    linear-gradient(135deg, #fff5f7 0%, #f7cad0 60%, #e5989b 100%);
+  box-shadow:
+    0 2px 6px rgba(229, 152, 155, 0.25),
+    inset 0 0 4px rgba(158, 47, 46, 0.16);
   opacity: 0;
   animation: akane-sakura-fall linear infinite;
 }
 
 [data-akane-phase="night"] .akane-sakura__petal {
-  background: linear-gradient(135deg, #f3e9ec 0%, #d8b4be 65%, #9e7b86 100%);
+  background:
+    repeating-linear-gradient(
+      118deg,
+      rgba(255, 255, 255, 0.16) 0 1px,
+      transparent 1px 3px
+    ),
+    radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.22), transparent 55%),
+    linear-gradient(135deg, #f3e9ec 0%, #d8b4be 65%, #9e7b86 100%);
   box-shadow: 0 0 8px rgba(243, 233, 236, 0.22);
 }
 
@@ -43,7 +59,7 @@
     opacity: 0.75;
   }
   100% {
-    transform: translate3d(90px, 110vh, 0) rotate(320deg) rotateY(180deg);
+    transform: translate3d(var(--akane-petal-drift, 90px), 110vh, 0) rotate(320deg) rotateY(180deg);
     opacity: 0;
   }
 }

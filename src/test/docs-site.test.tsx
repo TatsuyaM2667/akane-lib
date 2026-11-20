@@ -20,6 +20,8 @@ describe('DocsSite', () => {
       '#/components',
     );
     expect(screen.getByText('INTERACTIVE DEMO')).toBeInTheDocument();
+    expect(screen.getByText('言葉の代わりに、白い信号が降る')).toBeInTheDocument();
+    expect(screen.getByText('テレパスと昼鳶')).toBeInTheDocument();
   });
 
   it('ハッシュの変更でコンポーネント詳細とプレビューに切り替わる', () => {
@@ -40,7 +42,7 @@ describe('DocsSite', () => {
   it('ヘッダーの時間帯ボタンでテーマが切り替わる', () => {
     const { container } = render(<DocsSite />);
 
-    fireEvent.click(screen.getByRole('button', { name: '一 夕凪に切り替える' }));
+    fireEvent.click(screen.getByRole('button', { name: '六 夕凪に切り替える' }));
 
     expect(container.querySelector('[data-akane-phase="dusk"]')).toBeInTheDocument();
   });

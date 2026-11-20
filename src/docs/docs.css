@@ -159,6 +159,22 @@
   background: linear-gradient(135deg, #6d85a6, #e5b89b);
 }
 
+.docs-phase-indicator__dot--midnight {
+  background: linear-gradient(135deg, #080d16, #1b2b45);
+}
+
+.docs-phase-indicator__dot--morning {
+  background: linear-gradient(135deg, #7fa6bd, #f0d9b8);
+}
+
+.docs-phase-indicator__dot--day {
+  background: linear-gradient(135deg, #5f9cc4, #e4ddc6);
+}
+
+.docs-phase-indicator__dot--golden {
+  background: linear-gradient(135deg, #54789d, #f3c583);
+}
+
 .docs-header__storybook {
   text-decoration: none;
   font-size: 0.82rem;
@@ -358,6 +374,31 @@
 
 .docs-showcase__controls {
   gap: 0.7rem;
+}
+
+.docs-showcase__slider {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid rgba(247, 244, 238, 0.35);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--akane-paper, #f7f4ee);
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  backdrop-filter: blur(6px);
+}
+
+.docs-showcase__slider input {
+  width: 120px;
+  accent-color: var(--akane-accent, #b73b3a);
+}
+
+.docs-showcase__slider output {
+  min-width: 2.5ch;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
 .docs-showcase__grid {
@@ -665,6 +706,22 @@
   background: linear-gradient(170deg, #2b3f59, #6d85a6 50%, #e5b89b);
 }
 
+.docs-phase-card--midnight .docs-phase-card__sky {
+  background: linear-gradient(170deg, #080d16, #101a2b 58%, #1b2b45);
+}
+
+.docs-phase-card--morning .docs-phase-card__sky {
+  background: linear-gradient(170deg, #7fa6bd, #c9d4d0 55%, #f0d9b8);
+}
+
+.docs-phase-card--day .docs-phase-card__sky {
+  background: linear-gradient(170deg, #5f9cc4, #9fc9de 55%, #e4ddc6);
+}
+
+.docs-phase-card--golden .docs-phase-card__sky {
+  background: linear-gradient(170deg, #54789d, #d79a5f 55%, #f3c583);
+}
+
 .docs-phase-card__body {
   padding: 1.2rem;
 }
@@ -928,6 +985,41 @@
   letter-spacing: var(--akane-tracking-poetic);
 }
 
+.docs-preview__slider {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--akane-paper-border);
+  border-radius: 999px;
+  background: var(--akane-paper);
+  color: var(--akane-ink);
+  font-size: 0.82rem;
+}
+
+.docs-preview__slider input {
+  width: 110px;
+  accent-color: var(--akane-accent);
+}
+
+.docs-preview__oil {
+  position: relative;
+  width: 100%;
+  min-height: 170px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid var(--akane-paper-border);
+  border-radius: 10px;
+  background: linear-gradient(140deg, #3d5a80, #b73b3a);
+  color: #f7f4ee;
+}
+
+.docs-preview__oil p {
+  position: relative;
+  z-index: 1;
+}
+
 .docs-preview__result {
   margin: 0;
   font-size: 0.85rem;
@@ -1128,6 +1220,96 @@
   color: var(--akane-ink-muted);
 }
 
+.docs-hero__whisper {
+  max-width: 42rem;
+  margin: 0 0 1.8rem;
+  padding-left: 1rem;
+  border-left: 2px solid rgba(166, 208, 230, 0.45);
+}
+
+.docs-hero__whisper .akane-whisper {
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
+}
+
+.docs-showcase__worlds {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.2rem;
+}
+
+.docs-world {
+  overflow: hidden;
+  border: 1px solid var(--akane-paper-border);
+  border-radius: 14px;
+  background: #0d1520;
+  box-shadow: 0 18px 40px rgba(8, 14, 24, 0.18);
+}
+
+.docs-world--envy {
+  background: #180d10;
+}
+
+.docs-world .akane-relic {
+  --akane-relic-height: 190px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 190px;
+  padding: 2rem 1.4rem 1rem;
+  background: none;
+}
+
+.docs-world .akane-relic__content {
+  max-width: 26rem;
+  text-align: center;
+}
+
+.docs-world__caption {
+  margin: 0;
+  padding: 0 1.2rem 1.2rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  color: rgba(216, 228, 238, 0.62);
+}
+
+.docs-preview__whisper {
+  display: flex;
+  align-items: center;
+  min-height: 96px;
+  padding: 1.2rem;
+  border-radius: 10px;
+  background: #101a26;
+}
+
+.docs-preview__whisper--envy {
+  background: #1a0d10;
+}
+
+.docs-preview__input {
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid var(--akane-paper-border);
+  border-radius: 8px;
+  background: var(--akane-paper);
+  color: var(--akane-ink);
+  font-family: var(--akane-font-serif);
+}
+
+.docs-preview__body .akane-relic {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.4rem;
+  border: 1px solid var(--akane-paper-border);
+  border-radius: 10px;
+}
+
+.docs-preview__body .akane-relic__content {
+  max-width: 28rem;
+  text-align: center;
+}
+
 @media (max-width: 900px) {
   .docs-components-layout {
     grid-template-columns: 1fr;
@@ -1187,6 +1369,10 @@
   .docs-stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1.2rem;
+  }
+
+  .docs-showcase__worlds {
+    grid-template-columns: 1fr;
   }
 
   .docs-preview__bar span:last-child {

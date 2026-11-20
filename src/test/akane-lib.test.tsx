@@ -17,6 +17,9 @@ import {
   RainRippleButton,
   GhostFlowerRefraction,
   TypewriterCensorText,
+  OilPaintTexture,
+  WhisperText,
+  RelicScene,
 } from "../index";
 
 afterEach(() => {
@@ -30,6 +33,10 @@ describe("getSkyPhaseFromDate", () => {
     expect(getSkyPhaseFromDate(new Date(2026, 7, 31, 18, 30))).toBe("twilight");
     expect(getSkyPhaseFromDate(new Date(2026, 7, 31, 23, 30))).toBe("night");
     expect(getSkyPhaseFromDate(new Date(2026, 7, 31, 2, 0))).toBe("night");
+    expect(getSkyPhaseFromDate(new Date(2026, 7, 31, 1, 0))).toBe("midnight");
+    expect(getSkyPhaseFromDate(new Date(2026, 7, 31, 8, 0))).toBe("morning");
+    expect(getSkyPhaseFromDate(new Date(2026, 7, 31, 11, 0))).toBe("day");
+    expect(getSkyPhaseFromDate(new Date(2026, 7, 31, 17, 30))).toBe("golden");
   });
 });
 
@@ -94,6 +101,44 @@ describe("TwilightSky fireworks", () => {
       </TwilightSky>,
     );
     expect(container.querySelectorAll(".akane-ambient-firework")).toHaveLength(0);
+  });
+});
+
+describe("TwilightSky の追加フェーズ", () => {
+  it("新しいフェーズの背景クラスと環境演出が適用される", () => {
+    const { container, rerender } = render(
+      <TwilightSky ambient phase="midnight">
+        <span>群青</span>
+      </TwilightSky>,
+    );
+
+    expect(container.querySelector(".akane-sky--midnight")).toBeInTheDocument();
+    expect(container.querySelector(".akane-ambient-moon")).toBeInTheDocument();
+    expect(container.querySelectorAll(".akane-ambient-star").length).toBeGreaterThan(0);
+
+    rerender(
+      <TwilightSky ambient phase="day">
+        <span>白昼</span>
+      </TwilightSky>,
+    );
+    expect(container.querySelector(".akane-sky--day")).toBeInTheDocument();
+    expect(container.querySelectorAll(".akane-ambient-cloud")).toHaveLength(3);
+
+    rerender(
+      <TwilightSky ambient phase="morning">
+        <span>朝霧</span>
+      </TwilightSky>,
+    );
+    expect(container.querySelectorAll(".akane-ambient-dew")).toHaveLength(4);
+    expect(container.querySelector(".akane-ambient-mist")).toBeInTheDocument();
+
+    rerender(
+      <TwilightSky ambient phase="golden">
+        <span>金色</span>
+      </TwilightSky>,
+    );
+    expect(container.querySelector(".akane-ambient-sun")).toBeInTheDocument();
+    expect(container.querySelectorAll(".akane-ambient-ember").length).toBeGreaterThan(0);
   });
 });
 
@@ -229,6 +274,90 @@ describe("SakuraThiefOverlay & RainRippleButton", () => {
     expect(container.querySelectorAll(".akane-ripple-btn__ring").length).toBe(
       2,
     );
+  });
+
+  it("petalCount で花びらの枚数を指定できる", () => {
+    const { container } = render(
+      <SakuraThiefOverlay petalCount={48} active>
+        <span>桜</span>
+      </SakuraThiefOverlay>,
+    );
+
+    expect(container.querySelectorAll(".akane-sakura__petal")).toHaveLength(48);
+  });
+
+  it("oilPaint を付けると花びらレイヤーに油絵テクスチャが入る", () => {
+    const { container } = render(
+      <SakuraThiefOverlay petalCount={2} oilPaint>
+        <span>桜</span>
+      </SakuraThiefOverlay>,
+    );
+
+    expect(
+      container.querySelector(".akane-sakura__layer .akane-oil--petal"),
+    ).toBeInTheDocument();
+  });
+});
+
+describe("OilPaintTexture", () => {
+  it("variant と intensity に応じたクラスで描画される", () => {
+    const { container } = render(
+      <OilPaintTexture variant="paper" intensity="strong" />,
+    );
+    const texture = container.querySelector(".akane-oil");
+
+    expect(texture).toHaveClass(
+      "akane-oil--paper",
+      "akane-oil--strong",
+    );
+    expect(texture).toHaveAttribute("aria-hidden", "true");
+    expect(container.querySelectorAll(".akane-oil > span")).toHaveLength(3);
+  });
+});
+
+describe("WhisperText", () => {
+  it("variant に応じたクラスと読み上げ用テキストを描画する", () => {
+    const { container } = render(
+      <WhisperText text="白い信号" variant="envy" speedMs={10} />,
+    );
+
+    expect(container.querySelector(".akane-whisper")).toHaveClass(
+      "akane-whisper--envy",
+    );
+    expect(container.querySelector(".akane-whisper__sr")).toHaveTextContent(
+      "白い信号",
+    );
+    expect(
+      container.querySelector(".akane-whisper__glitch"),
+    ).toHaveAttribute("data-text", "白い信号");
+    expect(container.querySelectorAll(".akane-whisper__char")).toHaveLength(4);
+  });
+});
+
+describe("RelicScene", () => {
+  it("variant に応じた浮遊物と children を描画する", () => {
+    const { container } = render(
+      <RelicScene variant="envy" count={6}>
+        <span>夜景</span>
+      </RelicScene>,
+    );
+
+    expect(container.querySelector(".akane-relic")).toHaveClass(
+      "akane-relic--envy",
+    );
+    expect(container.querySelectorAll(".akane-relic__object")).toHaveLength(6);
+    expect(
+      container.querySelector(".akane-relic__object--crow"),
+    ).toBeInTheDocument();
+    expect(screen.getByText("夜景")).toBeInTheDocument();
+  });
+
+  it("count を 0〜40 の範囲に収める", () => {
+    const { container: many } = render(<RelicScene variant="telepath" count={99} />);
+    const { container: few } = render(<RelicScene variant="telepath" count={-5} />);
+
+    expect(many.querySelectorAll(".akane-relic__object")).toHaveLength(40);
+    expect(few.querySelectorAll(".akane-relic__object")).toHaveLength(0);
   });
 });
 

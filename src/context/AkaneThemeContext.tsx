@@ -1,13 +1,27 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import type { SkyPhase } from "../components/TwilightSky";
 
-const PHASES: SkyPhase[] = ["dusk", "twilight", "night", "dawn"];
+const PHASES: SkyPhase[] = [
+  "dawn",
+  "morning",
+  "day",
+  "dusk",
+  "golden",
+  "twilight",
+  "night",
+  "midnight",
+];
 
 export const getSkyPhaseFromDate = (date: Date = new Date()): SkyPhase => {
   const hour = date.getHours();
-  if (hour >= 4 && hour < 10) return "dawn";
-  if (hour >= 10 && hour < 17) return "dusk";
-  if (hour >= 17 && hour < 20) return "twilight";
+  if (hour < 2) return "midnight";
+  if (hour < 4) return "night";
+  if (hour < 7) return "dawn";
+  if (hour < 10) return "morning";
+  if (hour < 12) return "day";
+  if (hour < 17) return "dusk";
+  if (hour < 18) return "golden";
+  if (hour < 20) return "twilight";
   return "night";
 };
 

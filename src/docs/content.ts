@@ -33,40 +33,76 @@ export interface PhaseInfo {
 
 export const PHASES: PhaseInfo[] = [
   {
-    id: 'dusk',
-    name: '夕凪',
-    reading: 'ゆうなぎ',
+    id: 'midnight',
+    name: '群青',
+    reading: 'ぐんじょう',
     chapter: '一',
-    hours: '10:00 – 16:59',
-    keywords: '通り雨・橙の残照',
-    description: '昼の名残がまだ空に残る時間。雨粒が静かに落ち、紙の白さが一番強く見えます。',
-  },
-  {
-    id: 'twilight',
-    name: '茜さす',
-    reading: 'あかねさす',
-    chapter: '二',
-    hours: '17:00 – 19:59',
-    keywords: '光塵・茜色',
-    description: '空が群青へ沈む少し前。光塵が漂い、アクセントの茜が最も鮮やかになります。',
+    hours: '00:00 – 01:59',
+    keywords: '月明かり・星屑',
+    description: '街が眠りについた最も深い時間。月と星だけが灯り、紙もインクも夜の色に沈みます。',
   },
   {
     id: 'night',
     name: '第一夜',
     reading: 'だいいちや',
-    chapter: '三',
+    chapter: '二',
     hours: '20:00 – 03:59',
     keywords: '星屑・蛍火・遠花火',
-    description: '群青の深夜。紙は夜空色に反転し、インクは月明かりのような淡い茜へ変わります。',
+    description: '群青の夜。紙は夜空色に反転し、インクは月明かりのような淡い茜へ変わります。',
   },
   {
     id: 'dawn',
     name: '夜明け',
     reading: 'よあけ',
+    chapter: '三',
+    hours: '04:00 – 06:59',
+    keywords: '薄明・朝霧',
+    description: '藍がほどけ始める時間。霧が地面にたまり、コントラストがゆっくり戻ってきます。',
+  },
+  {
+    id: 'morning',
+    name: '朝霧',
+    reading: 'あさぎり',
     chapter: '四',
-    hours: '04:00 – 09:59',
-    keywords: '朝霧・藍の薄明',
-    description: '霧が地面にたまり、色づき始める時間。コントラストが穏やかで、朝の手帳によく合います。',
+    hours: '07:00 – 09:59',
+    keywords: '露・雲・淡い緑',
+    description: '露が光り、雲がゆっくり流れる朝。柔らかい紙色が朝の手帳に似合います。',
+  },
+  {
+    id: 'day',
+    name: '白昼',
+    reading: 'はくちゅう',
+    chapter: '五',
+    hours: '10:00 – 11:59',
+    keywords: '青空・白雲',
+    description: '影が短くなる時間。空気が澄み、紙の白とインクの黒が最もくっきりします。',
+  },
+  {
+    id: 'dusk',
+    name: '夕凪',
+    reading: 'ゆうなぎ',
+    chapter: '六',
+    hours: '12:00 – 16:59',
+    keywords: '通り雨・橙の残照',
+    description: '昼の名残がまだ空に残る時間。雨粒が静かに落ち、紙の白さが一番強く見えます。',
+  },
+  {
+    id: 'golden',
+    name: '金色',
+    reading: 'きんいろ',
+    chapter: '七',
+    hours: '17:00 – 17:59',
+    keywords: '夕日・光塵',
+    description: '茜に染まる直前のひととき。低い太陽が紙と文字を琥珀色に染めます。',
+  },
+  {
+    id: 'twilight',
+    name: '茜さす',
+    reading: 'あかねさす',
+    chapter: '八',
+    hours: '18:00 – 19:59',
+    keywords: '光塵・茜色',
+    description: '空が群青へ沈む少し前。光塵が漂い、アクセントの茜が最も鮮やかになります。',
   },
 ];
 
@@ -77,7 +113,7 @@ export const COMPONENTS: ComponentDoc[] = [
     japanese: '空の時間帯を司る',
     group: 'テーマ',
     motif: '移ろう空',
-    summary: '4つの時間帯と、それに伴う紙・インク・アクセント色を配下全体へ届けます。',
+    summary: '8つの時間帯と、それに伴う紙・インク・アクセント色を配下全体へ届けます。',
     detail:
       'phase を渡せば完全制御、defaultPhase なら非制御になります。syncWithSystemTime を有効にすると現在時刻に追従し、手動で切り替えるまで同期を一時停止します。useAkaneTheme はプロバイダの外では null を返すため、呼び出し側でフォールバックを用意してください。',
     usage: `import { AkaneThemeProvider, useAkaneTheme } from '@tatsuyamiura2667/akane-lib';
@@ -99,7 +135,7 @@ export function App() {
       { name: 'phase', type: 'SkyPhase', default: '—', description: '外部から時間帯を制御する' },
       { name: 'defaultPhase', type: 'SkyPhase', default: "'twilight'", description: '非制御時の初期値' },
       { name: 'onPhaseChange', type: '(phase: SkyPhase) => void', default: '—', description: '変化時に呼ばれる' },
-      { name: 'autoCycle', type: 'boolean', default: 'false', description: '一定間隔で4つの空を循環' },
+      { name: 'autoCycle', type: 'boolean', default: 'false', description: '一定間隔で8つの空を循環' },
       { name: 'intervalMs', type: 'number', default: '8000', description: '循環の間隔（ミリ秒）' },
       { name: 'syncWithSystemTime', type: 'boolean', default: 'false', description: '現在時刻と同期する' },
       { name: 'className', type: 'string', default: "''", description: 'ラッパーの追加クラス' },
@@ -116,9 +152,9 @@ export function App() {
     japanese: '背景の空',
     group: 'テーマ',
     motif: '夕凪 / 茜さす / 第一夜',
-    summary: '時間帯ごとのグラデーション空と、雨・光塵・星・霧の環境演出を重ねる背景コンテナです。',
+    summary: '時間帯ごとのグラデーション空と、雨・光塵・夕日・雲・星・月の環境演出を重ねる背景コンテナです。',
     detail:
-      'AkaneThemeProvider の内側では phase を自動継承します。単独で使う場合は phase または autoCycle を指定してください。ambient は時間帯に合う演出を、fireworks は夜に遠花火を加えます。',
+      'AkaneThemeProvider の内側では phase を自動継承します。単独で使う場合は phase または autoCycle を指定してください。ambient は時間帯に合う演出（雨・光塵・夕日・雲と露・星と月など）を、fireworks は夜に遠花火を加えます。oilPaint は筆致と画布の目を重ね、false で外せます。',
     usage: `import { TwilightSky } from '@tatsuyamiura2667/akane-lib';
 
 <TwilightSky ambient fireworks phase="night">
@@ -129,6 +165,7 @@ export function App() {
       { name: 'phase', type: 'SkyPhase', default: '—', description: '単独使用時の時間帯' },
       { name: 'ambient', type: 'boolean', default: 'false', description: '時間帯に応じた環境演出' },
       { name: 'fireworks', type: 'boolean', default: 'false', description: '夜に遠花火を追加' },
+      { name: 'oilPaint', type: 'boolean', default: 'true', description: '油絵の筆致レイヤー' },
       { name: 'autoCycle', type: 'boolean', default: 'false', description: '単独使用時の自動循環' },
       { name: 'intervalMs', type: 'number', default: '8000', description: '循環の間隔（ミリ秒）' },
       { name: 'className', type: 'string', default: "''", description: '追加クラス名' },
@@ -144,7 +181,7 @@ export function App() {
     motif: 'エルマ / エイミー',
     summary: '詩的な行間と字間の便箋コンテナ。縦書きにも切り替えられます。',
     detail:
-      'date は冒頭、signature は末尾に配置されます。vertical を付けると writing-mode: vertical-rl になり、手紙や短い詩の表示に向きます。',
+      'date は冒頭、signature は末尾に配置されます。vertical を付けると writing-mode: vertical-rl になり、手紙や短い詩の表示に向きます。oilPaint を付けると紙に厚塗りの質感が加わります。',
     usage: `import { LetterCard } from '@tatsuyamiura2667/akane-lib';
 
 <LetterCard date="八月三十一日" signature="エイミーへ">
@@ -155,6 +192,7 @@ export function App() {
       { name: 'date', type: 'string', default: '—', description: '日付・章題' },
       { name: 'signature', type: 'string', default: '—', description: '署名・差出人' },
       { name: 'vertical', type: 'boolean', default: 'false', description: '縦書きにする' },
+      { name: 'oilPaint', type: 'boolean', default: 'false', description: '紙に油絵テクスチャを重ねる' },
       { name: 'className', type: 'string', default: "''", description: '追加クラス名' },
     ],
     related: ['lyric-lines', 'white-lily-seal'],
@@ -309,21 +347,23 @@ const lines: LyricLine[] = [
     japanese: '桜吹雪の演出',
     group: '入力・演出',
     motif: '春泥棒',
-    summary: 'コンテンツの上を花びらが舞うオーバーレイ。風の強さを3段階で選べます。',
-    detail: 'active で花びらだけを消去でき、density は light / normal / gust の順に枚数と速さが増します。子要素は花びらの下に配置されます。',
+    summary: 'コンテンツの上を花びらが舞うオーバーレイ。風の強さと枚数を個別に調整できます。',
+    detail: 'active で花びらだけを消去でき、density は light / normal / gust の順に風の強さが増します。petalCount を指定すると density の枚数より優先され、0〜160 枚で細かく調整できます。oilPaint は花びらに筆致を加えます。',
     usage: `import { SakuraThiefOverlay } from '@tatsuyamiura2667/akane-lib';
 
-<SakuraThiefOverlay density="gust">
+<SakuraThiefOverlay density="gust" petalCount={48} oilPaint>
   <p>春の風の中の一文</p>
 </SakuraThiefOverlay>`,
     props: [
       { name: 'children', type: 'ReactNode', default: '—', description: '演出の内側に置く要素' },
       { name: 'active', type: 'boolean', default: 'true', description: '花びらを表示する' },
-      { name: 'density', type: "'light' | 'normal' | 'gust'", default: "'normal'", description: '枚数と風の強さ' },
+      { name: 'density', type: "'light' | 'normal' | 'gust'", default: "'normal'", description: '風の強さ（既定枚数 6 / 11 / 16）' },
+      { name: 'petalCount', type: 'number', default: '—', description: '花びらの枚数。0〜160 に丸められます' },
+      { name: 'oilPaint', type: 'boolean', default: 'false', description: '花びらに油絵の筆致を重ねる' },
       { name: 'className', type: 'string', default: "''", description: '追加クラス名' },
     ],
     notes: ['花びらの層は aria-hidden。prefers-reduced-motion では非表示になります。'],
-    related: ['twilight-sky', 'rain-ripple-button'],
+    related: ['twilight-sky', 'oil-paint-texture'],
   },
   {
     slug: 'rain-ripple-button',
@@ -393,6 +433,89 @@ const lines: LyricLine[] = [
       { name: 'className', type: 'string', default: "''", description: '追加クラス名' },
     ],
     related: ['notebook-memo', 'letter-card'],
+  },
+  {
+    slug: 'oil-paint-texture',
+    name: 'OilPaintTexture',
+    japanese: '油絵の質感',
+    group: '入力・演出',
+    motif: 'スケッチ／厚塗り',
+    summary: '筆致・画布の目・厚塗りの光を CSS だけで重ねる、画像不要のテクスチャです。',
+    detail:
+      'variant で空・紙・花びらの色味を切り替え、intensity で濃さを揃えます。absolute で親いっぱいに広がり、pointer-events を持たないため、テキストやボタンの操作を邪魔しません。',
+    usage: `import { OilPaintTexture } from '@tatsuyamiura2667/akane-lib';
+
+<div style={{ position: 'relative' }}>
+  <OilPaintTexture variant="paper" intensity="subtle" />
+  <p>紙の上に置いた一行</p>
+</div>`,
+    props: [
+      { name: 'variant', type: "'sky' | 'paper' | 'petal'", default: "'sky'", description: '質感の色味' },
+      { name: 'intensity', type: "'subtle' | 'normal' | 'strong'", default: "'normal'", description: '重ねる濃さ' },
+      { name: 'className', type: 'string', default: "''", description: '追加クラス名' },
+    ],
+    notes: ['画像や外部フォントを読み込みません。', '必ず position: relative の親要素の中に置いてください。'],
+    related: ['twilight-sky', 'letter-card', 'sakura-thief-overlay'],
+  },
+  {
+    slug: 'whisper-text',
+    name: 'WhisperText',
+    japanese: '届かない言葉',
+    group: '入力・演出',
+    motif: 'テレパス／昼鳶',
+    summary: '一文字ずつ滲んで現れる、テレパシーと嫉妬の二つの側面を持つ文字演出です。',
+    detail:
+      'telepath は白い信号が途切れずに揺れる glitch、envy は赤く滲んだ黒塗りの残響です。歌詞をそのまま引用せず、情景だけを借りたオリジナルの文を渡してください。speedMs を小さくすると、早口の囁きになります。',
+    usage: `import { WhisperText } from '@tatsuyamiura2667/akane-lib';
+
+<WhisperText
+  text={'言葉の代わりに、白い信号が降る'}
+  variant="telepath"
+  speedMs={48}
+/>
+
+<WhisperText
+  text={'笑いながら夜景を数える、満たされない胸の音'}
+  variant="envy"
+  speedMs={62}
+/>`,
+    props: [
+      { name: 'text', type: 'string', default: '必須', description: '表示する一文' },
+      { name: 'variant', type: "'telepath' | 'envy'", default: "'telepath'", description: '雪海か嫉妬の演出' },
+      { name: 'speedMs', type: 'number', default: '55', description: '1文字ずつの出現間隔（ミリ秒）' },
+      { name: 'className', type: 'string', default: "''", description: '追加クラス名' },
+    ],
+    notes: [
+      'prefers-reduced-motion が有効なら、すべての文字が一度に表示されます。',
+      '読み上げ用の非表示テキストを内包しているため、スクリーンリーダーでも全文が読めます。',
+    ],
+    related: ['relic-scene', 'typewriter-censor-text', 'lyric-lines'],
+  },
+  {
+    slug: 'relic-scene',
+    name: 'RelicScene',
+    japanese: '浮遊する遺物',
+    group: '入力・演出',
+    motif: 'テレパス／昼鳶／記憶',
+    summary: '紙飛行機・信号輪・結晶・鳶・カセットを CSS 3D で浮かべる、画像不要の奥行きシーンです。',
+    detail:
+      'telepath は白い紙飛行機と記号の輪、envy は血色の結晶と鳶の影、memories はカセットテープが漂います。count で個数を 0〜40 まで調整でき、children を渡すと 3D レイヤーの手前に配置できます。',
+    usage: `import { RelicScene, WhisperText } from '@tatsuyamiura2667/akane-lib';
+
+<RelicScene variant="telepath" count={16}>
+  <WhisperText text={'白く降る記号の中で、名前のない想いを送る'} />
+</RelicScene>`,
+    props: [
+      { name: 'variant', type: "'telepath' | 'envy' | 'memories'", default: "'telepath'", description: '浮遊物と配色の種類' },
+      { name: 'count', type: 'number', default: '14', description: '浮遊物の個数（0〜40）' },
+      { name: 'children', type: 'ReactNode', default: '—', description: '手前に重ねる内容' },
+      { name: 'className', type: 'string', default: "''", description: '追加クラス名' },
+    ],
+    notes: [
+      'position / 高さは CSS 変数 --akane-relic-height で上書きできます。',
+      '浮遊物は aria-hidden。prefers-reduced-motion では動きを停止します。',
+    ],
+    related: ['whisper-text', 'twilight-sky', 'cassette-player'],
   },
 ];
 
@@ -468,6 +591,27 @@ export const MOTIFS: MotifDoc[] = [
     components: ['notebook-memo', 'letter-card'],
     accent: '#5c4332',
   },
+  {
+    title: '油絵のスケッチ',
+    subtitle: '筆致と厚塗りの光',
+    body: '線を描き足すのではなく、色を置き重ねて情景をつくる。画像を使わずに、画布の目と筆の跡を重ねる素材として追加しました。',
+    components: ['oil-paint-texture', 'twilight-sky', 'letter-card'],
+    accent: '#8c4a3c',
+  },
+  {
+    title: 'テレパス',
+    subtitle: '雪海と記号の残響',
+    body: '言葉が形骸化し、白い雪とともに記号だけが降る荒廃した世界。伝えようとして伝わらない想いを、文字の滲みと浮遊する紙飛行機で表現しました。',
+    components: ['whisper-text', 'relic-scene', 'oil-paint-texture'],
+    accent: '#a6d0e6',
+  },
+  {
+    title: '昼鳶',
+    subtitle: '妬みとダイヤの夜景',
+    body: '笑いながら住宅街を見下ろす、満たされない胸の音。血色の結晶と鳶の影を浮かべ、明るい昼に潜む闇を演出します。',
+    components: ['whisper-text', 'relic-scene', 'typewriter-censor-text'],
+    accent: '#7a1f27',
+  },
 ];
 
 export const FAQS: { question: string; answer: string }[] = [
@@ -484,7 +628,7 @@ export const FAQS: { question: string; answer: string }[] = [
   {
     question: '夜だけ文字が見づらいです',
     answer:
-      'night フェーズでは紙色とインク色が反転します。色を固定したい場合はトークンを上書きするより、phase を twilight に固定するか、コンポーネントの className から配色を調整してください。',
+      'night / midnight フェーズでは紙色とインク色が反転します。色を固定したい場合はトークンを上書きするより、phase を twilight に固定するか、コンポーネントの className から配色を調整してください。',
   },
   {
     question: '時間帯を現在時刻に戻したい',
@@ -510,6 +654,11 @@ export const FAQS: { question: string; answer: string }[] = [
     question: '歌詞や音声ファイルは含まれていますか？',
     answer:
       '含まれていません。楽曲・物語の情景から着想を得たオリジナルの UI パーツとサンプル文です。CassettePlayer の audioSrc は利用側で用意した音声を指定してください。',
+  },
+  {
+    question: '3D オブジェクトは WebGL を使いますか？',
+    answer:
+      '使いません。RelicScene は CSS の perspective と transform-style: preserve-3d だけで紙飛行機・結晶・鳶・カセットを浮かべているため、追加の依存や GPU 初期化は不要です。',
   },
 ];
 

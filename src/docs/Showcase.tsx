@@ -12,9 +12,12 @@ import {
   WhiteLilySeal,
   GhostFlowerRefraction,
   TypewriterCensorText,
+  WhisperText,
+  RelicScene,
   type LyricLine,
   type RefractionIntensity,
 } from '../index';
+import { PHASES } from './content';
 
 const FIRST_NIGHT_LINES: LyricLine[] = [
   { time: 0, text: 'あなただけを覚えている' },
@@ -29,6 +32,12 @@ const DEFAULT_MONOLOGUE =
 type SakuraMode = 'off' | 'light' | 'normal' | 'gust';
 
 const SAKURA_CYCLE: SakuraMode[] = ['normal', 'gust', 'light', 'off'];
+const SAKURA_PRESET_COUNT: Record<SakuraMode, number> = {
+  off: 0,
+  light: 6,
+  normal: 11,
+  gust: 16,
+};
 const SAKURA_LABELS: Record<SakuraMode, string> = {
   off: '桜吹雪: 静寂',
   light: '桜吹雪: 微風',
@@ -48,6 +57,7 @@ export function Showcase() {
   const [elapsed, setElapsed] = useState(0);
   const [savedMemo, setSavedMemo] = useState<string | null>(null);
   const [sakuraMode, setSakuraMode] = useState<SakuraMode>('normal');
+  const [petalCount, setPetalCount] = useState(SAKURA_PRESET_COUNT.normal);
   const [refraction, setRefraction] = useState<RefractionIntensity>('calm');
   const [verticalCard, setVerticalCard] = useState(false);
   const [replayKey, setReplayKey] = useState(0);
@@ -55,6 +65,7 @@ export function Showcase() {
   const cycleSakura = () => {
     const next = SAKURA_CYCLE[(SAKURA_CYCLE.indexOf(sakuraMode) + 1) % SAKURA_CYCLE.length];
     setSakuraMode(next);
+    setPetalCount(SAKURA_PRESET_COUNT[next] || SAKURA_PRESET_COUNT.normal);
   };
 
   const cycleRefraction = () => {
@@ -67,6 +78,8 @@ export function Showcase() {
     <SakuraThiefOverlay
       active={sakuraMode !== 'off'}
       density={sakuraMode === 'off' ? 'normal' : sakuraMode}
+      petalCount={petalCount}
+      oilPaint
     >
       <div className="docs-showcase">
         <div className="docs-showcase__section-label">
@@ -78,10 +91,14 @@ export function Showcase() {
         </div>
 
         <nav className="docs-showcase__bookmarks" aria-label="時間帯の切り替え">
-          <BookmarkRibbon chapter="一" title="夕凪" onClick={() => theme?.setPhase('dusk')} />
-          <BookmarkRibbon chapter="二" title="茜さす" onClick={() => theme?.setPhase('twilight')} />
-          <BookmarkRibbon chapter="三" title="第一夜" onClick={() => theme?.setPhase('night')} />
-          <BookmarkRibbon chapter="四" title="夜明け" onClick={() => theme?.setPhase('dawn')} />
+          {PHASES.map((phase) => (
+            <BookmarkRibbon
+              key={phase.id}
+              chapter={phase.chapter}
+              title={phase.name}
+              onClick={() => theme?.setPhase(phase.id)}
+            />
+          ))}
         </nav>
 
         <div className="docs-showcase__section-label">
@@ -94,6 +111,19 @@ export function Showcase() {
 
         <div className="docs-showcase__controls">
           <RainRippleButton onClick={cycleSakura}>{SAKURA_LABELS[sakuraMode]}</RainRippleButton>
+          <label className="docs-showcase__slider">
+            <span>桜の枚数</span>
+            <input
+              type="range"
+              min={0}
+              max={160}
+              step={1}
+              value={petalCount}
+              onChange={(event) => setPetalCount(Number(event.target.value))}
+              aria-label="桜の枚数"
+            />
+            <output>{petalCount}</output>
+          </label>
           <RainRippleButton onClick={cycleRefraction}>{REFRACTION_LABELS[refraction]}</RainRippleButton>
           <RainRippleButton onClick={() => setVerticalCard((v) => !v)}>
             {verticalCard ? '便箋: 縦書き' : '便箋: 横書き'}
@@ -129,6 +159,7 @@ export function Showcase() {
               date="第一夜 / 花に亡霊"
               signature="ずっと待っていました"
               vertical={verticalCard}
+              oilPaint
             >
               {savedMemo ? (
                 <TypewriterCensorText key={`memo-${replayKey}`} text={savedMemo} speedMs={55} />
@@ -149,7 +180,7 @@ export function Showcase() {
         </TrainWindowFrame>
 
         <div className="docs-showcase__monologue">
-          <LetterCard date="思想犯 — 独白の断片" signature="黒塗りをクリックして開示">
+          <LetterCard date="思想犯 — 独白の断片" signature="黒塗りをクリックして開示" oilPaint>
             <TypewriterCensorText
               key={`default-${replayKey}`}
               text={DEFAULT_MONOLOGUE}
@@ -157,6 +188,37 @@ export function Showcase() {
               revealOnHover
             />
           </LetterCard>
+        </div>
+
+        <div className="docs-showcase__section-label">
+          <span>04</span>
+          <div>
+            <h2>テレパスと昼鳶</h2>
+            <p>白い雪の記号と、夜景に潜む妬み。言葉にならない情景を文字と3Dの遺物で置いています。</p>
+          </div>
+        </div>
+
+        <div className="docs-showcase__worlds">
+          <section className="docs-world docs-world--telepath" aria-label="テレパスの世界">
+            <RelicScene variant="telepath" count={18}>
+              <WhisperText
+                text="白く降る記号の中で、名前のない想いを送る"
+                variant="telepath"
+                speedMs={45}
+              />
+            </RelicScene>
+            <p className="docs-world__caption">SNOW SEA / TELEPATH — 言葉が記号になったあとの共感</p>
+          </section>
+          <section className="docs-world docs-world--envy" aria-label="昼鳶の世界">
+            <RelicScene variant="envy" count={14}>
+              <WhisperText
+                text="笑いながら夜景を数える、満たされない胸の音"
+                variant="envy"
+                speedMs={52}
+              />
+            </RelicScene>
+            <p className="docs-world__caption">DIAMOND NIGHT / ENVY — 明るい昼に潜む闇</p>
+          </section>
         </div>
       </div>
     </SakuraThiefOverlay>

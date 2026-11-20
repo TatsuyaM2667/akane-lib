@@ -13,7 +13,12 @@ import {
   RainRippleButton,
   GhostFlowerRefraction,
   TypewriterCensorText,
+  OilPaintTexture,
+  WhisperText,
+  RelicScene,
+  type RelicVariant,
 } from '../index';
+import { PHASES } from './content';
 
 const PREVIEW_LINES = [
   { time: 0, text: '窓の外に、まだ夜が残っている' },
@@ -42,10 +47,14 @@ function BookmarkPreview() {
   const theme = useAkaneTheme();
   return (
     <div className="docs-preview__row">
-      <BookmarkRibbon chapter="一" title="夕凪" onClick={() => theme?.setPhase('dusk')} />
-      <BookmarkRibbon chapter="二" title="茜さす" onClick={() => theme?.setPhase('twilight')} />
-      <BookmarkRibbon chapter="三" title="第一夜" onClick={() => theme?.setPhase('night')} />
-      <BookmarkRibbon chapter="四" title="夜明け" onClick={() => theme?.setPhase('dawn')} />
+      {PHASES.map((phase) => (
+        <BookmarkRibbon
+          key={phase.id}
+          chapter={phase.chapter}
+          title={phase.name}
+          onClick={() => theme?.setPhase(phase.id)}
+        />
+      ))}
     </div>
   );
 }
@@ -80,6 +89,138 @@ function RipplePreview() {
     <div className="docs-preview__stack">
       <RainRippleButton onClick={() => setCount((c) => c + 1)}>波紋を立てる</RainRippleButton>
       <p className="docs-preview__result">クリック回数：{count}</p>
+    </div>
+  );
+}
+
+function SakuraPreview() {
+  const [count, setCount] = useState(24);
+  return (
+    <div className="docs-preview__stack">
+      <SakuraThiefOverlay density="gust" petalCount={count} oilPaint>
+        <p className="docs-preview__centered">花びらの枚数を動かせます</p>
+      </SakuraThiefOverlay>
+      <label className="docs-preview__slider">
+        <span>枚数</span>
+        <input
+          type="range"
+          min={0}
+          max={160}
+          value={count}
+          onChange={(event) => setCount(Number(event.target.value))}
+          aria-label="花びらの枚数"
+        />
+        <output>{count}</output>
+      </label>
+    </div>
+  );
+}
+
+function OilPaintPreview() {
+  const [variant, setVariant] = useState<'sky' | 'paper' | 'petal'>('sky');
+  return (
+    <div className="docs-preview__stack">
+      <div className="docs-preview__oil">
+        <OilPaintTexture variant={variant} intensity="strong" />
+        <p className="docs-preview__centered">{variant} / 厚塗り</p>
+      </div>
+      <div className="docs-preview__row">
+        {(['sky', 'paper', 'petal'] as const).map((item) => (
+          <button
+            key={item}
+            type="button"
+            className="docs-plain-button"
+            aria-pressed={variant === item}
+            onClick={() => setVariant(item)}
+          >
+            {item}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function WhisperPreview() {
+  const [variant, setVariant] = useState<'telepath' | 'envy'>('telepath');
+  const [line, setLine] = useState('言葉の代わりに、白い信号が降る');
+
+  return (
+    <div className="docs-preview__stack">
+      <div className={`docs-preview__whisper docs-preview__whisper--${variant}`}>
+        <WhisperText
+          key={`${variant}-${line}`}
+          text={line}
+          variant={variant}
+          speedMs={variant === 'telepath' ? 42 : 58}
+        />
+      </div>
+      <input
+        className="docs-preview__input"
+        value={line}
+        onChange={(event) => setLine(event.target.value)}
+        aria-label="囁く文字"
+      />
+      <div className="docs-preview__row">
+        {(['telepath', 'envy'] as const).map((item) => (
+          <button
+            key={item}
+            type="button"
+            className="docs-plain-button"
+            aria-pressed={variant === item}
+            onClick={() => setVariant(item)}
+          >
+            {item}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function RelicPreview() {
+  const [variant, setVariant] = useState<RelicVariant>('telepath');
+  const [count, setCount] = useState(16);
+
+  return (
+    <div className="docs-preview__stack">
+      <RelicScene variant={variant} count={count}>
+        <WhisperText
+          key={variant}
+          text={
+            variant === 'telepath'
+              ? '白く降る記号の中で、名前のない想いを送る'
+              : '夜景を数えるたび、胸の渇きが増える'
+          }
+          variant={variant === 'envy' ? 'envy' : 'telepath'}
+          speedMs={48}
+        />
+      </RelicScene>
+      <div className="docs-preview__row">
+        {(['telepath', 'envy', 'memories'] as const).map((item) => (
+          <button
+            key={item}
+            type="button"
+            className="docs-plain-button"
+            aria-pressed={variant === item}
+            onClick={() => setVariant(item)}
+          >
+            {item}
+          </button>
+        ))}
+      </div>
+      <label className="docs-preview__slider">
+        <span>個数</span>
+        <input
+          type="range"
+          min={0}
+          max={40}
+          value={count}
+          onChange={(event) => setCount(Number(event.target.value))}
+          aria-label="浮遊物の個数"
+        />
+        <output>{count}</output>
+      </label>
     </div>
   );
 }
@@ -121,11 +262,7 @@ function previewFor(slug: string): ReactNode {
     case 'notebook-memo':
       return <MemoPreview />;
     case 'sakura-thief-overlay':
-      return (
-        <SakuraThiefOverlay density="gust">
-          <p className="docs-preview__centered">風に運ばれる花びら</p>
-        </SakuraThiefOverlay>
-      );
+      return <SakuraPreview />;
     case 'rain-ripple-button':
       return <RipplePreview />;
     case 'ghost-flower-refraction':
@@ -136,10 +273,16 @@ function previewFor(slug: string): ReactNode {
       );
     case 'typewriter-censor-text':
       return (
-        <LetterCard date="独白の断片" signature="黒塗りをクリック">
+        <LetterCard date="独白の断片" signature="黒塗りをクリック" oilPaint>
           <TypewriterCensorText text={'書いたはずの[[言葉]]が、まだ読めない。'} speedMs={55} />
         </LetterCard>
       );
+    case 'oil-paint-texture':
+      return <OilPaintPreview />;
+    case 'whisper-text':
+      return <WhisperPreview />;
+    case 'relic-scene':
+      return <RelicPreview />;
     default:
       return null;
   }

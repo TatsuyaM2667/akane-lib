@@ -11,6 +11,9 @@ import {
   RainRippleButton,
   GhostFlowerRefraction,
   TypewriterCensorText,
+  OilPaintTexture,
+  WhisperText,
+  RelicScene,
 } from "../index";
 
 const SAMPLE_LYRICS = [
@@ -124,10 +127,14 @@ export const SakuraAndRippleStory: StoryObj<typeof SakuraThiefOverlay> = {
   args: {
     active: true,
     density: "normal",
+    petalCount: 48,
+    oilPaint: true,
   },
   argTypes: {
     active: { control: "boolean" },
     density: { control: "radio", options: ["light", "normal", "gust"] },
+    petalCount: { control: { type: "range", min: 0, max: 160, step: 1 } },
+    oilPaint: { control: "boolean" },
   },
   render: (args) => (
     <SakuraThiefOverlay {...args}>
@@ -193,4 +200,90 @@ export const BookmarkRibbonStory: StoryObj<typeof BookmarkRibbon> = {
     title: "第一夜",
   },
   render: (args) => <BookmarkRibbon {...args} />,
+};
+
+export const OilPaintTextureStory: StoryObj<typeof OilPaintTexture> = {
+  name: "OilPaintTexture（油絵の質感）",
+  args: {
+    variant: "sky",
+    intensity: "normal",
+  },
+  argTypes: {
+    variant: { control: "radio", options: ["sky", "paper", "petal"] },
+    intensity: { control: "radio", options: ["subtle", "normal", "strong"] },
+  },
+  render: (args) => (
+    <div
+      style={{
+        position: "relative",
+        minHeight: "320px",
+        display: "grid",
+        placeItems: "center",
+        overflow: "hidden",
+        borderRadius: "12px",
+        background: "linear-gradient(140deg, #3d5a80, #b73b3a)",
+        color: "#f7f4ee",
+      }}
+    >
+      <OilPaintTexture {...args} />
+      <p style={{ position: "relative", zIndex: 1 }}>
+        画像なしの油絵テクスチャ
+      </p>
+    </div>
+  ),
+};
+
+export const WhisperTextStory: StoryObj<typeof WhisperText> = {
+  name: "WhisperText（届かない言葉）",
+  args: {
+    text: "白く降る記号の中で、名前のない想いを送る",
+    variant: "telepath",
+    speedMs: 45,
+  },
+  argTypes: {
+    text: { control: "text" },
+    variant: { control: "radio", options: ["telepath", "envy"] },
+    speedMs: { control: { type: "range", min: 10, max: 200, step: 5 } },
+  },
+  render: (args) => (
+    <div
+      style={{
+        minHeight: "200px",
+        display: "grid",
+        placeItems: "center",
+        padding: "2rem",
+        borderRadius: "12px",
+        background: args.variant === "envy" ? "#180d10" : "#101a26",
+      }}
+    >
+      <WhisperText {...args} />
+    </div>
+  ),
+};
+
+export const RelicSceneStory: StoryObj<typeof RelicScene> = {
+  name: "RelicScene（浮遊する遺物）",
+  args: {
+    variant: "telepath",
+    count: 16,
+  },
+  argTypes: {
+    variant: { control: "radio", options: ["telepath", "envy", "memories"] },
+    count: { control: { type: "range", min: 0, max: 40, step: 1 } },
+  },
+  render: (args) => (
+    <div style={{ minHeight: "300px" }}>
+      <RelicScene {...args} className="story-relic-scene">
+        <WhisperText
+          text={
+            args.variant === "envy"
+              ? "笑いながら夜景を数える、満たされない胸の音"
+              : "白く降る記号の中で、名前のない想いを送る"
+          }
+          variant={args.variant === "envy" ? "envy" : "telepath"}
+          speedMs={48}
+        />
+      </RelicScene>
+    </div>
+  ),
 };

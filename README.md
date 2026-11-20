@@ -5,14 +5,14 @@
 [![npm version](https://img.shields.io/npm/v/@tatsuyamiura2667/akane-lib.svg)](https://www.npmjs.com/package/@tatsuyamiura2667/akane-lib)
 
 ヨルシカの楽曲・物語（『エルマ』『エイミー』『第一夜』など）の情景から着想を得た、詩的な React UI コンポーネントライブラリです。  
-茜さす夕暮れから群青の深夜へと移ろう空の配色、便箋の質感、カセットテープ、夜列車の車窓、万年筆の手帳などを宣言的なコンポーネントとして提供します。
+茜さす夕暮れから群青の深夜へと移ろう空の配色、便箋の質感、カセットテープ、夜列車の車窓、万年筆の手帳などを宣言的なコンポーネントとして提供します。雪海の記号が降る「テレパス」や、夜景の妬みを描く「昼鳶」のダークな情景も追加しました。
 
 ## ドキュメント
 
 - **ドキュメントサイト / インタラクティブデモ**: https://TatsuyaM2667.github.io/akane-lib/
 - **コンポーネントカタログ (Storybook)**: https://TatsuyaM2667.github.io/akane-lib/storybook/
 
-ドキュメントサイトでは、導入方法、4つの空の時間帯、全13コンポーネントの API とライブプレビュー、モチーフ辞典、よくある質問を掲載しています。
+ドキュメントサイトでは、導入方法、8つの空の時間帯、全16コンポーネントの API とライブプレビュー、モチーフ辞典、よくある質問を掲載しています。
 
 ---
 
@@ -123,7 +123,7 @@ export function App() {
 
 ### 1. `AkaneThemeProvider` / `useAkaneTheme`
 
-時間帯（`SkyPhase`: `'dusk' | 'twilight' | 'night' | 'dawn'`）をコンテキストで管理し、配下の全コンポーネントの紙色・インク色・アクセントカラーを一括で切り替えます。`night` 指定時は深夜の群青・月明かり配色（ダークテーマ）になります。
+時間帯（`SkyPhase`: `'midnight' | 'night' | 'dawn' | 'morning' | 'day' | 'dusk' | 'golden' | 'twilight'`）をコンテキストで管理し、配下の全コンポーネントの紙色・インク色・アクセントカラーを一括で切り替えます。`night` / `midnight` 指定時は群青・月明かり配色（ダークテーマ）になります。
 
 | Prop | 型 | デフォルト | 説明 |
 | --- | --- | --- | --- |
@@ -132,7 +132,7 @@ export function App() {
 | `defaultPhase` | `SkyPhase` | `'twilight'` | 非制御モード時の初期時間帯 |
 | `onPhaseChange` | `(phase: SkyPhase) => void` | - | 時間帯が切り替わったときのコールバック |
 | `syncWithSystemTime` | `boolean` | `false` | ユーザーの現在時刻（朝・昼夕・黄昏・深夜）に応じて自動同期 |
-| `autoCycle` | `boolean` | `false` | 一定間隔で4つの時間帯を自動循環 |
+| `autoCycle` | `boolean` | `false` | 一定間隔で8つの時間帯を自動循環 |
 | `intervalMs` | `number` | `8000` | `autoCycle` 時の切り替え間隔（ミリ秒） |
 | `className` | `string` | `''` | ラッパー要素の追加クラス名 |
 
@@ -148,7 +148,7 @@ export function App() {
 
 ### 2. `TwilightSky`
 
-夕凪・茜空・深夜・夜明けのグラデーション空と、時間帯に応じた控えめな環境アニメーション（通り雨・光塵・星屑と蛍火・朝霧・遠花火）を描画する背景コンテナです。
+群青・第一夜・夜明け・朝霧・白昼・夕凪・金色・茜さすの8種類のグラデーション空と、時間帯に応じた控えめな環境アニメーション（月・星屑・蛍火・朝霧と露・雲・夕日・通り雨・光塵・遠花火）を描画する背景コンテナです。画像を使わない油絵の筆致レイヤーも重ねます。
 
 | Prop | 型 | デフォルト | 説明 |
 | --- | --- | --- | --- |
@@ -156,6 +156,7 @@ export function App() {
 | `phase` | `SkyPhase` | - | 単独使用時の時間帯指定（`AkaneThemeProvider` 内では自動継承） |
 | `ambient` | `boolean` | `false` | 時間帯に応じた環境アニメーションを表示 |
 | `fireworks` | `boolean` | `false` | `phase="night"` 時に遠花火の演出を追加 |
+| `oilPaint` | `boolean` | `true` | 油絵の筆致・画布の目を重ねる（`ambient` 有効時） |
 | `autoCycle` | `boolean` | `false` | 単独使用時の自動時間帯循環 |
 | `intervalMs` | `number` | `8000` | 自動循環の切り替え間隔（ミリ秒） |
 | `className` | `string` | `''` | 追加クラス名 |
@@ -170,6 +171,7 @@ export function App() {
 | `date` | `string` | - | 冒頭に表示する日付や章題 |
 | `signature` | `string` | - | 末尾に表示する署名・差出人 |
 | `vertical` | `boolean` | `false` | `true` で縦書き（`writing-mode: vertical-rl`）表示 |
+| `oilPaint` | `boolean` | `false` | 紙に油絵の厚塗りテクスチャを重ねる |
 | `className` | `string` | `''` | 追加クラス名 |
 
 ### 4. `CassettePlayer`
@@ -248,13 +250,15 @@ export function App() {
 
 ### 10. `SakuraThiefOverlay`
 
-花びらが舞うオーバーレイです。`density` で風の強さを切り替えられます。
+花びらが舞うオーバーレイです。`density` で風の強さ、`petalCount` で枚数（0〜160）を細かく調整できます。`oilPaint` で花びらに筆致を加えられます。
 
 | Prop | 型 | デフォルト | 説明 |
 | --- | --- | --- | --- |
 | `children` | `ReactNode` | - | 演出の内側に置く要素 |
 | `active` | `boolean` | `true` | 花びらを表示するか |
-| `density` | `'light' \| 'normal' \| 'gust'` | `'normal'` | 花びらの枚数と風の強さ |
+| `density` | `'light' \| 'normal' \| 'gust'` | `'normal'` | 風の強さ（既定枚数 6 / 11 / 16） |
+| `petalCount` | `number` | - | 花びらの枚数。`density` の枚数より優先されます |
+| `oilPaint` | `boolean` | `false` | 花びらに油絵の筆致を重ねる |
 | `className` | `string` | `''` | 追加クラス名 |
 
 ### 11. `RainRippleButton`
@@ -289,6 +293,62 @@ SVG フィルタで光の屈折・残像・水面の光跡を重ねるラッパ�
 | `revealOnHover` | `boolean` | `true` | ホバーで開示可能にするか |
 | `instant` | `boolean` | `false` | 打鍵アニメーションを省略するか |
 | `onComplete` | `() => void` | - | 打鍵完了時のコールバック |
+| `className` | `string` | `''` | 追加クラス名 |
+
+### 14. `OilPaintTexture`
+
+筆致・画布の目・厚塗りの光を CSS だけで重ねる、画像不要のテクスチャです。親要素いっぱいに広がり、ポインタ操作を邪魔しません。
+
+```tsx
+import { OilPaintTexture } from '@tatsuyamiura2667/akane-lib';
+
+<div style={{ position: 'relative' }}>
+  <OilPaintTexture variant="paper" intensity="subtle" />
+  <p>紙の上に置いた一行</p>
+</div>;
+```
+
+| Prop | 型 | デフォルト | 説明 |
+| --- | --- | --- | --- |
+| `variant` | `'sky' \| 'paper' \| 'petal'` | `'sky'` | 空・紙・花びらの色味 |
+| `intensity` | `'subtle' \| 'normal' \| 'strong'` | `'normal'` | 重ねる濃さ |
+| `className` | `string` | `''` | 追加クラス名 |
+
+### 15. `WhisperText`
+
+一文字ずつ滲んで現れる文字演出です。`telepath` は白い信号の揺らぎ、`envy` は赤く滲んだ黒塗りの残響を表現します。情景だけを借りたオリジナルの文を渡してください。
+
+```tsx
+import { WhisperText } from '@tatsuyamiura2667/akane-lib';
+
+<WhisperText text="言葉の代わりに、白い信号が降る" variant="telepath" speedMs={45} />
+<WhisperText text="笑いながら夜景を数える、満たされない胸の音" variant="envy" speedMs={55} />
+```
+
+| Prop | 型 | デフォルト | 説明 |
+| --- | --- | --- | --- |
+| `text` | `string` | (必須) | 表示する一文 |
+| `variant` | `'telepath' \| 'envy'` | `'telepath'` | 雪海か嫉妬の演出 |
+| `speedMs` | `number` | `55` | 1文字ずつの出現間隔（ミリ秒） |
+| `className` | `string` | `''` | 追加クラス名 |
+
+### 16. `RelicScene`
+
+紙飛行機・信号輪・結晶・鳶・カセットを CSS 3D で浮かべる、画像不要の奥行きシーンです。WebGL や追加依存は使いません。
+
+```tsx
+import { RelicScene, WhisperText } from '@tatsuyamiura2667/akane-lib';
+
+<RelicScene variant="telepath" count={16}>
+  <WhisperText text="白く降る記号の中で、名前のない想いを送る" />
+</RelicScene>;
+```
+
+| Prop | 型 | デフォルト | 説明 |
+| --- | --- | --- | --- |
+| `variant` | `'telepath' \| 'envy' \| 'memories'` | `'telepath'` | 浮遊物と配色の種類 |
+| `count` | `number` | `14` | 浮遊物の個数（0〜40） |
+| `children` | `ReactNode` | - | 手前に重ねる内容 |
 | `className` | `string` | `''` | 追加クラス名 |
 
 ---

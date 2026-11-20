@@ -1,10 +1,31 @@
 import React, { useMemo } from 'react';
+import { OilPaintTexture } from './OilPaintTexture';
 import './SakuraThiefOverlay.css';
+
+const DENSITY_COUNT = { light: 6, normal: 11, gust: 16 } as const;
+const MAX_PETALS = 160;
+
+function randomSeed(index: number): number {
+  const value = Math.sin(index * 12.9898 + 78.233) * 43758.5453;
+  return value - Math.floor(value);
+}
+
+function makePetal(index: number) {
+  return {
+    left: `${(randomSeed(index * 5 + 1) * 94 + 3).toFixed(1)}%`,
+    size: Math.round(7 + randomSeed(index * 5 + 2) * 8),
+    duration: `${(7 + randomSeed(index * 5 + 3) * 6).toFixed(1)}s`,
+    delay: `${(randomSeed(index * 5 + 4) * 8).toFixed(1)}s`,
+    drift: Math.round((randomSeed(index * 5 + 5) - 0.5) * 120),
+  };
+}
 
 export interface SakuraThiefOverlayProps {
   children?: React.ReactNode;
   active?: boolean;
   density?: 'light' | 'normal' | 'gust';
+  petalCount?: number;
+  oilPaint?: boolean;
   className?: string;
 }
 
@@ -31,13 +52,24 @@ export const SakuraThiefOverlay: React.FC<SakuraThiefOverlayProps> = ({
   children,
   active = true,
   density = 'normal',
+  petalCount,
+  oilPaint = false,
   className = '',
 }) => {
-  const petals = useMemo(() => {
-    if (density === 'light') return PETAL_SEEDS.slice(0, 6);
-    if (density === 'normal') return PETAL_SEEDS.slice(0, 11);
-    return PETAL_SEEDS;
-  }, [density]);
+  const count = Math.max(
+    0,
+    Math.min(Math.floor(petalCount ?? DENSITY_COUNT[density]), MAX_PETALS),
+  );
+
+  const petals = useMemo(
+    () =>
+      Array.from({ length: count }, (_, index) =>
+        index < PETAL_SEEDS.length
+          ? { ...PETAL_SEEDS[index], drift: 90 }
+          : makePetal(index),
+      ),
+    [count],
+  );
 
   return (
     <div className={`akane-sakura ${className}`}>
@@ -46,17 +78,21 @@ export const SakuraThiefOverlay: React.FC<SakuraThiefOverlayProps> = ({
           className={`akane-sakura__layer ${density === 'gust' ? 'akane-sakura__layer--gust' : ''}`}
           aria-hidden="true"
         >
+          {oilPaint && <OilPaintTexture variant="petal" intensity="subtle" />}
           {petals.map((petal, idx) => (
             <span
               key={idx}
               className="akane-sakura__petal"
-              style={{
-                left: petal.left,
-                width: `${petal.size}px`,
-                height: `${Math.round(petal.size * 0.65)}px`,
-                animationDuration: density === 'gust' ? '6.5s' : petal.duration,
-                animationDelay: petal.delay,
-              }}
+              style={
+                {
+                  left: petal.left,
+                  width: `${petal.size}px`,
+                  height: `${Math.round(petal.size * 0.65)}px`,
+                  animationDuration: density === 'gust' ? '6.5s' : petal.duration,
+                  animationDelay: petal.delay,
+                  '--akane-petal-drift': `${petal.drift}px`,
+                } as React.CSSProperties
+              }
             />
           ))}
         </div>

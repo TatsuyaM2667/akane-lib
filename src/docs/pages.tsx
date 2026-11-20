@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAkaneTheme } from '../index';
+import { useAkaneTheme, WhisperText } from '../index';
 import { Showcase } from './Showcase';
 import { ComponentPreview } from './ComponentPreview';
 import { Callout, CodeBlock, LinkCard, NextLinks, PageHeader, PropsTable, SectionHeading, Tag } from './DocsUi';
@@ -52,6 +52,9 @@ export function HomePage() {
           夕凪から群青の深夜へ移ろう空、便箋、カセットテープ、夜列車の車窓。
           {' '}ヨルシカの物語から着想を得た情景を、宣言的な React コンポーネントとして扱えるライブラリです。
         </p>
+        <div className="docs-hero__whisper">
+          <WhisperText text="言葉の代わりに、白い信号が降る" variant="telepath" speedMs={40} />
+        </div>
         <div className="docs-hero__actions">
           <a className="docs-button docs-button--primary" href="#/components">
             コンポーネントを見る
@@ -74,7 +77,7 @@ export function HomePage() {
           </div>
           <div>
             <dt>STORYBOOK STORIES</dt>
-            <dd>9</dd>
+            <dd>12</dd>
           </div>
           <div>
             <dt>LICENSE</dt>
@@ -135,8 +138,8 @@ export function StartPage() {
       </Callout>
 
       <div className="docs-card-grid">
-        <LinkCard href="#/theme" eyebrow="THEME" title="テーマと空" body="4つの時間帯、トークン、システム時刻との同期" />
-        <LinkCard href="#/components" eyebrow="REFERENCE" title="コンポーネント" body="13個の API とライブプレビュー" />
+        <LinkCard href="#/theme" eyebrow="THEME" title="テーマと空" body="8つの時間帯、トークン、システム時刻との同期" />
+        <LinkCard href="#/components" eyebrow="REFERENCE" title="コンポーネント" body={`${COMPONENTS.length}個の API とライブプレビュー`} />
         <LinkCard href="#/motifs" eyebrow="MOTIFS" title="モチーフ辞典" body="曲の情景から使うパーツを探す" />
       </div>
 
@@ -183,14 +186,14 @@ export function ThemePage() {
         lead="空は単なる背景ではなく、紙・インク・アクセント色をまとめて切り替える状態です。"
       />
 
-      <SectionHeading title="4つの時間帯" description="カードのボタンから、このページ全体の空を切り替えてみてください。" />
+      <SectionHeading title="8つの時間帯" description="カードのボタンから、このページ全体の空を切り替えてみてください。" />
       <PhaseCards />
 
       <SectionHeading title="時刻と同期する" description="syncWithSystemTime を付けると、現在時刻に応じて空が選ばれます。" />
       <CodeBlock code={SYSTEM_TIME_CODE} label="SystemTime.tsx" />
       <Callout title="判定の目安" tone="note">
         <p>
-          04–09時が dawn、10–16時が dusk、17–19時が twilight、20–03時が night。
+          00–01時 midnight、02–03時 night、04–06時 dawn、07–09時 morning、10–11時 day、12–16時 dusk、17時 golden、18–19時 twilight、20–23時 night。
           <code>getSkyPhaseFromDate(date)</code> で同じ判定を直接呼べます。
         </p>
       </Callout>
@@ -267,7 +270,7 @@ export function ComponentsPage({ slug }: { slug?: string }) {
       <PageHeader
         kicker="API REFERENCE"
         title="コンポーネント"
-        lead="13のコンポーネントを、役割・モチーフ・Props・動きの順に掲載しています。"
+        lead={`${COMPONENTS.length}のコンポーネントを、役割・モチーフ・Props・動きの順に掲載しています。`}
       />
 
       <div className="docs-components-layout">

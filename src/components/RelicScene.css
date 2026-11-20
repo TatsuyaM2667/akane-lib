@@ -1,0 +1,151 @@
+.akane-relic {
+  --akane-relic-object: rgba(220, 237, 245, 0.78);
+  --akane-relic-glow: rgba(166, 208, 230, 0.28);
+  position: relative;
+  min-height: var(--akane-relic-height, 220px);
+  overflow: hidden;
+  isolation: isolate;
+  perspective: 900px;
+  background: radial-gradient(circle at 50% 40%, rgba(24, 36, 52, 0.1), transparent 68%);
+}
+
+.akane-relic__scene {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  transform-style: preserve-3d;
+  transform: rotateX(14deg) rotateY(-10deg);
+  pointer-events: none;
+}
+
+.akane-relic__content {
+  position: relative;
+  z-index: 1;
+}
+
+.akane-relic__object {
+  position: absolute;
+  transform-style: preserve-3d;
+  animation: akane-relic-float var(--akane-relic-duration, 10s) ease-in-out
+    var(--akane-relic-delay, 0s) infinite alternate;
+}
+
+.akane-relic__inner {
+  position: relative;
+  display: block;
+  transform-style: preserve-3d;
+  filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.32));
+}
+
+@keyframes akane-relic-float {
+  from {
+    transform: translate3d(0, 8px, -40px);
+  }
+  to {
+    transform: translate3d(10px, var(--akane-relic-rise, -24px), 60px);
+  }
+}
+
+.akane-relic__object--plane .akane-relic__inner {
+  width: 34px;
+  height: 24px;
+  background: linear-gradient(135deg, #ffffff, var(--akane-relic-object) 58%, #9bb6c8);
+  clip-path: polygon(0 50%, 100% 0, 68% 100%, 44% 62%);
+  box-shadow: 0 0 18px var(--akane-relic-glow);
+}
+
+.akane-relic__object--plane .akane-relic__inner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 43%, rgba(74, 102, 124, 0.45) 44% 46%, transparent 47%);
+}
+
+.akane-relic__object--ring .akane-relic__inner {
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--akane-relic-object);
+  border-radius: 50%;
+  box-shadow: 0 0 16px var(--akane-relic-glow), inset 0 0 12px var(--akane-relic-glow);
+}
+
+.akane-relic__object--ring .akane-relic__inner::after {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px solid var(--akane-relic-glow);
+  border-radius: 50%;
+}
+
+.akane-relic__object--snow .akane-relic__inner {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--akane-relic-object);
+  box-shadow: 0 0 10px 3px var(--akane-relic-glow);
+}
+
+.akane-relic__object--shard .akane-relic__inner {
+  width: 22px;
+  height: 38px;
+  background: linear-gradient(150deg, #5b202b, #14090e 65%);
+  clip-path: polygon(52% 0, 100% 68%, 62% 100%, 6% 58%);
+  box-shadow: 0 0 14px rgba(183, 59, 58, 0.35);
+}
+
+.akane-relic__object--crow .akane-relic__inner {
+  width: 48px;
+  height: 20px;
+  background: #090a0f;
+  clip-path: polygon(0 44%, 30% 50%, 50% 16%, 70% 50%, 100% 44%, 82% 72%, 50% 62%, 18% 72%);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+}
+
+.akane-relic__object--cassette .akane-relic__inner {
+  width: 46px;
+  height: 30px;
+  border: 1px solid rgba(244, 224, 196, 0.5);
+  border-radius: 3px;
+  background: linear-gradient(160deg, #5b463b, #241a17);
+}
+
+.akane-relic__object--cassette .akane-relic__inner::before,
+.akane-relic__object--cassette .akane-relic__inner::after {
+  content: '';
+  position: absolute;
+  top: 9px;
+  width: 10px;
+  height: 10px;
+  border: 1px solid rgba(244, 224, 196, 0.7);
+  border-radius: 50%;
+}
+
+.akane-relic__object--cassette .akane-relic__inner::before {
+  left: 8px;
+}
+
+.akane-relic__object--cassette .akane-relic__inner::after {
+  right: 8px;
+}
+
+.akane-relic--telepath {
+  background: radial-gradient(circle at 50% 40%, rgba(126, 174, 202, 0.16), transparent 68%);
+}
+
+.akane-relic--envy {
+  --akane-relic-object: rgba(232, 164, 152, 0.7);
+  --akane-relic-glow: rgba(183, 59, 58, 0.24);
+  background: radial-gradient(circle at 70% 60%, rgba(112, 28, 35, 0.28), transparent 65%);
+}
+
+.akane-relic--memories {
+  --akane-relic-object: rgba(244, 224, 196, 0.72);
+  --akane-relic-glow: rgba(205, 162, 106, 0.22);
+  background: radial-gradient(circle at 40% 50%, rgba(118, 86, 54, 0.18), transparent 68%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .akane-relic__object {
+    animation: none;
+  }
+}

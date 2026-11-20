@@ -1,10 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { useAkaneTheme } from '../context/AkaneThemeContext';
+import { OilPaintTexture } from './OilPaintTexture';
 import './TwilightSky.css';
 
-export type SkyPhase = 'dusk' | 'twilight' | 'night' | 'dawn';
+export type SkyPhase =
+  | 'dawn'
+  | 'morning'
+  | 'day'
+  | 'dusk'
+  | 'golden'
+  | 'twilight'
+  | 'night'
+  | 'midnight';
 
-const PHASES: SkyPhase[] = ['dusk', 'twilight', 'night', 'dawn'];
+const PHASES: SkyPhase[] = [
+  'dawn',
+  'morning',
+  'day',
+  'dusk',
+  'golden',
+  'twilight',
+  'night',
+  'midnight',
+];
 
 const RAIN_DROPS = [
   { left: '6%', duration: '1.9s', delay: '0.1s' },
@@ -51,6 +69,21 @@ const FIREWORKS = [
   { top: '34%', left: '86%', size: 30, duration: '7.2s', delay: '5.1s' },
 ];
 
+const CLOUDS = [
+  { top: '14%', left: '8%', width: 140, duration: '54s', delay: '0s' },
+  { top: '28%', left: '46%', width: 190, duration: '72s', delay: '12s' },
+  { top: '9%', left: '74%', width: 120, duration: '62s', delay: '28s' },
+];
+
+const DEW = [
+  { top: '32%', left: '18%', size: 3, duration: '5.4s', delay: '0.3s' },
+  { top: '48%', left: '42%', size: 2, duration: '6.2s', delay: '1.8s' },
+  { top: '38%', left: '68%', size: 3, duration: '4.9s', delay: '3.1s' },
+  { top: '58%', left: '84%', size: 2, duration: '5.8s', delay: '2.4s' },
+];
+
+const STARRY_PHASES: SkyPhase[] = ['night', 'midnight'];
+
 export interface TwilightSkyProps {
   children: React.ReactNode;
   phase?: SkyPhase;
@@ -58,6 +91,7 @@ export interface TwilightSkyProps {
   intervalMs?: number;
   ambient?: boolean;
   fireworks?: boolean;
+  oilPaint?: boolean;
   className?: string;
 }
 
@@ -68,6 +102,7 @@ export const TwilightSky: React.FC<TwilightSkyProps> = ({
   intervalMs = 8000,
   ambient = false,
   fireworks = false,
+  oilPaint = true,
   className = '',
 }) => {
   const theme = useAkaneTheme();
@@ -99,6 +134,7 @@ export const TwilightSky: React.FC<TwilightSkyProps> = ({
     >
       {ambient && (
         <div className="akane-sky__ambient" aria-hidden="true">
+          {oilPaint && <OilPaintTexture variant="sky" intensity="subtle" />}
           {activePhase === 'dusk' &&
             RAIN_DROPS.map((drop, i) => (
               <span
@@ -112,7 +148,7 @@ export const TwilightSky: React.FC<TwilightSkyProps> = ({
               />
             ))}
 
-          {activePhase === 'twilight' &&
+          {(activePhase === 'twilight' || activePhase === 'golden') &&
             EMBERS.map((ember, i) => (
               <span
                 key={i}
@@ -127,10 +163,10 @@ export const TwilightSky: React.FC<TwilightSkyProps> = ({
               />
             ))}
 
-          {activePhase === 'night' &&
+          {STARRY_PHASES.includes(activePhase) &&
             STARS.map((star, i) => (
               <span
-                key={i}
+                key={`star-${i}`}
                 className={`akane-ambient-star ${star.firefly ? 'akane-ambient-star--firefly' : ''}`}
                 style={{
                   top: star.top,
@@ -143,11 +179,13 @@ export const TwilightSky: React.FC<TwilightSkyProps> = ({
               />
             ))}
 
-          {activePhase === 'night' &&
+          {activePhase === 'midnight' && <div className="akane-ambient-moon" />}
+
+          {STARRY_PHASES.includes(activePhase) &&
             fireworks &&
             FIREWORKS.map((firework, i) => (
               <span
-                key={i}
+                key={`fw-${i}`}
                 className="akane-ambient-firework"
                 style={{
                   top: firework.top,
@@ -160,7 +198,43 @@ export const TwilightSky: React.FC<TwilightSkyProps> = ({
               />
             ))}
 
-          {activePhase === 'dawn' && <div className="akane-ambient-mist" />}
+          {(activePhase === 'day' || activePhase === 'morning') &&
+            CLOUDS.map((cloud, i) => (
+              <span
+                key={`cloud-${i}`}
+                className="akane-ambient-cloud"
+                style={{
+                  top: cloud.top,
+                  left: cloud.left,
+                  width: `${cloud.width}px`,
+                  height: `${Math.round(cloud.width * 0.38)}px`,
+                  animationDuration: cloud.duration,
+                  animationDelay: cloud.delay,
+                }}
+              />
+            ))}
+
+          {activePhase === 'morning' &&
+            DEW.map((drop, i) => (
+              <span
+                key={`dew-${i}`}
+                className="akane-ambient-dew"
+                style={{
+                  top: drop.top,
+                  left: drop.left,
+                  width: `${drop.size}px`,
+                  height: `${drop.size}px`,
+                  animationDuration: drop.duration,
+                  animationDelay: drop.delay,
+                }}
+              />
+            ))}
+
+          {activePhase === 'golden' && <div className="akane-ambient-sun" />}
+
+          {(activePhase === 'dawn' || activePhase === 'morning') && (
+            <div className="akane-ambient-mist" />
+          )}
         </div>
       )}
 

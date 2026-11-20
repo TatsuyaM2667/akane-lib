@@ -1,7 +1,10 @@
 :root,
 [data-akane-phase="dusk"],
 [data-akane-phase="twilight"],
-[data-akane-phase="dawn"] {
+[data-akane-phase="dawn"],
+[data-akane-phase="morning"],
+[data-akane-phase="day"],
+[data-akane-phase="golden"] {
   /* Palette: 茜（夕暮れ）と群青（夜明け・海） */
   --akane-crimson: #b73b3a;      /* 茜さす空 */
   --akane-dusk: #e07a5f;         /* 夕焼けの残照 */
@@ -23,7 +26,8 @@
 }
 
 /* 深夜（night）: 群青の夜空と月明かりの配色 */
-[data-akane-phase="night"] {
+[data-akane-phase="night"],
+[data-akane-phase="midnight"] {
   --akane-paper: #162130;        /* 夜の群青・濃紺の便箋 */
   --akane-paper-border: #2c3e55; /* 月光が当たる薄い境界線 */
   --akane-ink: #e8ecf2;          /* 月明かりに浮かぶ銀白の文字 */
@@ -37,4 +41,31 @@
   --akane-paper: #f3f5f8;
   --akane-paper-border: #d5dce6;
   --akane-accent: #3d5a80;
+}
+
+[data-akane-phase="morning"] {
+  --akane-paper: #f6f4ec;
+  --akane-paper-border: #d8ddd4;
+  --akane-accent: #5b7f86;
+}
+
+[data-akane-phase="day"] {
+  --akane-paper: #fbf8ef;
+  --akane-paper-border: #dbe4e8;
+  --akane-accent: #2f6f96;
+}
+
+[data-akane-phase="golden"] {
+  --akane-paper: #f8efdf;
+  --akane-paper-border: #e3d0b4;
+  --akane-accent: #b46a2f;
+}
+
+[data-akane-phase="midnight"] {
+  --akane-paper: #101827;
+  --akane-paper-border: #24324a;
+  --akane-ink: #dfe6f2;
+  --akane-ink-muted: #8195b0;
+  --akane-accent: #c8a86b;
+  --akane-shadow: rgba(2, 6, 14, 0.55);
 }

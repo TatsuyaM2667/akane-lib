@@ -23,6 +23,22 @@
   background: linear-gradient(170deg, #2b3f59 0%, #6d85a6 50%, #e5b89b 100%);
 }
 
+.akane-sky--midnight {
+  background: linear-gradient(170deg, #080d16 0%, #101a2b 58%, #1b2b45 100%);
+}
+
+.akane-sky--morning {
+  background: linear-gradient(170deg, #7fa6bd 0%, #c9d4d0 55%, #f0d9b8 100%);
+}
+
+.akane-sky--day {
+  background: linear-gradient(170deg, #5f9cc4 0%, #9fc9de 55%, #e4ddc6 100%);
+}
+
+.akane-sky--golden {
+  background: linear-gradient(170deg, #54789d 0%, #d79a5f 55%, #f3c583 100%);
+}
+
 /* コンテンツは背景パーティクルより前面に配置 */
 .akane-sky__content {
   position: relative;
@@ -157,6 +173,92 @@
   50% {
     opacity: 0.75;
     transform: translateY(-8px) scale(1.04);
+  }
+}
+
+.akane-ambient-moon {
+  position: absolute;
+  top: 9%;
+  right: 14%;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #f7f1df, #d9d2bd 62%, #9fb0c5 100%);
+  box-shadow:
+    0 0 34px rgba(215, 224, 240, 0.3),
+    inset -10px -6px 18px rgba(40, 56, 82, 0.35);
+  animation: akane-moon-glow 9s ease-in-out infinite;
+}
+
+@keyframes akane-moon-glow {
+  0%, 100% {
+    opacity: 0.72;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+.akane-ambient-cloud {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 42% 50%, rgba(255, 255, 255, 0.6), transparent 72%);
+  filter: blur(6px);
+  animation: akane-cloud-drift linear infinite;
+}
+
+@keyframes akane-cloud-drift {
+  0%, 100% {
+    opacity: 0.22;
+    transform: translate3d(-8vw, 0, 0);
+  }
+  50% {
+    opacity: 0.6;
+    transform: translate3d(14vw, 0, 0);
+  }
+}
+
+.akane-ambient-dew {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #ffffff, rgba(255, 255, 255, 0.2) 65%, transparent);
+  box-shadow: 0 0 7px rgba(255, 255, 255, 0.6);
+  animation: akane-dew-twinkle ease-in-out infinite;
+}
+
+@keyframes akane-dew-twinkle {
+  0%, 100% {
+    opacity: 0.15;
+    transform: scale(0.7);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.25);
+  }
+}
+
+.akane-ambient-sun {
+  position: absolute;
+  right: 8%;
+  bottom: 10%;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 235, 187, 0.9), rgba(244, 183, 104, 0.42) 45%, transparent 72%);
+  filter: blur(2px);
+  animation: akane-sun-pulse 8s ease-in-out infinite;
+}
+
+@keyframes akane-sun-pulse {
+  0%, 100% {
+    opacity: 0.65;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
   }
 }
 

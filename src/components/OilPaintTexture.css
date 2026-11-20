@@ -1,0 +1,84 @@
+.akane-oil {
+  --akane-oil-base-opacity: 0.5;
+  --akane-oil-opacity-scale: 1;
+  --akane-oil-stroke: rgba(255, 240, 220, 0.24);
+  --akane-oil-shadow: rgba(24, 32, 48, 0.18);
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: clamp(0, calc(var(--akane-oil-base-opacity) * var(--akane-oil-opacity-scale)), 1);
+  mix-blend-mode: soft-light;
+}
+
+.akane-oil__strokes,
+.akane-oil__impasto,
+.akane-oil__weave {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.akane-oil__strokes {
+  background:
+    repeating-linear-gradient(
+      112deg,
+      transparent 0 7px,
+      var(--akane-oil-stroke) 8px 10px,
+      transparent 11px 24px
+    ),
+    repeating-linear-gradient(
+      28deg,
+      transparent 0 11px,
+      var(--akane-oil-shadow) 12px 13px,
+      transparent 14px 30px
+    ),
+    radial-gradient(ellipse at 18% 28%, rgba(255, 255, 255, 0.3), transparent 42%),
+    radial-gradient(ellipse at 76% 66%, var(--akane-oil-shadow), transparent 48%);
+  background-blend-mode: overlay, multiply, screen, overlay;
+}
+
+.akane-oil__impasto {
+  background:
+    radial-gradient(ellipse 18% 9% at 24% 32%, rgba(255, 255, 255, 0.42), transparent 70%),
+    radial-gradient(ellipse 26% 7% at 68% 58%, var(--akane-oil-stroke), transparent 72%),
+    radial-gradient(ellipse 14% 12% at 45% 80%, var(--akane-oil-shadow), transparent 70%);
+  filter: blur(1.5px);
+  mix-blend-mode: overlay;
+}
+
+.akane-oil__weave {
+  background-image:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.09) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.07) 0 1px, transparent 1px 3px);
+  opacity: 0.55;
+}
+
+.akane-oil--sky {
+  --akane-oil-base-opacity: 0.72;
+  --akane-oil-stroke: rgba(255, 226, 190, 0.34);
+  --akane-oil-shadow: rgba(35, 48, 74, 0.28);
+}
+
+.akane-oil--paper {
+  --akane-oil-base-opacity: 0.38;
+  --akane-oil-stroke: rgba(255, 248, 230, 0.42);
+  --akane-oil-shadow: rgba(122, 92, 64, 0.16);
+  mix-blend-mode: multiply;
+}
+
+.akane-oil--petal {
+  --akane-oil-base-opacity: 0.62;
+  --akane-oil-stroke: rgba(255, 240, 244, 0.46);
+  --akane-oil-shadow: rgba(158, 72, 84, 0.18);
+}
+
+.akane-oil--subtle {
+  --akane-oil-opacity-scale: 0.5;
+}
+
+.akane-oil--strong {
+  --akane-oil-opacity-scale: 1.3;
+}
