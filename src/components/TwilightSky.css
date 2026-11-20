@@ -4,6 +4,7 @@
   transition: background 2.4s ease, color 1.2s ease;
   position: relative;
   overflow: hidden;
+  overflow: clip;
 }
 
 .akane-sky--dusk {
@@ -171,8 +172,22 @@
   position: absolute;
   border-radius: 50%;
   border: 1px dashed rgba(247, 244, 238, 0.35);
+  background: radial-gradient(circle, rgba(247, 244, 238, 0.5) 0 2px, transparent 3px);
   box-shadow: 0 0 18px rgba(224, 122, 95, 0.25);
   animation: akane-firework-bloom ease-out infinite;
+}
+
+.akane-ambient-firework::before,
+.akane-ambient-firework::after {
+  content: '';
+  position: absolute;
+  inset: -30%;
+  border-radius: 50%;
+  border: 1px solid rgba(247, 244, 238, 0.16);
+}
+
+.akane-ambient-firework::after {
+  transform: rotate(45deg) scaleY(0.4);
 }
 
 @keyframes akane-firework-bloom {

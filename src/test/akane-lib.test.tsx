@@ -71,6 +71,32 @@ describe("AkaneThemeProvider & BookmarkRibbon", () => {
   });
 });
 
+describe("TwilightSky fireworks", () => {
+  it("夜の空で fireworks を指定したときだけ遠花火が描画される", () => {
+    const { container, rerender } = render(
+      <TwilightSky ambient fireworks phase="night">
+        <span>夜空</span>
+      </TwilightSky>,
+    );
+
+    expect(container.querySelectorAll(".akane-ambient-firework")).toHaveLength(3);
+
+    rerender(
+      <TwilightSky ambient phase="night">
+        <span>夜空</span>
+      </TwilightSky>,
+    );
+    expect(container.querySelectorAll(".akane-ambient-firework")).toHaveLength(0);
+
+    rerender(
+      <TwilightSky ambient fireworks phase="dusk">
+        <span>夕空</span>
+      </TwilightSky>,
+    );
+    expect(container.querySelectorAll(".akane-ambient-firework")).toHaveLength(0);
+  });
+});
+
 describe("LetterCard & TrainWindowFrame & WhiteLilySeal", () => {
   it("日付・本文・署名と白百合封蝋が正しく描画される", () => {
     render(

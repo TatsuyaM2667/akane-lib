@@ -4,11 +4,13 @@ import dts from "vite-plugin-dts";
 import { resolve } from "path";
 
 export default defineConfig({
+  publicDir: false,
   plugins: [
     react(),
     dts({
       insertTypesEntry: true,
       tsconfigPath: "./tsconfig.app.json",
+      exclude: ["src/docs/**", "src/test/**", "src/stories/**", "src/App.tsx", "src/main.tsx"],
     }),
   ],
   build: {

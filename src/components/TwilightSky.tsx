@@ -45,12 +45,19 @@ const STARS = [
   { top: '58%', left: '86%', size: 3.5, duration: '6.8s', delay: '1.3s', firefly: true },
 ];
 
+const FIREWORKS = [
+  { top: '18%', left: '22%', size: 38, duration: '6.5s', delay: '0.4s' },
+  { top: '12%', left: '68%', size: 52, duration: '8s', delay: '3.2s' },
+  { top: '34%', left: '86%', size: 30, duration: '7.2s', delay: '5.1s' },
+];
+
 export interface TwilightSkyProps {
   children: React.ReactNode;
   phase?: SkyPhase;
   autoCycle?: boolean;
   intervalMs?: number;
   ambient?: boolean;
+  fireworks?: boolean;
   className?: string;
 }
 
@@ -60,6 +67,7 @@ export const TwilightSky: React.FC<TwilightSkyProps> = ({
   autoCycle = false,
   intervalMs = 8000,
   ambient = false,
+  fireworks = false,
   className = '',
 }) => {
   const theme = useAkaneTheme();
@@ -131,6 +139,23 @@ export const TwilightSky: React.FC<TwilightSkyProps> = ({
                   height: `${star.size}px`,
                   animationDuration: star.duration,
                   animationDelay: star.delay,
+                }}
+              />
+            ))}
+
+          {activePhase === 'night' &&
+            fireworks &&
+            FIREWORKS.map((firework, i) => (
+              <span
+                key={i}
+                className="akane-ambient-firework"
+                style={{
+                  top: firework.top,
+                  left: firework.left,
+                  width: `${firework.size}px`,
+                  height: `${firework.size}px`,
+                  animationDuration: firework.duration,
+                  animationDelay: firework.delay,
                 }}
               />
             ))}
