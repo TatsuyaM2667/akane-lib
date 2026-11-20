@@ -31,7 +31,7 @@ const preview: Preview = {
       const phase = (context.globals.skyPhase || 'twilight') as SkyPhase;
       return (
         <AkaneThemeProvider phase={phase}>
-          <TwilightSky ambient fireworks>
+          <TwilightSky ambient fireworks oilPaint={false}>
             <div
               style={{
                 minHeight: '100vh',

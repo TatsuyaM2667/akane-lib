@@ -232,7 +232,7 @@ function previewFor(slug: string): ReactNode {
     case 'twilight-sky':
       return (
         <div className="docs-preview__sky">
-          <TwilightSky ambient fireworks phase="night">
+          <TwilightSky ambient fireworks phase="night" oilPaint={false}>
             <p>夜の空と遠花火</p>
           </TwilightSky>
         </div>

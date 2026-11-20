@@ -140,7 +140,7 @@ export default function DocsSite() {
 
   return (
     <AkaneThemeProvider defaultPhase="night">
-      <TwilightSky ambient fireworks>
+      <TwilightSky ambient fireworks oilPaint={false}>
         <SiteHeader route={route} />
         <main className="docs-main" id="main">
           <RoutedContent route={route} />
