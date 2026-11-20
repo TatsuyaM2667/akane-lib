@@ -1,5 +1,4 @@
 import type { Preview } from '@storybook/react-vite';
-import React from 'react';
 import '../src/tokens.css';
 import { AkaneThemeProvider, TwilightSky, type SkyPhase } from '../src/index';
 
