@@ -128,7 +128,7 @@ export const SakuraAndRippleStory: StoryObj<typeof SakuraThiefOverlay> = {
     active: true,
     density: "normal",
     petalCount: 48,
-    oilPaint: true,
+    oilPaint: false,
   },
   argTypes: {
     active: { control: "boolean" },

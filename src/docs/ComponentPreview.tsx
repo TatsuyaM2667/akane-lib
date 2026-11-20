@@ -97,7 +97,7 @@ function SakuraPreview() {
   const [count, setCount] = useState(24);
   return (
     <div className="docs-preview__stack">
-      <SakuraThiefOverlay density="gust" petalCount={count} oilPaint>
+      <SakuraThiefOverlay density="gust" petalCount={count}>
         <p className="docs-preview__centered">花びらの枚数を動かせます</p>
       </SakuraThiefOverlay>
       <label className="docs-preview__slider">
@@ -273,7 +273,7 @@ function previewFor(slug: string): ReactNode {
       );
     case 'typewriter-censor-text':
       return (
-        <LetterCard date="独白の断片" signature="黒塗りをクリック" oilPaint>
+        <LetterCard date="独白の断片" signature="黒塗りをクリック">
           <TypewriterCensorText text={'書いたはずの[[言葉]]が、まだ読めない。'} speedMs={55} />
         </LetterCard>
       );

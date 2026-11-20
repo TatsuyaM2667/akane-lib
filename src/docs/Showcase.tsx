@@ -79,7 +79,6 @@ export function Showcase() {
       active={sakuraMode !== 'off'}
       density={sakuraMode === 'off' ? 'normal' : sakuraMode}
       petalCount={petalCount}
-      oilPaint
     >
       <div className="docs-showcase">
         <div className="docs-showcase__section-label">
@@ -159,7 +158,6 @@ export function Showcase() {
               date="第一夜 / 花に亡霊"
               signature="ずっと待っていました"
               vertical={verticalCard}
-              oilPaint
             >
               {savedMemo ? (
                 <TypewriterCensorText key={`memo-${replayKey}`} text={savedMemo} speedMs={55} />
@@ -180,7 +178,7 @@ export function Showcase() {
         </TrainWindowFrame>
 
         <div className="docs-showcase__monologue">
-          <LetterCard date="思想犯 — 独白の断片" signature="黒塗りをクリックして開示" oilPaint>
+          <LetterCard date="思想犯 — 独白の断片" signature="黒塗りをクリックして開示">
             <TypewriterCensorText
               key={`default-${replayKey}`}
               text={DEFAULT_MONOLOGUE}

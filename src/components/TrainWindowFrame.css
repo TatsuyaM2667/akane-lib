@@ -1,4 +1,5 @@
 .akane-window {
+  box-sizing: border-box;
   position: relative;
   width: 100%;
   max-width: 640px;

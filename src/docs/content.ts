@@ -351,7 +351,7 @@ const lines: LyricLine[] = [
     detail: 'active で花びらだけを消去でき、density は light / normal / gust の順に風の強さが増します。petalCount を指定すると density の枚数より優先され、0〜160 枚で細かく調整できます。oilPaint は花びらに筆致を加えます。',
     usage: `import { SakuraThiefOverlay } from '@tatsuyamiura2667/akane-lib';
 
-<SakuraThiefOverlay density="gust" petalCount={48} oilPaint>
+<SakuraThiefOverlay density="gust" petalCount={48}>
   <p>春の風の中の一文</p>
 </SakuraThiefOverlay>`,
     props: [
