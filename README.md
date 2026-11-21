@@ -4,7 +4,7 @@
 [![Publish Package](https://github.com/TatsuyaM2667/akane-lib/actions/workflows/publish.yml/badge.svg)](https://github.com/TatsuyaM2667/akane-lib/actions/workflows/publish.yml)
 [![npm version](https://img.shields.io/npm/v/@tatsuyamiura2667/akane-lib.svg)](https://www.npmjs.com/package/@tatsuyamiura2667/akane-lib)
 
-現在の安定版: **0.4.8**
+現在の安定版: **0.4.9**
 
 ヨルシカの楽曲・物語（『エルマ』『エイミー』『第一夜』など）の情景から着想を得た、詩的な React UI コンポーネントライブラリです。  
 茜さす夕暮れから群青の深夜へと移ろう空の配色、便箋の質感、カセットテープ、夜列車の車窓、万年筆の手帳などを宣言的なコンポーネントとして提供します。雪海の記号が降る「テレパス」や、夜景の妬みを描く「昼鳶」のダークな情景も追加しました。2017〜2026年の43作品から抽象化した紙・光・風・水の処理を、画像不要の CSS / SVG マテリアルとしてまとめています。
@@ -393,7 +393,7 @@ MV 資料はドキュメントサイトの「MV資料」「年表」「素材シ
 
 ## リリースノート
 
-### Unreleased
+### 0.4.9
 
 - 43作品の MV モチーフを抽象化した MV マテリアル・ギャラリー、モチーフ年表、素材システムの3ページを追加しました。
 - `FilmGrainOverlay` から `SourceChip` まで15個の画像不要マテリアル・プリミティブを追加しました。
