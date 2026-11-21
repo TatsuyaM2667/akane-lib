@@ -4,6 +4,7 @@ import { Showcase } from './Showcase';
 import { ComponentPreview } from './ComponentPreview';
 import { Callout, CodeBlock, LinkCard, NextLinks, PageHeader, PropsTable, SectionHeading, Tag } from './DocsUi';
 import { COMPONENTS, FAQS, MOTIFS, PHASES, TOKENS } from './content';
+import { MATERIAL_PRIMITIVES, MOTIF_SYSTEMS, MV_CATALOG } from './catalog';
 
 const INSTALL_CODE = 'npm install @tatsuyamiura2667/akane-lib';
 
@@ -77,7 +78,15 @@ export function HomePage() {
           </div>
           <div>
             <dt>STORYBOOK STORIES</dt>
-            <dd>12</dd>
+            <dd>27</dd>
+          </div>
+          <div>
+            <dt>MV MATERIALS</dt>
+            <dd>{MV_CATALOG.length}</dd>
+          </div>
+          <div>
+            <dt>PRIMITIVES</dt>
+            <dd>{MATERIAL_PRIMITIVES.length}</dd>
           </div>
           <div>
             <dt>LICENSE</dt>
@@ -92,10 +101,45 @@ export function HomePage() {
 
       <Showcase />
 
+      <div className="docs-home-divider">
+        <span>MATERIAL ARCHIVE</span>
+      </div>
+
+      <section className="docs-home-archive" aria-labelledby="home-archive-title">
+        <div className="docs-home-archive__intro">
+          <p className="docs-kicker">FROM 43 WORKS TO REUSABLE MATERIALS</p>
+          <h2 id="home-archive-title">情景を、紙・光・風・水の処理へ。</h2>
+          <p>
+            作品のフレームを複製せず、反復する質感と光源の扱いを CSS / SVG の部品へ翻訳しました。
+            {MOTIF_SYSTEMS.length}系統のモチーフ、{MATERIAL_PRIMITIVES.length}個のプリミティブを、ここから辿れます。
+          </p>
+        </div>
+        <div className="docs-card-grid">
+          <LinkCard
+            href="#/gallery"
+            eyebrow="GALLERY"
+            title="MVマテリアル・ギャラリー"
+            body={`${MV_CATALOG.length}作品を時代・系統・キーワードで絞り込む`}
+          />
+          <LinkCard
+            href="#/timeline"
+            eyebrow="CHRONOLOGY"
+            title="モチーフ年表"
+            body="2017から2026までの視覚言語の積み重ね"
+          />
+          <LinkCard
+            href="#/materials"
+            eyebrow="SYSTEM"
+            title="素材システム"
+            body="モチーフ・トークン・プリミティブの三層構造"
+          />
+        </div>
+      </section>
+
       <NextLinks
         items={[
           { href: '#/motifs', label: 'モチーフ辞典', hint: '曲と情景からコンポーネントを辿る' },
-          { href: '#/faq', label: 'よくある質問', hint: '導入や表示の悩みを解消する' },
+          { href: '#/materials', label: '素材システム', hint: 'トークンとプリミティブを見る' },
         ]}
       />
     </div>

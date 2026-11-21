@@ -1,0 +1,31 @@
+.akane-halftone {
+  --akane-halftone-dot: rgba(36, 33, 30, 0.62);
+  --akane-halftone-size: 6px;
+  --akane-halftone-angle: 45deg;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.akane-halftone::before {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  background-image: radial-gradient(circle, var(--akane-halftone-dot) 0 30%, transparent 33%);
+  background-size: var(--akane-halftone-size) var(--akane-halftone-size);
+  transform: rotate(var(--akane-halftone-angle));
+}
+
+.akane-halftone--accent {
+  --akane-halftone-dot: rgba(183, 59, 58, 0.66);
+  mix-blend-mode: multiply;
+}
+
+.akane-halftone--paper {
+  --akane-halftone-dot: rgba(247, 244, 238, 0.8);
+  mix-blend-mode: screen;
+}

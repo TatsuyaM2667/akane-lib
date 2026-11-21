@@ -1,0 +1,42 @@
+.akane-grain {
+  --akane-grain-opacity: 0.12;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 160px 160px;
+  mix-blend-mode: soft-light;
+  opacity: var(--akane-grain-opacity);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .akane-grain--animated {
+    animation: akane-grain-drift 1.2s steps(4, end) infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .akane-grain--animated {
+    animation: none;
+  }
+}
+
+@keyframes akane-grain-drift {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: calc(var(--akane-grain-opacity) * 0.82);
+  }
+  50% {
+    transform: translate3d(-1.5%, 1%, 0);
+    opacity: var(--akane-grain-opacity);
+  }
+  100% {
+    transform: translate3d(1%, -1.5%, 0);
+    opacity: calc(var(--akane-grain-opacity) * 0.88);
+  }
+}

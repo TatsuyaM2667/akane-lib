@@ -23,6 +23,42 @@
   --akane-font-serif: "Shippori Mincho", "Noto Serif JP", "Yu Mincho", serif;
   --akane-tracking-poetic: 0.14em;
   --akane-leading-poetic: 2.1;
+
+  /* Motion visual language: proposed MV-inspired material tokens */
+  --yk-paper: #f7f0e1;
+  --yk-ink: #24202e;
+  --yk-blue-hour: #2b4a92;
+  --yk-blue-green: #3e6b69;
+  --yk-summer-green: #6e8f6b;
+  --yk-moon: #dce6f0;
+  --yk-dusk-orange: #d97a45;
+  --yk-accent-red: #c8412f;
+  --yk-night-navy: #141c2e;
+  --yk-sepia: #8a6a4f;
+  --yk-mist: #b9c0c4;
+  --yk-pencil: #6b6459;
+}
+
+[data-yk-mood="blue-hour"] {
+  --yk-accent-red: #2b4a92;
+  --yk-dusk-orange: #3d5a80;
+}
+
+[data-yk-mood="summer-light"] {
+  --yk-blue-hour: #2f6fa8;
+  --yk-summer-green: #7fa85b;
+  --yk-dusk-orange: #f6c86a;
+}
+
+[data-yk-mood="paper-ink"] {
+  --yk-blue-hour: #24202e;
+  --yk-moon: #f7f0e1;
+}
+
+[data-yk-mood="night-sea"] {
+  --yk-blue-hour: #141c2e;
+  --yk-blue-green: #2e6e7e;
+  --yk-moon: #dce6f0;
 }
 
 /* 深夜（night）: 群青の夜空と月明かりの配色 */

@@ -1,0 +1,37 @@
+.akane-moon-halo {
+  --akane-moon-size: 120px;
+  --akane-moon-glow: 0.6;
+  position: relative;
+  display: inline-block;
+  width: var(--akane-moon-size);
+  height: var(--akane-moon-size);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.akane-moon-halo::before {
+  content: '';
+  position: absolute;
+  inset: 16%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 36% 32%, #fffdf4 0%, #ece7d8 56%, #b8b5ac 100%);
+  box-shadow:
+    0 0 calc(var(--akane-moon-size) * 0.4) calc(var(--akane-moon-size) * 0.08) rgba(226, 232, 240, var(--akane-moon-glow)),
+    inset -4px -5px 12px rgba(120, 122, 128, 0.22);
+}
+
+.akane-moon-halo::after {
+  content: '';
+  position: absolute;
+  inset: -18%;
+  border-radius: 50%;
+  background-image:
+    radial-gradient(circle, rgba(255, 250, 226, 0.7) 0 2px, transparent 3px),
+    radial-gradient(circle, rgba(200, 220, 240, 0.55) 0 3px, transparent 4px),
+    radial-gradient(circle, rgba(255, 245, 218, 0.5) 0 2px, transparent 3px),
+    radial-gradient(circle, rgba(210, 226, 244, 0.45) 0 1.5px, transparent 2.5px);
+  background-position: 18% 26%, 76% 18%, 84% 74%, 24% 80%;
+  background-size: 42% 42%, 36% 36%, 45% 45%, 30% 30%;
+  background-repeat: no-repeat;
+  opacity: calc(var(--akane-moon-glow) * 0.9);
+}

@@ -16,6 +16,21 @@ import {
   OilPaintTexture,
   WhisperText,
   RelicScene,
+  FilmGrainOverlay,
+  PaperTexture,
+  HalftoneDots,
+  VignetteLens,
+  RisoText,
+  KomorebiLight,
+  MoonHalo,
+  FireworkBurst,
+  TapeLabel,
+  TypographicStamp,
+  HoleMask,
+  FractureFrame,
+  BubbleField,
+  WindPath,
+  SourceChip,
   type RelicVariant,
 } from '../index';
 import { PHASES } from './content';
@@ -25,6 +40,15 @@ const PREVIEW_LINES = [
   { time: 4, text: '手帳の罫線をなぞる' },
   { time: 8, text: '白い百合を一輪、置いていく' },
 ];
+
+function MaterialStage({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <div className="docs-material-preview">
+      <span className="docs-material-preview__label">{label}</span>
+      <div className="docs-material-preview__stage">{children}</div>
+    </div>
+  );
+}
 
 function ThemeProviderPreview() {
   const theme = useAkaneTheme();
@@ -283,6 +307,121 @@ function previewFor(slug: string): ReactNode {
       return <WhisperPreview />;
     case 'relic-scene':
       return <RelicPreview />;
+    case 'film-grain-overlay':
+      return (
+        <MaterialStage label="FE TURBULENCE">
+          <p className="docs-material-preview__centered">粒子の粗さを、空気の密度に変える。</p>
+          <FilmGrainOverlay intensity={0.18} />
+        </MaterialStage>
+      );
+    case 'paper-tex':
+      return (
+        <MaterialStage label="FIBER / WASH">
+          <PaperTexture tone="washi" />
+          <p className="docs-material-preview__centered">和紙の繊維と、薄い洗いの跡。</p>
+        </MaterialStage>
+      );
+    case 'halftone-dots':
+      return (
+        <MaterialStage label="HALFTONE">
+          <HalftoneDots angle={45} density={7} tone="ink" />
+          <p className="docs-material-preview__centered">網点は、光を一度紙に翻訳する。</p>
+        </MaterialStage>
+      );
+    case 'vignette-lens':
+      return (
+        <MaterialStage label="LENS EDGE">
+          <VignetteLens strength={0.55} />
+          <p className="docs-material-preview__centered">視線を中央へ寄せる、静かな縁。</p>
+        </MaterialStage>
+      );
+    case 'riso-text':
+      return (
+        <MaterialStage label="MISREGISTRATION">
+          <RisoText as="h3" ink="var(--yk-accent-red)">
+            茜色の誤差
+          </RisoText>
+          <p>刷りずれた数ミリが、文字に体温を与える。</p>
+        </MaterialStage>
+      );
+    case 'komorebi-light':
+      return (
+        <MaterialStage label="THROUGH THE LEAVES">
+          <KomorebiLight spots={11} direction="left" />
+          <p className="docs-material-preview__centered">木漏れ日は、輪郭のない光斑から。</p>
+        </MaterialStage>
+      );
+    case 'moon-halo':
+      return (
+        <MaterialStage label="MOONLIGHT">
+          <MoonHalo size={170} glow={0.8} />
+          <p className="docs-material-preview__centered">月は、圆盘ではなく周囲の滲みで在る。</p>
+        </MaterialStage>
+      );
+    case 'firework-burst':
+      return (
+        <MaterialStage label="RADIAL LINES">
+          <FireworkBurst rays={18} />
+          <p className="docs-material-preview__centered">夏空に、短い放射線を描く。</p>
+        </MaterialStage>
+      );
+    case 'tape-label':
+      return (
+        <MaterialStage label="ADHESIVE">
+          <TapeLabel width={220} angle={-2}>
+            八月、某、月明かり
+          </TapeLabel>
+          <p>引き裂いた端と、糊の筋を残す。</p>
+        </MaterialStage>
+      );
+    case 'typographic-stamp':
+      return (
+        <MaterialStage label="INK GAP">
+          <TypographicStamp label="承認" tone="crimson" />
+          <p>押す力によって、インクは欠ける。</p>
+        </MaterialStage>
+      );
+    case 'hole-mask':
+      return (
+        <MaterialStage label="CIRCULAR LOSS">
+          <HoleMask size={150} stitch>
+            <p className="docs-material-preview__centered">読める本文は、そのまま残ります。</p>
+          </HoleMask>
+        </MaterialStage>
+      );
+    case 'fracture-frame':
+      return (
+        <MaterialStage label="FRAGMENTS">
+          <FractureFrame pieces={6}>
+            <p className="docs-material-preview__centered">割れ目は、内容を隠さない。</p>
+          </FractureFrame>
+        </MaterialStage>
+      );
+    case 'bubble-field':
+      return (
+        <MaterialStage label="BUBBLE FIELD">
+          <BubbleField count={14} release />
+          <p className="docs-material-preview__centered">泡は、視点を替える合図。</p>
+        </MaterialStage>
+      );
+    case 'wind-path':
+      return (
+        <MaterialStage label="CUBIC WIND">
+          <WindPath seed={19} speed={7} />
+          <p className="docs-material-preview__centered">風は線ではなく、消え入る軌跡。</p>
+        </MaterialStage>
+      );
+    case 'source-chip':
+      return (
+        <MaterialStage label="SOURCE LAYER">
+          <div className="docs-material-preview__chips">
+            <SourceChip label="公式 BIOGRAPHY" tier="primary" href="https://yorushika.com/" />
+            <SourceChip label="インタビュー" tier="press" />
+            <SourceChip label="二次資料" tier="secondary" />
+          </div>
+          <p>一次・報道・二次を、見た目でも区別します。</p>
+        </MaterialStage>
+      );
     default:
       return null;
   }

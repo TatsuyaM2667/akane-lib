@@ -1,0 +1,15 @@
+.akane-vignette {
+  --akane-vignette-strength: 0.35;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: block;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at 50% 48%,
+    transparent 34%,
+    rgba(12, 16, 24, calc(var(--akane-vignette-strength) * 0.45)) 72%,
+    rgba(12, 16, 24, var(--akane-vignette-strength)) 100%
+  );
+}

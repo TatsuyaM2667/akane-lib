@@ -1,0 +1,61 @@
+.akane-firework {
+  display: inline-block;
+  width: 120px;
+  height: 120px;
+  overflow: visible;
+  color: var(--akane-accent);
+  pointer-events: none;
+}
+
+.akane-firework line {
+  stroke: currentColor;
+  stroke-linecap: round;
+  opacity: 0.85;
+}
+
+.akane-firework__rays {
+  transform-origin: 50px 50px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .akane-firework__rays {
+    animation: akane-firework-pulse 2.8s ease-in-out infinite;
+  }
+
+  .akane-firework--once .akane-firework__rays {
+    animation: akane-firework-once 1.5s ease-out 1 forwards;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .akane-firework__rays {
+    animation: none;
+  }
+}
+
+@keyframes akane-firework-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.96) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.04) rotate(6deg);
+  }
+}
+
+@keyframes akane-firework-once {
+  0% {
+    opacity: 0;
+    transform: scale(0.4) rotate(-12deg);
+  }
+  35% {
+    opacity: 1;
+    transform: scale(1.08) rotate(0deg);
+  }
+  100% {
+    opacity: 0.35;
+    transform: scale(1.02) rotate(8deg);
+  }
+}

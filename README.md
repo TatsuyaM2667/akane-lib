@@ -7,14 +7,14 @@
 現在の安定版: **0.4.8**
 
 ヨルシカの楽曲・物語（『エルマ』『エイミー』『第一夜』など）の情景から着想を得た、詩的な React UI コンポーネントライブラリです。  
-茜さす夕暮れから群青の深夜へと移ろう空の配色、便箋の質感、カセットテープ、夜列車の車窓、万年筆の手帳などを宣言的なコンポーネントとして提供します。雪海の記号が降る「テレパス」や、夜景の妬みを描く「昼鳶」のダークな情景も追加しました。
+茜さす夕暮れから群青の深夜へと移ろう空の配色、便箋の質感、カセットテープ、夜列車の車窓、万年筆の手帳などを宣言的なコンポーネントとして提供します。雪海の記号が降る「テレパス」や、夜景の妬みを描く「昼鳶」のダークな情景も追加しました。2017〜2026年の43作品から抽象化した紙・光・風・水の処理を、画像不要の CSS / SVG マテリアルとしてまとめています。
 
 ## ドキュメント
 
 - **ドキュメントサイト / インタラクティブデモ**: https://TatsuyaM2667.github.io/akane-lib/
 - **コンポーネントカタログ (Storybook)**: https://TatsuyaM2667.github.io/akane-lib/storybook/
 
-ドキュメントサイトでは、導入方法、8つの空の時間帯、全16コンポーネントの API とライブプレビュー、12ストーリーの Storybook、モチーフ辞典、よくある質問を掲載しています。
+ドキュメントサイトでは、導入方法、8つの空の時間帯、全31コンポーネントの API とライブプレビュー、27ストーリーの Storybook、モチーフ辞典、43作品の MV マテリアル・ギャラリー、モチーフ年表、素材システム、よくある質問を掲載しています。
 
 ---
 
@@ -355,7 +355,51 @@ import { RelicScene, WhisperText } from '@tatsuyamiura2667/akane-lib';
 
 ---
 
+## マテリアル・プリミティブ
+
+43作品から抽出した「紙 / 光 / 風 / 水 / 線 / 身体 / 視点」の処理を、画像なしで重ねられる装飾部品として追加しました。いずれも `className` を受け取り、装飾レイヤーは `aria-hidden`、モーションは `prefers-reduced-motion` に従います。
+
+| コンポーネント | 役割 | 主な Prop |
+| --- | --- | --- |
+| `FilmGrainOverlay` | フィルム粒子の空気感 | `intensity`, `animated` |
+| `PaperTexture` | 和紙・新聞紙・便箋の繊維 | `tone` |
+| `HalftoneDots` | リソ／新版画の網点 | `angle`, `density`, `tone` |
+| `VignetteLens` | レンズ周縁の減衰 | `strength` |
+| `RisoText` | 刷りずれた見出し | `children`, `ink`, `as` |
+| `KomorebiLight` | 木漏れ日の光斑 | `spots`, `direction` |
+| `MoonHalo` | 月のハロー | `size`, `glow` |
+| `FireworkBurst` | 放射線の花火 | `rays`, `once` |
+| `TapeLabel` | 引き裂いたマスキングテープ | `children`, `angle`, `width` |
+| `TypographicStamp` | インク欠けの判子 | `label`, `tone` |
+| `HoleMask` | 円形の欠落 | `size`, `stitch`, `children` |
+| `FractureFrame` | 内容を隠さない割れ目 | `pieces`, `children` |
+| `BubbleField` | 水中の泡 | `count`, `release` |
+| `WindPath` | 消え入る風の軌跡 | `seed`, `speed` |
+| `SourceChip` | 一次 / 報道 / 二次の出典ラベル | `label`, `href`, `tier` |
+
+```tsx
+import { PaperTexture, FilmGrainOverlay, RisoText } from '@tatsuyamiura2667/akane-lib';
+
+<div style={{ position: 'relative' }}>
+  <PaperTexture tone="washi" />
+  <RisoText as="h2" ink="#c8412f">茜色の誤差</RisoText>
+  <FilmGrainOverlay intensity={0.12} />
+</div>;
+```
+
+MV 資料はドキュメントサイトの「MV資料」「年表」「素材システム」から辿れます。歌詞・映像フレーム・キャラクターは複製していません。
+
+---
+
 ## リリースノート
+
+### Unreleased
+
+- 43作品の MV モチーフを抽象化した MV マテリアル・ギャラリー、モチーフ年表、素材システムの3ページを追加しました。
+- `FilmGrainOverlay` から `SourceChip` まで15個の画像不要マテリアル・プリミティブを追加しました。
+- `--yk-*` の提案トークン12個と、4つのムードプリセットを追加しました。
+- ホームに素材アーカイブ導線を追加し、Storybook を27ストーリーへ拡充しました。
+- ドキュメントの背景から斜線模様を除去し、カセットテープと手帳の幅を可変化して重なりを解消しました。
 
 ### 0.4.8
 

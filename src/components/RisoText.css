@@ -1,0 +1,35 @@
+.akane-riso {
+  --akane-riso-ink: currentColor;
+  position: relative;
+  display: inline-block;
+  color: var(--akane-riso-ink);
+  font-family: var(--akane-font-serif);
+  letter-spacing: var(--akane-tracking-poetic, 0.14em);
+  line-height: var(--akane-leading-poetic, 2.1);
+}
+
+.akane-riso--h1,
+.akane-riso--h2,
+.akane-riso--h3,
+.akane-riso--p {
+  display: block;
+}
+
+.akane-riso__ghost {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  color: var(--akane-accent);
+  opacity: 0.3;
+  mix-blend-mode: multiply;
+  white-space: inherit;
+  transform: translate(1.5px, -1px);
+}
+
+.akane-riso__ghost::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  letter-spacing: inherit;
+}

@@ -39,6 +39,36 @@ describe('DocsSite', () => {
     expect(screen.getByText(/黒塗りの指定/)).toBeInTheDocument();
   });
 
+  it('MV資料・年表・素材システムのルートが切り替わる', () => {
+    render(<DocsSite />);
+
+    expect(screen.getByRole('link', { name: 'MV資料' })).toHaveAttribute('href', '#/gallery');
+    expect(screen.getByRole('link', { name: '年表' })).toHaveAttribute('href', '#/timeline');
+    expect(screen.getByRole('link', { name: '素材システム' })).toHaveAttribute('href', '#/materials');
+
+    act(() => {
+      window.location.hash = '#/gallery';
+      fireEvent(window, new Event('hashchange'));
+    });
+    expect(
+      screen.getByRole('heading', { level: 1, name: 'MVマテリアル・ギャラリー' }),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/43 \/ 43 件を表示/)).toBeInTheDocument();
+
+    act(() => {
+      window.location.hash = '#/timeline';
+      fireEvent(window, new Event('hashchange'));
+    });
+    expect(screen.getByRole('heading', { level: 1, name: 'モチーフ年表' })).toBeInTheDocument();
+
+    act(() => {
+      window.location.hash = '#/materials';
+      fireEvent(window, new Event('hashchange'));
+    });
+    expect(screen.getByRole('heading', { level: 1, name: '素材システム' })).toBeInTheDocument();
+    expect(screen.getByText('--yk-blue-hour')).toBeInTheDocument();
+  });
+
   it('ヘッダーの時間帯ボタンでテーマが切り替わる', () => {
     const { container } = render(<DocsSite />);
 

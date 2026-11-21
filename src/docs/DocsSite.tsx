@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { AkaneThemeProvider, TwilightSky, useAkaneTheme } from '../index';
 import { PHASES } from './content';
+import { GalleryPage, MaterialsPage, TimelinePage } from './CatalogPages';
 import { ComponentsPage, FaqPage, HomePage, MotifsPage, StartPage, ThemePage } from './pages';
 import './docs.css';
 
-type PageId = 'home' | 'start' | 'theme' | 'components' | 'motifs' | 'faq';
+type PageId = 'home' | 'start' | 'theme' | 'components' | 'motifs' | 'gallery' | 'timeline' | 'materials' | 'faq';
 
 interface Route {
   page: PageId;
@@ -17,12 +18,24 @@ const NAV_ITEMS: { page: PageId; label: string; href: string }[] = [
   { page: 'theme', label: 'テーマと空', href: '#/theme' },
   { page: 'components', label: 'コンポーネント', href: '#/components' },
   { page: 'motifs', label: 'モチーフ辞典', href: '#/motifs' },
+  { page: 'gallery', label: 'MV資料', href: '#/gallery' },
+  { page: 'timeline', label: '年表', href: '#/timeline' },
+  { page: 'materials', label: '素材システム', href: '#/materials' },
   { page: 'faq', label: 'FAQ', href: '#/faq' },
 ];
 
 function parseRoute(): Route {
   const [page, slug] = window.location.hash.replace(/^#\/?/, '').split('/');
-  if (page === 'start' || page === 'theme' || page === 'components' || page === 'motifs' || page === 'faq') {
+  if (
+    page === 'start' ||
+    page === 'theme' ||
+    page === 'components' ||
+    page === 'motifs' ||
+    page === 'gallery' ||
+    page === 'timeline' ||
+    page === 'materials' ||
+    page === 'faq'
+  ) {
     return { page, slug };
   }
   return { page: 'home' };
@@ -128,6 +141,12 @@ function RoutedContent({ route }: { route: Route }) {
       return <ComponentsPage slug={route.slug} />;
     case 'motifs':
       return <MotifsPage />;
+    case 'gallery':
+      return <GalleryPage />;
+    case 'timeline':
+      return <TimelinePage />;
+    case 'materials':
+      return <MaterialsPage />;
     case 'faq':
       return <FaqPage />;
     default:

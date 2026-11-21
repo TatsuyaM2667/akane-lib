@@ -331,6 +331,36 @@
   background: var(--akane-paper-border);
 }
 
+.docs-home-archive {
+  max-width: 960px;
+  margin: 0 auto 3rem;
+  padding: 2rem;
+  border: 1px solid var(--akane-paper-border);
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(220, 230, 240, 0.35), transparent 42%),
+    radial-gradient(circle at 86% 82%, rgba(217, 122, 69, 0.12), transparent 45%),
+    var(--akane-paper);
+}
+
+.docs-home-archive__intro {
+  max-width: 620px;
+  margin-bottom: 2rem;
+}
+
+.docs-home-archive__intro h2 {
+  margin: 0.6rem 0 1rem;
+  font-family: var(--akane-font-serif);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  line-height: 1.5;
+}
+
+.docs-home-archive__intro > p:last-child {
+  margin: 0;
+  color: var(--akane-ink-muted);
+  line-height: 1.9;
+}
+
 .docs-showcase {
   display: flex;
   flex-direction: column;
@@ -955,6 +985,60 @@
   max-width: 100%;
 }
 
+.docs-material-preview {
+  width: 100%;
+  max-width: 560px;
+}
+
+.docs-material-preview__label {
+  display: block;
+  margin-bottom: 0.75rem;
+  color: var(--akane-ink-muted);
+  font-family: system-ui, sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.24em;
+}
+
+.docs-material-preview__stage {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  min-height: 260px;
+  padding: 2rem;
+  overflow: hidden;
+  border: 1px solid var(--akane-paper-border);
+  border-radius: 12px;
+  background:
+    radial-gradient(circle at 18% 20%, rgba(220, 230, 240, 0.45), transparent 45%),
+    radial-gradient(circle at 82% 78%, rgba(217, 122, 69, 0.12), transparent 48%),
+    var(--akane-paper);
+}
+
+.docs-material-preview__stage > p,
+.docs-material-preview__stage > h3,
+.docs-material-preview__stage > div {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  line-height: 1.9;
+  text-align: center;
+}
+
+.docs-material-preview__centered {
+  max-width: 30ch;
+}
+
+.docs-material-preview__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
 .docs-preview__sky {
   width: 100%;
   max-width: 520px;
@@ -1321,6 +1405,10 @@
 @media (max-width: 900px) {
   .docs-showcase__grid {
     grid-template-columns: 1fr;
+  }
+
+  .docs-home-archive {
+    padding: 1.25rem;
   }
 
   .docs-components-layout {

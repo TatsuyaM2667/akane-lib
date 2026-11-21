@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import {
   LetterCard,
@@ -14,6 +15,21 @@ import {
   OilPaintTexture,
   WhisperText,
   RelicScene,
+  FilmGrainOverlay,
+  PaperTexture,
+  HalftoneDots,
+  VignetteLens,
+  RisoText,
+  KomorebiLight,
+  MoonHalo,
+  FireworkBurst,
+  TapeLabel,
+  TypographicStamp,
+  HoleMask,
+  FractureFrame,
+  BubbleField,
+  WindPath,
+  SourceChip,
 } from "../index";
 
 const SAMPLE_LYRICS = [
@@ -22,6 +38,30 @@ const SAMPLE_LYRICS = [
   { time: 6, text: "白い百合を一輪持って、隣の街から帰ります" },
   { time: 9, text: "列車の窓を少し開いて、夜風が頬を撫でていく" },
 ];
+
+function MaterialStoryFrame({ children }: { children: ReactNode }) {
+  return (
+    <div
+      style={{
+        position: "relative",
+        isolation: "isolate",
+        overflow: "hidden",
+        minHeight: "260px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "1.25rem",
+        padding: "2rem",
+        borderRadius: "12px",
+        border: "1px solid var(--akane-paper-border)",
+        background: "var(--akane-paper)",
+      }}
+    >
+      {children}
+    </div>
+  );
+}
 
 const meta: Meta = {
   title: "akane-lib/コンポーネントカタログ",
@@ -285,5 +325,228 @@ export const RelicSceneStory: StoryObj<typeof RelicScene> = {
         />
       </RelicScene>
     </div>
+  ),
+};
+
+export const FilmGrainOverlayStory: StoryObj<typeof FilmGrainOverlay> = {
+  name: "FilmGrainOverlay（フィルム粒子）",
+  args: { intensity: 0.14, animated: false },
+  argTypes: {
+    intensity: { control: { type: "range", min: 0, max: 1, step: 0.02 } },
+    animated: { control: "boolean" },
+  },
+  render: (args) => (
+    <MaterialStoryFrame>
+      <p>粒子の粗さを、空気の密度に変える。</p>
+      <FilmGrainOverlay {...args} />
+    </MaterialStoryFrame>
+  ),
+};
+
+export const PaperTextureStory: StoryObj<typeof PaperTexture> = {
+  name: "PaperTexture（紙の繊維）",
+  args: { tone: "washi" },
+  argTypes: {
+    tone: { control: "radio", options: ["paper", "washi", "newsprint"] },
+  },
+  render: (args) => (
+    <MaterialStoryFrame>
+      <PaperTexture {...args} />
+      <p>和紙の繊維と、薄い洗いの跡。</p>
+    </MaterialStoryFrame>
+  ),
+};
+
+export const HalftoneDotsStory: StoryObj<typeof HalftoneDots> = {
+  name: "HalftoneDots（網点）",
+  args: { angle: 45, density: 7, tone: "ink" },
+  argTypes: {
+    angle: { control: { type: "range", min: 0, max: 360, step: 15 } },
+    density: { control: { type: "range", min: 2, max: 48, step: 1 } },
+    tone: { control: "radio", options: ["ink", "accent", "paper"] },
+  },
+  render: (args) => (
+    <MaterialStoryFrame>
+      <HalftoneDots {...args} />
+      <p>網点は、光を一度紙に翻訳する。</p>
+    </MaterialStoryFrame>
+  ),
+};
+
+export const VignetteLensStory: StoryObj<typeof VignetteLens> = {
+  name: "VignetteLens（レンズ周縁）",
+  args: { strength: 0.45 },
+  argTypes: {
+    strength: { control: { type: "range", min: 0, max: 1, step: 0.05 } },
+  },
+  render: (args) => (
+    <MaterialStoryFrame>
+      <VignetteLens {...args} />
+      <p>視線を中央へ寄せる、静かな縁。</p>
+    </MaterialStoryFrame>
+  ),
+};
+
+export const RisoTextStory: StoryObj<typeof RisoText> = {
+  name: "RisoText（刷りずれた文字）",
+  args: { children: "茜色の誤差", ink: "#c8412f", as: "h3" },
+  argTypes: {
+    ink: { control: "color" },
+    as: { control: "radio", options: ["span", "h1", "h2", "h3", "p"] },
+  },
+  render: (args) => (
+    <MaterialStoryFrame>
+      <RisoText {...args} />
+      <p>刷りずれた数ミリが、文字に体温を与える。</p>
+    </MaterialStoryFrame>
+  ),
+};
+
+export const KomorebiLightStory: StoryObj<typeof KomorebiLight> = {
+  name: "KomorebiLight（木漏れ日）",
+  args: { spots: 11, direction: "left" },
+  argTypes: {
+    spots: { control: { type: "range", min: 1, max: 18, step: 1 } },
+    direction: { control: "radio", options: ["left", "right"] },
+  },
+  render: (args) => (
+    <MaterialStoryFrame>
+      <KomorebiLight {...args} />
+      <p>木漏れ日は、輪郭のない光斑から。</p>
+    </MaterialStoryFrame>
+  ),
+};
+
+export const MoonHaloStory: StoryObj<typeof MoonHalo> = {
+  name: "MoonHalo（月のハロー）",
+  args: { size: 170, glow: 0.8 },
+  argTypes: {
+    size: { control: { type: "range", min: 24, max: 480, step: 4 } },
+    glow: { control: { type: "range", min: 0, max: 1, step: 0.05 } },
+  },
+  render: (args) => (
+    <MaterialStoryFrame>
+      <MoonHalo {...args} />
+      <p>月は、円盤ではなく周囲の滲みで在る。</p>
+    </MaterialStoryFrame>
+  ),
+};
+
+export const FireworkBurstStory: StoryObj<typeof FireworkBurst> = {
+  name: "FireworkBurst（放射花火）",
+  args: { rays: 18, once: false },
+  argTypes: {
+    rays: { control: { type: "range", min: 6, max: 32, step: 1 } },
+    once: { control: "boolean" },
+  },
+  render: (args) => (
+    <MaterialStoryFrame>
+      <FireworkBurst {...args} />
+      <p>夏空に、短い放射線を描く。</p>
+    </MaterialStoryFrame>
+  ),
+};
+
+export const TapeLabelStory: StoryObj<typeof TapeLabel> = {
+  name: "TapeLabel（マスキングテープ）",
+  args: { children: "八月、某、月明かり", width: 220, angle: -2 },
+  argTypes: {
+    width: { control: "text" },
+    angle: { control: { type: "range", min: -30, max: 30, step: 0.5 } },
+  },
+  render: (args) => (
+    <MaterialStoryFrame>
+      <TapeLabel {...args} />
+      <p>引き裂いた端と、糊の筋を残す。</p>
+    </MaterialStoryFrame>
+  ),
+};
+
+export const TypographicStampStory: StoryObj<typeof TypographicStamp> = {
+  name: "TypographicStamp（インクの判子）",
+  args: { label: "承認", tone: "crimson" },
+  argTypes: {
+    label: { control: "text" },
+    tone: { control: "radio", options: ["crimson", "ink", "sepia"] },
+  },
+  render: (args) => (
+    <MaterialStoryFrame>
+      <TypographicStamp {...args} />
+      <p>押す力によって、インクは欠ける。</p>
+    </MaterialStoryFrame>
+  ),
+};
+
+export const HoleMaskStory: StoryObj<typeof HoleMask> = {
+  name: "HoleMask（円形の欠落）",
+  args: { size: 140, stitch: true },
+  argTypes: {
+    size: { control: { type: "range", min: 24, max: 400, step: 4 } },
+    stitch: { control: "boolean" },
+  },
+  render: (args) => (
+    <MaterialStoryFrame>
+      <HoleMask {...args}>
+        <p>読める本文は、そのまま残ります。</p>
+      </HoleMask>
+    </MaterialStoryFrame>
+  ),
+};
+
+export const FractureFrameStory: StoryObj<typeof FractureFrame> = {
+  name: "FractureFrame（割れ目の枠）",
+  args: { pieces: 6, children: "割れても、読める。" },
+  argTypes: {
+    pieces: { control: { type: "range", min: 2, max: 10, step: 1 } },
+  },
+  render: (args) => (
+    <MaterialStoryFrame>
+      <FractureFrame {...args} />
+    </MaterialStoryFrame>
+  ),
+};
+
+export const BubbleFieldStory: StoryObj<typeof BubbleField> = {
+  name: "BubbleField（泡の群れ）",
+  args: { count: 14, release: false },
+  argTypes: {
+    count: { control: { type: "range", min: 1, max: 24, step: 1 } },
+    release: { control: "boolean" },
+  },
+  render: (args) => (
+    <MaterialStoryFrame>
+      <BubbleField {...args} />
+      <p>泡は、視点を替える合図。</p>
+    </MaterialStoryFrame>
+  ),
+};
+
+export const WindPathStory: StoryObj<typeof WindPath> = {
+  name: "WindPath（風の軌跡）",
+  args: { seed: 19, speed: 7 },
+  argTypes: {
+    seed: { control: { type: "range", min: 0, max: 99, step: 1 } },
+    speed: { control: { type: "range", min: 2, max: 60, step: 1 } },
+  },
+  render: (args) => (
+    <MaterialStoryFrame>
+      <WindPath {...args} />
+      <p>風は線ではなく、消え入る軌跡。</p>
+    </MaterialStoryFrame>
+  ),
+};
+
+export const SourceChipStory: StoryObj<typeof SourceChip> = {
+  name: "SourceChip（出典ラベル）",
+  args: { label: "公式 BIOGRAPHY", tier: "primary", href: "https://yorushika.com/" },
+  argTypes: {
+    label: { control: "text" },
+    tier: { control: "radio", options: ["primary", "press", "secondary"] },
+  },
+  render: (args) => (
+    <MaterialStoryFrame>
+      <SourceChip {...args} />
+      <p>一次・報道・二次を、見た目でも区別します。</p>
+    </MaterialStoryFrame>
   ),
 };

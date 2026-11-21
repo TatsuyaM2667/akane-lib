@@ -1,0 +1,48 @@
+.akane-source-chip {
+  --akane-source-ink: var(--akane-ink-muted, #6e675f);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  padding: 0.24em 0.6em;
+  border: 1px solid var(--akane-paper-border, #dfd8ca);
+  border-radius: 2px;
+  background: var(--akane-paper, #f7f4ee);
+  color: var(--akane-source-ink);
+  font-family: var(--akane-font-serif);
+  font-size: 0.76rem;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  vertical-align: middle;
+}
+
+a.akane-source-chip {
+  cursor: pointer;
+}
+
+a.akane-source-chip:hover,
+a.akane-source-chip:focus-visible {
+  border-color: var(--akane-accent, #b73b3a);
+  color: var(--akane-accent, #b73b3a);
+}
+
+.akane-source-chip__tier {
+  padding: 0 0.35em;
+  border: 1px solid currentColor;
+  border-radius: 1px;
+  font-size: 0.82em;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.akane-source-chip__label {
+  overflow-wrap: anywhere;
+}
+
+.akane-source-chip--primary {
+  --akane-source-ink: var(--akane-accent, #b73b3a);
+}
+
+.akane-source-chip--press {
+  --akane-source-ink: var(--akane-sea, #3d5a80);
+}

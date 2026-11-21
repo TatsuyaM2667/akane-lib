@@ -1,0 +1,41 @@
+.akane-paper-tex {
+  --akane-paper-fiber: rgba(122, 92, 64, 0.12);
+  --akane-paper-wash: rgba(255, 252, 240, 0.42);
+  --akane-paper-blend: multiply;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(0deg, transparent 0 3px, var(--akane-paper-fiber) 4px 5px, transparent 6px 11px),
+    repeating-linear-gradient(90deg, transparent 0 5px, var(--akane-paper-fiber) 6px 6px, transparent 7px 14px),
+    radial-gradient(ellipse at 20% 30%, var(--akane-paper-wash), transparent 55%),
+    radial-gradient(ellipse at 78% 72%, var(--akane-paper-wash), transparent 60%);
+  background-blend-mode: overlay, multiply, screen, screen;
+  mix-blend-mode: var(--akane-paper-blend);
+}
+
+.akane-paper-tex--washi {
+  --akane-paper-fiber: rgba(150, 132, 100, 0.16);
+  --akane-paper-wash: rgba(255, 253, 245, 0.5);
+  background-image:
+    repeating-linear-gradient(0deg, transparent 0 9px, var(--akane-paper-fiber) 10px 11px, transparent 12px 26px),
+    repeating-linear-gradient(90deg, transparent 0 14px, var(--akane-paper-fiber) 15px 16px, transparent 17px 33px),
+    radial-gradient(ellipse at 32% 18%, var(--akane-paper-wash), transparent 62%),
+    radial-gradient(ellipse at 68% 80%, var(--akane-paper-wash), transparent 58%);
+}
+
+.akane-paper-tex--newsprint {
+  --akane-paper-fiber: rgba(86, 82, 74, 0.18);
+  --akane-paper-wash: rgba(226, 220, 205, 0.4);
+  --akane-paper-blend: multiply;
+  background-image:
+    repeating-linear-gradient(0deg, transparent 0 2px, var(--akane-paper-fiber) 3px 3px, transparent 4px 7px),
+    repeating-linear-gradient(90deg, transparent 0 3px, var(--akane-paper-fiber) 4px 4px, transparent 5px 8px),
+    radial-gradient(ellipse at 15% 70%, var(--akane-paper-wash), transparent 58%),
+    radial-gradient(ellipse at 85% 30%, var(--akane-paper-wash), transparent 54%);
+  opacity: 0.7;
+}

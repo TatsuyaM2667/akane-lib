@@ -1,0 +1,51 @@
+.akane-komorebi {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+  isolation: isolate;
+  mix-blend-mode: screen;
+}
+
+.akane-komorebi--right {
+  transform: scaleX(-1);
+}
+
+.akane-komorebi__spot {
+  position: absolute;
+  left: var(--akane-komorebi-x, 50%);
+  top: var(--akane-komorebi-y, 50%);
+  width: var(--akane-komorebi-size, 20px);
+  height: var(--akane-komorebi-size, 20px);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 246, 214, 0.92), rgba(244, 214, 150, 0.3) 46%, transparent 72%);
+  box-shadow: 0 0 var(--akane-komorebi-blur, 16px) rgba(255, 236, 188, 0.55);
+  transform: translate(-50%, -50%) rotate(-24deg) scaleX(1.7);
+  opacity: 0.7;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .akane-komorebi__spot {
+    animation: akane-komorebi-flicker 5.5s ease-in-out var(--akane-komorebi-delay, 0s) infinite alternate;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .akane-komorebi__spot {
+    animation: none;
+  }
+}
+
+@keyframes akane-komorebi-flicker {
+  from {
+    opacity: 0.45;
+    transform: translate(-50%, -50%) rotate(-24deg) scaleX(1.5);
+  }
+  to {
+    opacity: 0.85;
+    transform: translate(-52%, -48%) rotate(-18deg) scaleX(1.8);
+  }
+}

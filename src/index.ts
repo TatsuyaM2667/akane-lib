@@ -61,3 +61,48 @@ export type { WhisperTextProps, WhisperVariant } from './components/WhisperText'
 
 export { RelicScene } from './components/RelicScene';
 export type { RelicSceneProps, RelicVariant } from './components/RelicScene';
+
+export { FilmGrainOverlay } from './components/FilmGrainOverlay';
+export type { FilmGrainOverlayProps } from './components/FilmGrainOverlay';
+
+export { PaperTexture } from './components/PaperTexture';
+export type { PaperTextureProps, PaperTone } from './components/PaperTexture';
+
+export { HalftoneDots } from './components/HalftoneDots';
+export type { HalftoneDotsProps, HalftoneTone } from './components/HalftoneDots';
+
+export { VignetteLens } from './components/VignetteLens';
+export type { VignetteLensProps } from './components/VignetteLens';
+
+export { RisoText } from './components/RisoText';
+export type { RisoTextProps, RisoTextTag } from './components/RisoText';
+
+export { KomorebiLight } from './components/KomorebiLight';
+export type { KomorebiLightProps, KomorebiDirection } from './components/KomorebiLight';
+
+export { MoonHalo } from './components/MoonHalo';
+export type { MoonHaloProps } from './components/MoonHalo';
+
+export { FireworkBurst } from './components/FireworkBurst';
+export type { FireworkBurstProps } from './components/FireworkBurst';
+
+export { TapeLabel } from './components/TapeLabel';
+export type { TapeLabelProps } from './components/TapeLabel';
+
+export { TypographicStamp } from './components/TypographicStamp';
+export type { TypographicStampProps, StampTone } from './components/TypographicStamp';
+
+export { HoleMask } from './components/HoleMask';
+export type { HoleMaskProps } from './components/HoleMask';
+
+export { FractureFrame } from './components/FractureFrame';
+export type { FractureFrameProps } from './components/FractureFrame';
+
+export { BubbleField } from './components/BubbleField';
+export type { BubbleFieldProps } from './components/BubbleField';
+
+export { WindPath } from './components/WindPath';
+export type { WindPathProps } from './components/WindPath';
+
+export { SourceChip } from './components/SourceChip';
+export type { SourceChipProps, SourceTier } from './components/SourceChip';

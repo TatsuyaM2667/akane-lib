@@ -1,4 +1,5 @@
 import type { SkyPhase } from '../index';
+import { MOOD_TOKENS } from './catalog';
 
 export interface PropDoc {
   name: string;
@@ -517,6 +518,307 @@ const lines: LyricLine[] = [
     ],
     related: ['whisper-text', 'twilight-sky', 'cassette-player'],
   },
+  {
+    slug: 'film-grain-overlay',
+    name: 'FilmGrainOverlay',
+    japanese: 'フィルム粒子',
+    group: 'マテリアル',
+    motif: '全作品の空気感',
+    summary: '外部画像なしで、フィルムのような微細な粒子を重ねる装飾レイヤーです。',
+    detail: 'feTurbulence のノイズを data URI として埋め込み、soft-light で紙と空の両方に馴染みます。animated を付けると、静止を尊重したうえでごく軽い揺れを追加できます。',
+    usage: `import { FilmGrainOverlay } from '@tatsuyamiura2667/akane-lib';
+
+<div style={{ position: 'relative' }}>
+  <p>紙の上の一行</p>
+  <FilmGrainOverlay intensity={0.12} />
+</div>`,
+    props: [
+      { name: 'intensity', type: 'number', default: '0.12', description: '粒子の不透明度（0〜1）' },
+      { name: 'animated', type: 'boolean', default: 'false', description: '微かな動きを付ける' },
+      { name: 'className', type: 'string', default: "''", description: '追加クラス名' },
+    ],
+    notes: ['装飾レイヤーは aria-hidden。', 'prefers-reduced-motion では静止します。'],
+    related: ['paper-tex', 'vignette-lens', 'halftone-dots'],
+  },
+  {
+    slug: 'paper-tex',
+    name: 'PaperTexture',
+    japanese: '紙の繊維',
+    group: 'マテリアル',
+    motif: '手紙／本／封筒',
+    summary: '和紙・新聞紙・便箋の違いを、繊維と洗いのグラデーションで表現します。',
+    detail: 'tone を切り替えると繊維の間隔と色が変わります。親要素に重ねても本文の選択やクリックを邪魔しません。',
+    usage: `import { PaperTexture } from '@tatsuyamiura2667/akane-lib';
+
+<div style={{ position: 'relative' }}>
+  <PaperTexture tone="washi" />
+  <p>文字はそのまま読めます。</p>
+</div>`,
+    props: [
+      { name: 'tone', type: "'paper' | 'washi' | 'newsprint'", default: "'paper'", description: '紙の質感' },
+      { name: 'className', type: 'string', default: "''", description: '追加クラス名' },
+    ],
+    related: ['letter-card', 'notebook-memo', 'film-grain-overlay'],
+  },
+  {
+    slug: 'halftone-dots',
+    name: 'HalftoneDots',
+    japanese: '網点',
+    group: 'マテリアル',
+    motif: 'リソ／新版画／印刷',
+    summary: ' radial-gradient の点で、印刷物のような網点を敷く装飾です。',
+    detail: 'angle と density で点の並びと間隔を調整できます。インク色はトークンから継承するため、テーマ切り替えに追従します。',
+    usage: `import { HalftoneDots } from '@tatsuyamiura2667/akane-lib';
+
+<div style={{ position: 'relative' }}>
+  <HalftoneDots angle={45} density={7} />
+  <p>刷り物の空気</p>
+</div>`,
+    props: [
+      { name: 'angle', type: 'number', default: '45', description: '点の並び角度' },
+      { name: 'density', type: 'number', default: '6', description: '点の間隔（px）' },
+      { name: 'tone', type: "'ink' | 'accent' | 'paper'", default: "'ink'", description: '点の色' },
+      { name: 'className', type: 'string', default: "''", description: '追加クラス名' },
+    ],
+    related: ['riso-text', 'paper-tex', 'typographic-stamp'],
+  },
+  {
+    slug: 'vignette-lens',
+    name: 'VignetteLens',
+    japanese: 'レンズ周縁',
+    group: 'マテリアル',
+    motif: '固定視点／映画',
+    summary: '左右盲や茜の夕景のような、周縁がわずかに沈むレンズ効果を重ねます。',
+    detail: 'strength を上げるほど縁が暗くなります。文字は装飾より手前に残るため、可読性を保ったまま空気を締められます。',
+    usage: `import { VignetteLens } from '@tatsuyamiura2667/akane-lib';
+
+<div style={{ position: 'relative' }}>
+  <VignetteLens strength={0.4} />
+  <p>視線は中央へ残る</p>
+</div>`,
+    props: [
+      { name: 'strength', type: 'number', default: '0.35', description: '周縁の暗さ（0〜1）' },
+      { name: 'className', type: 'string', default: "''", description: '追加クラス名' },
+    ],
+    related: ['film-grain-overlay', 'komorebi-light', 'twilight-sky'],
+  },
+  {
+    slug: 'riso-text',
+    name: 'RisoText',
+    japanese: '刷りずれた文字',
+    group: 'マテリアル',
+    motif: 'タイポ／誤差',
+    summary: '本文を一度だけ読み上げながら、見た目にはインクの刷りずれを再現します。',
+    detail: 'as で見出しレベルを選べます。複製された装飾文字は aria-hidden のため、スクリーンリーダーには同じ文章が二度読まれません。',
+    usage: `import { RisoText } from '@tatsuyamiura2667/akane-lib';
+
+<RisoText as="h2" ink="#c8412f">茜色の誤差</RisoText>`,
+    props: [
+      { name: 'children', type: 'ReactNode', default: '—', description: '表示する本文' },
+      { name: 'ink', type: 'string', default: 'currentColor', description: 'ずらしインクの色' },
+      { name: 'as', type: "'span' | 'h1' | 'h2' | 'h3' | 'p'", default: "'span'", description: '描画する要素' },
+      { name: 'className', type: 'string', default: "''", description: '追加クラス名' },
+    ],
+    related: ['halftone-dots', 'typographic-stamp', 'source-chip'],
+  },
+  {
+    slug: 'komorebi-light',
+    name: 'KomorebiLight',
+    japanese: '木漏れ日',
+    group: 'マテリアル',
+    motif: '夏／木漏れ日／残像',
+    summary: '不揃いな光斑を重ね、直射日光の硬さをやわらかく演出します。',
+    detail: 'spots は 1〜18 に丸められます。direction で光が差し込む向きを変えられ、screen 合成で紙色を明るくします。',
+    usage: `import { KomorebiLight } from '@tatsuyamiura2667/akane-lib';
+
+<div style={{ position: 'relative' }}>
+  <KomorebiLight spots={10} direction="left" />
+  <p>葉の間から落ちる光</p>
+</div>`,
+    props: [
+      { name: 'spots', type: 'number', default: '7', description: '光斑の数（1〜18）' },
+      { name: 'direction', type: "'left' | 'right'", default: "'left'", description: '光が差す向き' },
+      { name: 'className', type: 'string', default: "''", description: '追加クラス名' },
+    ],
+    related: ['twilight-sky', 'sakura-thief-overlay', 'vignette-lens'],
+  },
+  {
+    slug: 'moon-halo',
+    name: 'MoonHalo',
+    japanese: '月のハロー',
+    group: 'マテリアル',
+    motif: '夜／月／孤独',
+    summary: '月そのものより、周囲のにじんだ光を主役にした装飾です。',
+    detail: 'size と glow で円光の大きさと滲みを調整します。文字を重ねず、余白で静けさを保つのが基本の使い方です。',
+    usage: `import { MoonHalo } from '@tatsuyamiura2667/akane-lib';
+
+<div style={{ position: 'relative' }}>
+  <MoonHalo size={160} glow={0.8} />
+</div>`,
+    props: [
+      { name: 'size', type: 'number', default: '120', description: '円光の直径（px）' },
+      { name: 'glow', type: 'number', default: '0.6', description: '滲みの強さ（0〜1）' },
+      { name: 'className', type: 'string', default: "''", description: '追加クラス名' },
+    ],
+    related: ['twilight-sky', 'twilight-sky', 'film-grain-overlay'],
+  },
+  {
+    slug: 'firework-burst',
+    name: 'FireworkBurst',
+    japanese: '放射花火',
+    group: 'マテリアル',
+    motif: '靴の花火／夏空',
+    summary: '決定論的な SVG の放射線で、打ち上がった直後の花火を描きます。',
+    detail: 'rays は 6〜32 に丸められます。once を付けると短い出現アニメーションだけが走り、reduced-motion では静止した花火が残ります。',
+    usage: `import { FireworkBurst } from '@tatsuyamiura2667/akane-lib';
+
+<div style={{ position: 'relative' }}>
+  <FireworkBurst rays={18} />
+</div>`,
+    props: [
+      { name: 'rays', type: 'number', default: '14', description: '放射線の数（6〜32）' },
+      { name: 'once', type: 'boolean', default: 'false', description: '一度だけ短く動かす' },
+      { name: 'className', type: 'string', default: "''", description: '追加クラス名' },
+    ],
+    related: ['twilight-sky', 'bubble-field', 'moon-halo'],
+  },
+  {
+    slug: 'tape-label',
+    name: 'TapeLabel',
+    japanese: 'マスキングテープ',
+    group: 'マテリアル',
+    motif: '盗作／コラージュ',
+    summary: '引き裂いた端と糊の筋を持つ、紙のラベル wrapper です。',
+    detail: 'children はそのまま操作可能な要素として残ります。angle と width で、貼り付けた場所の不揃いを調整できます。',
+    usage: `import { TapeLabel } from '@tatsuyamiura2667/akane-lib';
+
+<TapeLabel width={220} angle={-2}>八月、某、月明かり</TapeLabel>`,
+    props: [
+      { name: 'children', type: 'ReactNode', default: '—', description: 'ラベルに貼る内容' },
+      { name: 'angle', type: 'number', default: '-1.5', description: '傾き（度）' },
+      { name: 'width', type: 'number | string', default: '180', description: 'ラベルの幅' },
+      { name: 'className', type: 'string', default: "''", description: '追加クラス名' },
+    ],
+    related: ['letter-card', 'typographic-stamp', 'source-chip'],
+  },
+  {
+    slug: 'typographic-stamp',
+    name: 'TypographicStamp',
+    japanese: 'インクの判子',
+    group: 'マテリアル',
+    motif: '451／ archive／タイポ',
+    summary: '二重枠とインク欠けで、押印された短い言葉を表現します。',
+    detail: 'tone で朱・墨・セピアを切り替えます。マスクは横方向の細い欠落のみなので、斜線模様は残りません。',
+    usage: `import { TypographicStamp } from '@tatsuyamiura2667/akane-lib';
+
+<TypographicStamp label="承認" tone="crimson" />`,
+    props: [
+      { name: 'label', type: 'string', default: '—', description: '判子に刻む文字' },
+      { name: 'tone', type: "'crimson' | 'ink' | 'sepia'", default: "'crimson'", description: 'インクの色' },
+      { name: 'className', type: 'string', default: "''", description: '追加クラス名' },
+    ],
+    related: ['riso-text', 'tape-label', 'source-chip'],
+  },
+  {
+    slug: 'hole-mask',
+    name: 'HoleMask',
+    japanese: '円形の欠落',
+    group: 'マテリアル',
+    motif: '心に穴が空いた',
+    summary: '中央に丸い欠落を残しながら、本文は普通に読めるようにする wrapper です。',
+    detail: 'stitch を付けると縫い目のような同心円が加わります。children はマスクの外側に配置され、操作も可能です。',
+    usage: `import { HoleMask } from '@tatsuyamiura2667/akane-lib';
+
+<HoleMask size={120} stitch>
+  <p>読める本文はそのまま残ります。</p>
+</HoleMask>`,
+    props: [
+      { name: 'size', type: 'number', default: '96', description: '欠落の直径（px）' },
+      { name: 'stitch', type: 'boolean', default: 'true', description: '縫い目を描く' },
+      { name: 'children', type: 'ReactNode', default: '—', description: '欠落の外に置く内容' },
+      { name: 'className', type: 'string', default: "''", description: '追加クラス名' },
+    ],
+    related: ['fracture-frame', 'letter-card', 'ghost-flower-refraction'],
+  },
+  {
+    slug: 'fracture-frame',
+    name: 'FractureFrame',
+    japanese: '割れ目の枠',
+    group: 'マテリアル',
+    motif: '思想犯／修羅',
+    summary: '内容を隠さずに、割れた硝子のような線だけを重ねる枠です。',
+    detail: 'pieces は 2〜10 に丸められます。線は装飾レイヤーなので、ボタンやリンクが中にあってもそのまま操作できます。',
+    usage: `import { FractureFrame } from '@tatsuyamiura2667/akane-lib';
+
+<FractureFrame pieces={6}>
+  <p>割れても、読める。</p>
+</FractureFrame>`,
+    props: [
+      { name: 'pieces', type: 'number', default: '5', description: '割れ目の数（2〜10）' },
+      { name: 'children', type: 'ReactNode', default: '—', description: '枠の中身' },
+      { name: 'className', type: 'string', default: "''", description: '追加クラス名' },
+    ],
+    related: ['hole-mask', 'whisper-text', 'typewriter-censor-text'],
+  },
+  {
+    slug: 'bubble-field',
+    name: 'BubbleField',
+    japanese: '泡の群れ',
+    group: 'マテリアル',
+    motif: 'あぶく／ノーチラス',
+    summary: '水中や密室に漂う泡を、CSS の円とマスクで描きます。',
+    detail: 'release を付けると彩度と動きがわずかに上がり、視点が開いた瞬間を表現できます。count は 1〜24 に丸められます。',
+    usage: `import { BubbleField } from '@tatsuyamiura2667/akane-lib';
+
+<div style={{ position: 'relative' }}>
+  <BubbleField count={14} release />
+</div>`,
+    props: [
+      { name: 'count', type: 'number', default: '10', description: '泡の数（1〜24）' },
+      { name: 'release', type: 'boolean', default: 'false', description: '解放時の彩度と動き' },
+      { name: 'className', type: 'string', default: "''", description: '追加クラス名' },
+    ],
+    related: ['ghost-flower-refraction', 'firework-burst', 'twilight-sky'],
+  },
+  {
+    slug: 'wind-path',
+    name: 'WindPath',
+    japanese: '風の軌跡',
+    group: 'マテリアル',
+    motif: '風を食む／又三郎',
+    summary: '三次ベジェの線が消え入ることで、風の通り道を描きます。',
+    detail: 'seed から形を決めるため、再描画しても揺らぎません。speed は秒数で、長くすると静かな流れになります。',
+    usage: `import { WindPath } from '@tatsuyamiura2667/akane-lib';
+
+<div style={{ position: 'relative' }}>
+  <WindPath seed={19} speed={7} />
+</div>`,
+    props: [
+      { name: 'seed', type: 'number', default: '7', description: '形を決める整数' },
+      { name: 'speed', type: 'number', default: '8', description: '一周期の秒数' },
+      { name: 'className', type: 'string', default: "''", description: '追加クラス名' },
+    ],
+    related: ['sakura-thief-overlay', 'komorebi-light', 'twilight-sky'],
+  },
+  {
+    slug: 'source-chip',
+    name: 'SourceChip',
+    japanese: '出典ラベル',
+    group: 'マテリアル',
+    motif: '資料の層',
+    summary: '一次・報道・二次の違いを、小さなラベルで明示します。',
+    detail: 'href を渡すとリンクとして描画されます。資料の格付けを利用者に隠さないための、ドキュメント向けの小さな部品です。',
+    usage: `import { SourceChip } from '@tatsuyamiura2667/akane-lib';
+
+<SourceChip label="公式 BIOGRAPHY" tier="primary" href="https://yorushika.com/" />`,
+    props: [
+      { name: 'label', type: 'string', default: '—', description: '出典の名前' },
+      { name: 'href', type: 'string', default: '—', description: '出典リンク' },
+      { name: 'tier', type: "'primary' | 'press' | 'secondary'", default: "'secondary'", description: '資料の種別' },
+      { name: 'className', type: 'string', default: "''", description: '追加クラス名' },
+    ],
+    related: ['riso-text', 'tape-label', 'typographic-stamp'],
+  },
 ];
 
 export interface MotifDoc {
@@ -612,6 +914,90 @@ export const MOTIFS: MotifDoc[] = [
     components: ['whisper-text', 'relic-scene', 'typewriter-censor-text'],
     accent: '#7a1f27',
   },
+  {
+    title: '紙と手紙',
+    subtitle: '封筒・日記・活字の物質性',
+    body: '作品を貫くのは、手紙や本という紙の手触りです。繊維、洗い、判子の欠けを重ね、文字が紙に宿る感覚を部品にしました。',
+    components: ['paper-tex', 'letter-card', 'typographic-stamp', 'tape-label'],
+    accent: '#f7f0e1',
+  },
+  {
+    title: '青と夜',
+    subtitle: 'blue hour と月明かり',
+    body: '群青は背景色ではなく、光が失われていく時間の色です。月のハローとフィルム粒子で、距離のある静けさを保ちます。',
+    components: ['moon-halo', 'film-grain-overlay', 'twilight-sky'],
+    accent: '#2b4a92',
+  },
+  {
+    title: '夏の光',
+    subtitle: '入道雲と木漏れ日',
+    body: '強い光源と硬い影、葉の間から落ちる不揃いな光斑。色を足すより、光の当たり方を揃えることで夏が立ち上がります。',
+    components: ['komorebi-light', 'firework-burst', 'vignette-lens'],
+    accent: '#d97a45',
+  },
+  {
+    title: '雨と硝子',
+    subtitle: '105度の雨線と水滴',
+    body: '窓越しの景色は、雨粒とぼかしで輪郭がほどけます。既存の波紋ボタンと車窓に、レンズ周縁を重ねて使います。',
+    components: ['vignette-lens', 'rain-ripple-button', 'train-window-frame'],
+    accent: '#b9c0c4',
+  },
+  {
+    title: '海と泡',
+    subtitle: '水平線と溶ける焦点',
+    body: '遠い水平線、気泡、溶ける焦点。四色程度に抑えた階調と、少し遅い泡の動きで視点を海の深さへ運びます。',
+    components: ['bubble-field', 'ghost-flower-refraction', 'relic-scene'],
+    accent: '#3e6b69',
+  },
+  {
+    title: '風と雲',
+    subtitle: '流線と視差の上昇',
+    body: '風は線そのものではなく、消え入る軌跡として残ります。曲線のdashと、軽い視差の重なりで気配だけを描きます。',
+    components: ['wind-path', 'twilight-sky', 'sakura-thief-overlay'],
+    accent: '#6e8f6b',
+  },
+  {
+    title: '花と散落',
+    subtitle: '桜、花瓶、花吹雪',
+    body: '散るものは、速度と枚数で印象が変わります。花びらを一枚のプリミティブに集約し、風と光の方向へ接続しました。',
+    components: ['sakura-thief-overlay', 'wind-path', 'komorebi-light'],
+    accent: '#f4b8c4',
+  },
+  {
+    title: '線と版',
+    subtitle: '新版画・リソ・滲み',
+    body: '背景にまで一定幅の輪郭を入れる、版ずれを残す。絵を模写せず、印刷の処理だけを抽象化した系統です。',
+    components: ['halftone-dots', 'riso-text', 'oil-paint-texture'],
+    accent: '#c8412f',
+  },
+  {
+    title: '身体と仮面',
+    subtitle: '行進・舞・顔の不在',
+    body: '人物を特定の形で描かず、等間隔のマーカーや裂け目で「誰かが居た跡」だけを残します。操作要素はそのまま読めます。',
+    components: ['fracture-frame', 'hole-mask', 'relic-scene'],
+    accent: '#8a6a4f',
+  },
+  {
+    title: '断片と視点',
+    subtitle: '横長、固定、多重露光',
+    body: '同じ情景でも、切り取り方が変われば意味が変わります。枠と視点のトークンを分け、断片を安全に並べられるようにしました。',
+    components: ['fracture-frame', 'train-window-frame', 'whisper-text'],
+    accent: '#1e2d40',
+  },
+  {
+    title: 'フィルム処理',
+    subtitle: '粒子・ビネット・低フレーム',
+    body: '空気感は、色ではなく粒子と周縁の減衰で決まります。全コンポーネントに共通して重ねられる三つの下地を用意しました。',
+    components: ['film-grain-overlay', 'vignette-lens', 'paper-tex'],
+    accent: '#6b6459',
+  },
+  {
+    title: '文学の参照',
+    subtitle: '宮沢賢治・グリム・朔太郎',
+    body: '物語の出典は引用せず、ラベルとしてだけ示します。資料の層を可視化することで、着想と複製の境界を保ちます。',
+    components: ['source-chip', 'tape-label', 'typewriter-censor-text'],
+    accent: '#b73b3a',
+  },
 ];
 
 export const FAQS: { question: string; answer: string }[] = [
@@ -660,6 +1046,16 @@ export const FAQS: { question: string; answer: string }[] = [
     answer:
       '使いません。RelicScene は CSS の perspective と transform-style: preserve-3d だけで紙飛行機・結晶・鳶・カセットを浮かべているため、追加の依存や GPU 初期化は不要です。',
   },
+  {
+    question: '43作品の資料は、どの範囲まで参考にしていますか？',
+    answer:
+      'タイトル、公開年、モチーフ、色の傾向だけを資料として扱い、歌詞・映像フレーム・キャラクターデザイン・音声は複製していません。HEXは設計用の提案値で、公式のカラースクリプトではありません。資料の種別は primary / press / secondary でラベルしています。',
+  },
+  {
+    question: '新しいマテリアルのアニメーションを止めたい',
+    answer:
+      'すべての装飾は prefers-reduced-motion を尊重します。個別に止めたい場合は、FilmGrainOverlay の animated を外す、FireworkBurst の once を外す、BubbleField の release を外すことで静止した表現になります。',
+  },
 ];
 
 export const TOKENS: { group: string; rows: { name: string; value: string; description: string }[] }[] = [
@@ -681,5 +1077,13 @@ export const TOKENS: { group: string; rows: { name: string; value: string; descr
       { name: '--akane-tracking-poetic', value: '0.14em', description: '詩的な文字間' },
       { name: '--akane-leading-poetic', value: '2.1', description: '行間' },
     ],
+  },
+  {
+    group: 'MV着想の提案トークン',
+    rows: MOOD_TOKENS.map((token) => ({
+      name: token.name,
+      value: token.value,
+      description: token.role,
+    })),
   },
 ];
