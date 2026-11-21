@@ -2,10 +2,12 @@ import React from 'react';
 import './WhisperText.css';
 
 export type WhisperVariant = 'telepath' | 'envy';
+export type WhisperAnimation = 'reveal' | 'ink' | 'flicker' | 'wave' | 'drift';
 
 export interface WhisperTextProps {
   text: string;
   variant?: WhisperVariant;
+  animation?: WhisperAnimation;
   speedMs?: number;
   className?: string;
 }
@@ -13,6 +15,7 @@ export interface WhisperTextProps {
 export const WhisperText: React.FC<WhisperTextProps> = ({
   text,
   variant = 'telepath',
+  animation = 'reveal',
   speedMs = 55,
   className = '',
 }) => {
@@ -20,7 +23,8 @@ export const WhisperText: React.FC<WhisperTextProps> = ({
 
   return (
     <p
-      className={`akane-whisper akane-whisper--${variant} ${className}`.trim()}
+      className={`akane-whisper akane-whisper--${variant} akane-whisper--anim-${animation} ${className}`.trim()}
+      data-animation={animation}
     >
       <span className="akane-whisper__sr">{text}</span>
       <span className="akane-whisper__glitch" data-text={text} aria-hidden="true" />

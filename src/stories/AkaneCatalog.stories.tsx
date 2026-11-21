@@ -89,14 +89,57 @@ export const CassettePlayerStory: StoryObj<typeof CassettePlayer> = {
   name: "CassettePlayer（カセットテープ）",
   args: {
     side: "A",
+    variant: "normal",
     title: "第一夜 — 夢の記憶",
     durationSec: 180,
   },
   argTypes: {
     side: { control: "radio", options: ["A", "B"] },
+    variant: {
+      control: "radio",
+      options: ["normal", "chrome", "metal", "clear", "archive"],
+    },
     durationSec: { control: { type: "number", min: 10, max: 600 } },
   },
   render: (args) => <CassettePlayer {...args} />,
+};
+
+export const CassetteVariantsStory: StoryObj<typeof CassettePlayer> = {
+  name: "CassettePlayer（5種類のテープ）",
+  args: { title: "夢の記憶", durationSec: 180 },
+  render: () => (
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+        gap: "1rem",
+      }}
+    >
+      {(["normal", "chrome", "metal", "clear", "archive"] as const).map(
+        (variant) => (
+          <div
+            key={variant}
+            style={{
+              padding: "1rem",
+              borderRadius: "10px",
+              border: "1px solid var(--akane-paper-border)",
+            }}
+          >
+            <small
+              style={{
+                display: "block",
+                marginBottom: "0.6rem",
+                letterSpacing: "0.2em",
+              }}
+            >
+              {variant.toUpperCase()}
+            </small>
+            <CassettePlayer title="夢の記憶" variant={variant} durationSec={180} />
+          </div>
+        ),
+      )}
+    </div>
+  ),
 };
 
 export const LyricLinesStory: StoryObj<typeof LyricLines> = {
@@ -278,11 +321,16 @@ export const WhisperTextStory: StoryObj<typeof WhisperText> = {
   args: {
     text: "白く降る記号の中で、名前のない想いを送る",
     variant: "telepath",
+    animation: "reveal",
     speedMs: 45,
   },
   argTypes: {
     text: { control: "text" },
     variant: { control: "radio", options: ["telepath", "envy"] },
+    animation: {
+      control: "radio",
+      options: ["reveal", "ink", "flicker", "wave", "drift"],
+    },
     speedMs: { control: { type: "range", min: 10, max: 200, step: 5 } },
   },
   render: (args) => (
@@ -297,6 +345,56 @@ export const WhisperTextStory: StoryObj<typeof WhisperText> = {
       }}
     >
       <WhisperText {...args} />
+    </div>
+  ),
+};
+
+export const WhisperAnimationsStory: StoryObj<typeof WhisperText> = {
+  name: "WhisperText（5種類の出現モーション）",
+  args: {
+    text: "白い信号が、夜を渡っていく",
+    variant: "telepath",
+    speedMs: 45,
+  },
+  render: () => (
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+        gap: "1rem",
+      }}
+    >
+      {(
+        [
+          ["reveal", "滲んで浮かぶ"],
+          ["ink", "インクが滲む"],
+          ["flicker", "信号が途切れる"],
+          ["wave", "波打って届く"],
+          ["drift", "遠くから漂う"],
+        ] as const
+      ).map(([animation, label]) => (
+        <div
+          key={animation}
+          style={{
+            minHeight: "140px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            gap: "0.75rem",
+            padding: "1.25rem",
+            borderRadius: "10px",
+            background: "#101a26",
+            color: "#e7f1f7",
+          }}
+        >
+          <small style={{ letterSpacing: "0.2em", opacity: 0.7 }}>{label}</small>
+          <WhisperText
+            text="白い信号が、夜を渡っていく"
+            animation={animation}
+            speedMs={45}
+          />
+        </div>
+      ))}
     </div>
   ),
 };

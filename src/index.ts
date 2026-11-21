@@ -17,7 +17,7 @@ export { TwilightSky } from './components/TwilightSky';
 export type { TwilightSkyProps, SkyPhase } from './components/TwilightSky';
 
 export { CassettePlayer } from './components/CassettePlayer';
-export type { CassettePlayerProps } from './components/CassettePlayer';
+export type { CassettePlayerProps, CassetteVariant } from './components/CassettePlayer';
 
 export { BookmarkRibbon } from './components/BookmarkRibbon';
 export type { BookmarkRibbonProps } from './components/BookmarkRibbon';
@@ -57,7 +57,7 @@ export type {
 } from './components/OilPaintTexture';
 
 export { WhisperText } from './components/WhisperText';
-export type { WhisperTextProps, WhisperVariant } from './components/WhisperText';
+export type { WhisperTextProps, WhisperVariant, WhisperAnimation } from './components/WhisperText';
 
 export { RelicScene } from './components/RelicScene';
 export type { RelicSceneProps, RelicVariant } from './components/RelicScene';

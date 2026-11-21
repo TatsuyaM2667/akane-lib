@@ -1,14 +1,34 @@
 .akane-cassette {
+  --cassette-shell: var(--akane-paper);
+  --cassette-ink: var(--akane-ink);
+  --cassette-shell-edge: var(--akane-paper-border);
+  --cassette-divider: var(--akane-accent);
+  --cassette-type: var(--akane-accent);
+  --cassette-label: transparent;
+  --cassette-window: #121720;
+  --cassette-tape: #2c3542;
+  --cassette-reel: #dfd8ca;
+  --cassette-reel-core: #f7f4ee;
+  --cassette-progress: var(--akane-dusk);
+  --cassette-control-border: var(--akane-ink-muted);
+  --cassette-glow: var(--akane-shadow);
   box-sizing: border-box;
   width: 100%;
   max-width: 340px;
-  background-color: var(--akane-paper);
-  color: var(--akane-ink);
-  border: 1px solid var(--akane-paper-border);
+  color: var(--cassette-ink);
+  background-color: var(--cassette-shell);
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.07),
+    transparent 22%,
+    transparent 78%,
+    rgba(0, 0, 0, 0.05)
+  );
+  border: 1px solid var(--cassette-shell-edge);
   border-radius: 8px;
   padding: 1.25rem 1.5rem;
   font-family: var(--akane-font-serif);
-  box-shadow: 0 12px 28px var(--akane-shadow);
+  box-shadow: 0 12px 28px var(--cassette-glow);
   user-select: none;
   transition:
     background-color 1.4s ease,
@@ -17,26 +37,37 @@
     box-shadow 1.4s ease;
 }
 
+.akane-cassette *,
+.akane-cassette *::before,
+.akane-cassette *::after {
+  box-sizing: border-box;
+}
+
 .akane-cassette__label {
-  border-bottom: 1px solid var(--akane-accent);
-  padding-bottom: 0.5rem;
-  margin-bottom: 1rem;
-  display: flex;
-  gap: 0.75rem;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
   align-items: baseline;
+  gap: 0.45rem 0.75rem;
+  padding: 0.55rem 0.65rem;
+  margin-bottom: 1rem;
+  background-color: var(--cassette-label);
+  border: 1px solid var(--cassette-divider);
+  border-bottom-width: 2px;
+  border-radius: 3px;
   transition: border-color 1.4s ease;
 }
 
 .akane-cassette__side {
-  font-size: 0.75rem;
+  grid-column: 1;
+  font-size: 0.72rem;
   font-weight: 600;
-  color: var(--akane-accent);
+  color: var(--cassette-type);
   letter-spacing: 0.1em;
-  transition: color 1.4s ease;
+  white-space: nowrap;
 }
 
 .akane-cassette__title {
+  grid-column: 2;
   min-width: 0;
   overflow: hidden;
   font-size: 0.95rem;
@@ -45,23 +76,40 @@
   white-space: nowrap;
 }
 
+.akane-cassette__type {
+  grid-column: 1 / -1;
+  justify-self: start;
+  padding: 0.12rem 0.42rem;
+  color: var(--cassette-type);
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  font-family: var(--akane-font-sans, sans-serif);
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  line-height: 1.4;
+}
+
 .akane-cassette__window {
-  background-color: #121720;
+  background-color: var(--cassette-window);
+  border: 1px solid rgba(0, 0, 0, 0.28);
   border-radius: 4px;
   padding: 0.9rem 1.25rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1rem;
+  box-shadow: inset 0 1px 8px rgba(0, 0, 0, 0.45);
 }
 
 .akane-cassette__reel {
+  flex: 0 0 auto;
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  border: 3px dashed #dfd8ca;
+  border: 3px dashed var(--cassette-reel);
   display: grid;
   place-items: center;
+  transition: border-color 1.4s ease;
 }
 
 .akane-cassette__reel--spinning {
@@ -72,13 +120,15 @@
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background-color: #f7f4ee;
+  background-color: var(--cassette-reel-core);
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.18);
 }
 
 .akane-cassette__tape-bar {
   flex: 1;
   height: 6px;
-  background-color: #2c3542;
+  min-width: 24px;
+  background-color: var(--cassette-tape);
   margin: 0 1rem;
   border-radius: 2px;
   overflow: hidden;
@@ -86,7 +136,7 @@
 
 .akane-cassette__tape-progress {
   height: 100%;
-  background-color: var(--akane-dusk);
+  background-color: var(--cassette-progress);
   transition: width 0.3s linear;
 }
 
@@ -94,12 +144,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0.5rem;
 }
 
 .akane-cassette__btn {
   background: transparent;
-  border: 1px solid var(--akane-ink-muted);
-  color: var(--akane-ink);
+  border: 1px solid var(--cassette-control-border);
+  color: var(--cassette-ink);
   font-family: var(--akane-font-serif);
   font-size: 0.85rem;
   letter-spacing: 0.12em;
@@ -109,14 +160,81 @@
 }
 
 .akane-cassette__btn:hover {
-  border-color: var(--akane-accent);
-  color: var(--akane-accent);
+  border-color: var(--cassette-progress);
+  color: var(--cassette-progress);
 }
 
 .akane-cassette__time {
   font-size: 0.8rem;
-  color: var(--akane-ink-muted);
+  color: var(--cassette-ink);
+  opacity: 0.7;
   letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.akane-cassette--chrome {
+  --cassette-shell: #211f1e;
+  --cassette-ink: #f1e5d8;
+  --cassette-shell-edge: #6f5d4f;
+  --cassette-divider: #b87945;
+  --cassette-type: #e8a76a;
+  --cassette-label: #2a2622;
+  --cassette-window: #0c0d0f;
+  --cassette-tape: #191919;
+  --cassette-reel: #e2a35f;
+  --cassette-reel-core: #f4d2aa;
+  --cassette-progress: #e07a5f;
+  --cassette-control-border: #9b7c62;
+  --cassette-glow: rgba(120, 61, 34, 0.38);
+}
+
+.akane-cassette--metal {
+  --cassette-shell: #c3cbd4;
+  --cassette-ink: #1b2732;
+  --cassette-shell-edge: #8797a6;
+  --cassette-divider: #4f7894;
+  --cassette-type: #2f6c90;
+  --cassette-label: rgba(246, 250, 252, 0.72);
+  --cassette-window: #101c27;
+  --cassette-tape: #263746;
+  --cassette-reel: #d6e8f2;
+  --cassette-reel-core: #6e9cb9;
+  --cassette-progress: #5aa0c7;
+  --cassette-control-border: #5f7689;
+  --cassette-glow: rgba(42, 78, 105, 0.28);
+}
+
+.akane-cassette--clear {
+  --cassette-shell: rgba(216, 236, 240, 0.38);
+  --cassette-ink: #1c343c;
+  --cassette-shell-edge: rgba(105, 165, 176, 0.7);
+  --cassette-divider: rgba(45, 127, 141, 0.65);
+  --cassette-type: #247786;
+  --cassette-label: rgba(255, 255, 255, 0.38);
+  --cassette-window: rgba(15, 42, 51, 0.86);
+  --cassette-tape: #16313a;
+  --cassette-reel: #bfe7ef;
+  --cassette-reel-core: #e7fbfd;
+  --cassette-progress: #67b7c4;
+  --cassette-control-border: rgba(36, 119, 134, 0.65);
+  --cassette-glow: rgba(65, 142, 155, 0.26);
+  backdrop-filter: blur(3px);
+}
+
+.akane-cassette--archive {
+  --cassette-shell: #e7ddc9;
+  --cassette-ink: #342d24;
+  --cassette-shell-edge: #b7a58b;
+  --cassette-divider: #9b4a41;
+  --cassette-type: #8c3b34;
+  --cassette-label: rgba(255, 252, 243, 0.75);
+  --cassette-window: #2a2620;
+  --cassette-tape: #3a332b;
+  --cassette-reel: #d8c8a6;
+  --cassette-reel-core: #f4e8cf;
+  --cassette-progress: #a74c43;
+  --cassette-control-border: #9a8468;
+  --cassette-glow: rgba(92, 70, 45, 0.26);
 }
 
 @keyframes akane-spin {
@@ -125,5 +243,15 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .akane-cassette__reel--spinning {
+    animation: none;
+  }
+
+  .akane-cassette__tape-progress {
+    transition: none;
   }
 }

@@ -31,7 +31,9 @@ import {
   BubbleField,
   WindPath,
   SourceChip,
+  type CassetteVariant,
   type RelicVariant,
+  type WhisperAnimation,
 } from '../index';
 import { PHASES } from './content';
 
@@ -46,6 +48,70 @@ function MaterialStage({ label, children }: { label: string; children: ReactNode
     <div className="docs-material-preview">
       <span className="docs-material-preview__label">{label}</span>
       <div className="docs-material-preview__stage">{children}</div>
+    </div>
+  );
+}
+
+const CASSETTE_VARIANTS: { id: CassetteVariant; label: string; note: string }[] = [
+  { id: 'normal', label: 'NORMAL', note: '紙ラベル / 標準' },
+  { id: 'chrome', label: 'CHROME', note: '黒艶 / 高域' },
+  { id: 'metal', label: 'METAL', note: '銀灰 / 金属' },
+  { id: 'clear', label: 'CLEAR', note: '透明殻 / 水色' },
+  { id: 'archive', label: 'ARCHIVE', note: '褪せた紙 / 保管' },
+];
+
+const WHISPER_ANIMATIONS: { id: WhisperAnimation; label: string; note: string }[] = [
+  { id: 'reveal', label: 'REVEAL', note: '滲んで浮かぶ' },
+  { id: 'ink', label: 'INK', note: 'インクが滲む' },
+  { id: 'flicker', label: 'FLICKER', note: '信号が途切れる' },
+  { id: 'wave', label: 'WAVE', note: '波打って届く' },
+  { id: 'drift', label: 'DRIFT', note: '遠くから漂う' },
+];
+
+function CassetteVariantsPreview() {
+  return (
+    <div className="docs-variant-gallery">
+      {CASSETTE_VARIANTS.map((variant) => (
+        <div className="docs-variant-card" key={variant.id}>
+          <span className="docs-variant-card__label">{variant.label}</span>
+          <CassettePlayer
+            title="夢の記憶"
+            variant={variant.id}
+            durationSec={180}
+          />
+          <p className="docs-variant-card__note">{variant.note}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function WhisperAnimationsPreview() {
+  const [replayKey, setReplayKey] = useState(0);
+
+  return (
+    <div className="docs-variant-gallery docs-variant-gallery--wide">
+      <button
+        type="button"
+        className="docs-plain-button docs-variant-gallery__replay"
+        onClick={() => setReplayKey((key) => key + 1)}
+      >
+        アニメーションを再生し直す
+      </button>
+      {WHISPER_ANIMATIONS.map((item) => (
+        <div className="docs-variant-card docs-variant-card--wide" key={item.id}>
+          <span className="docs-variant-card__label">{item.label}</span>
+          <div className="docs-preview__whisper docs-preview__whisper--telepath">
+            <WhisperText
+              key={`${item.id}-${replayKey}`}
+              text="白い信号が、夜を渡っていく"
+              animation={item.id}
+              speedMs={45}
+            />
+          </div>
+          <p className="docs-variant-card__note">{item.note}</p>
+        </div>
+      ))}
     </div>
   );
 }
@@ -167,15 +233,18 @@ function OilPaintPreview() {
 
 function WhisperPreview() {
   const [variant, setVariant] = useState<'telepath' | 'envy'>('telepath');
+  const [animation, setAnimation] = useState<WhisperAnimation>('reveal');
   const [line, setLine] = useState('言葉の代わりに、白い信号が降る');
+  const [replayKey, setReplayKey] = useState(0);
 
   return (
     <div className="docs-preview__stack">
       <div className={`docs-preview__whisper docs-preview__whisper--${variant}`}>
         <WhisperText
-          key={`${variant}-${line}`}
+          key={`${variant}-${animation}-${line}-${replayKey}`}
           text={line}
           variant={variant}
+          animation={animation}
           speedMs={variant === 'telepath' ? 42 : 58}
         />
       </div>
@@ -197,6 +266,26 @@ function WhisperPreview() {
             {item}
           </button>
         ))}
+      </div>
+      <div className="docs-preview__row">
+        {WHISPER_ANIMATIONS.map((item) => (
+          <button
+            key={item.id}
+            type="button"
+            className="docs-plain-button"
+            aria-pressed={animation === item.id}
+            onClick={() => setAnimation(item.id)}
+          >
+            {item.label}
+          </button>
+        ))}
+        <button
+          type="button"
+          className="docs-plain-button"
+          onClick={() => setReplayKey((key) => key + 1)}
+        >
+          再生し直す
+        </button>
       </div>
     </div>
   );
@@ -268,7 +357,15 @@ function previewFor(slug: string): ReactNode {
         </LetterCard>
       );
     case 'cassette-player':
-      return <CassettePlayer side="A" title="サンプル — 夢の記憶" durationSec={14} />;
+      return (
+        <div className="docs-preview__stack">
+          <CassetteVariantsPreview />
+          <div className="docs-variant-live">
+            <span className="docs-variant-card__label">LIVE / SIDE A</span>
+            <CassettePlayer side="A" title="サンプル — 夢の記憶" durationSec={14} />
+          </div>
+        </div>
+      );
     case 'bookmark-ribbon':
       return <BookmarkPreview />;
     case 'lyric-lines':
@@ -304,7 +401,12 @@ function previewFor(slug: string): ReactNode {
     case 'oil-paint-texture':
       return <OilPaintPreview />;
     case 'whisper-text':
-      return <WhisperPreview />;
+      return (
+        <div className="docs-preview__stack">
+          <WhisperAnimationsPreview />
+          <WhisperPreview />
+        </div>
+      );
     case 'relic-scene':
       return <RelicPreview />;
     case 'film-grain-overlay':

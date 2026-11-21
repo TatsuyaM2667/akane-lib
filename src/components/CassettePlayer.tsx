@@ -1,18 +1,30 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './CassettePlayer.css';
 
+export type CassetteVariant = 'normal' | 'chrome' | 'metal' | 'clear' | 'archive';
+
 export interface CassettePlayerProps {
   title: string;
   side?: 'A' | 'B';
+  variant?: CassetteVariant;
   audioSrc?: string;
   durationSec?: number;
   onTimeUpdate?: (elapsedSec: number) => void;
   className?: string;
 }
 
+const VARIANT_LABELS: Record<CassetteVariant, string> = {
+  normal: 'NORMAL POSITION',
+  chrome: 'HIGH BIAS',
+  metal: 'METAL POSITION',
+  clear: 'CLEAR SHELL',
+  archive: 'ARCHIVE',
+};
+
 export const CassettePlayer: React.FC<CassettePlayerProps> = ({
   title,
   side = 'A',
+  variant = 'normal',
   audioSrc,
   durationSec = 180,
   onTimeUpdate,
@@ -65,7 +77,7 @@ export const CassettePlayer: React.FC<CassettePlayerProps> = ({
   const progressPct = Math.min(100, (elapsed / total) * 100);
 
   return (
-    <div className={`akane-cassette ${className}`}>
+    <div className={`akane-cassette akane-cassette--${variant} ${className}`.trim()}>
       {audioSrc && (
         <audio
           ref={audioRef}
@@ -76,6 +88,7 @@ export const CassettePlayer: React.FC<CassettePlayerProps> = ({
       <div className="akane-cassette__label">
         <span className="akane-cassette__side">SIDE {side}</span>
         <span className="akane-cassette__title">{title}</span>
+        <span className="akane-cassette__type">{VARIANT_LABELS[variant]}</span>
       </div>
 
       <div className="akane-cassette__window">

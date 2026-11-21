@@ -78,7 +78,7 @@ export function HomePage() {
           </div>
           <div>
             <dt>STORYBOOK STORIES</dt>
-            <dd>27</dd>
+            <dd>29</dd>
           </div>
           <div>
             <dt>MV MATERIALS</dt>

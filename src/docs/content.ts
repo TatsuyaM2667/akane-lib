@@ -204,13 +204,14 @@ export function App() {
     japanese: 'カセットプレイヤー',
     group: '入力・演出',
     motif: '靴とカセットテープ',
-    summary: '回るリールと進むテープで、時間の経過そのものを可視化するプレイヤーです。',
+    summary: '回るリールと進むテープで、時間の経過そのものを可視化するプレイヤーです。5種類のテープ筐体を切り替えられます。',
     detail:
-      'audioSrc を渡すと実際の音声を再生します。省略すると durationSec の長さだけ動くビジュアルプレイヤーとして動くので、歌詞のタイムラインと同期させやすくなります。',
+      'audioSrc を渡すと実際の音声を再生します。省略すると durationSec の長さだけ動くビジュアルプレイヤーとして動くので、歌詞のタイムラインと同期させやすくなります。variant は normal / chrome / metal / clear / archive の5種類で、紙ラベル・黒艶・銀灰・透明殻・保管用の褪せた紙をそれぞれ再現します。カタログでは5種類を並べて比較できます。',
     usage: `import { CassettePlayer } from '@tatsuyamiura2667/akane-lib';
 
 <CassettePlayer
   side="A"
+  variant="chrome"
   title="第一夜 — 夢の記憶"
   durationSec={14}
   onTimeUpdate={(sec) => console.log(sec)}
@@ -218,11 +219,13 @@ export function App() {
     props: [
       { name: 'title', type: 'string', default: '必須', description: 'ラベルのタイトル' },
       { name: 'side', type: "'A' | 'B'", default: "'A'", description: 'テープの面' },
+      { name: 'variant', type: "'normal' | 'chrome' | 'metal' | 'clear' | 'archive'", default: "'normal'", description: 'テープの種類と筐体の質感' },
       { name: 'audioSrc', type: 'string', default: '—', description: '再生する音声の URL' },
       { name: 'durationSec', type: 'number', default: '180', description: '擬似再生の長さ（秒）' },
       { name: 'onTimeUpdate', type: '(sec: number) => void', default: '—', description: '経過秒数の通知' },
       { name: 'className', type: 'string', default: "''", description: '追加クラス名' },
     ],
+    notes: ['prefers-reduced-motion が有効な環境ではリールの回転を停止します。', '音声ファイルはライブラリに含まれていません。'],
     related: ['lyric-lines', 'train-window-frame'],
   },
   {
@@ -464,25 +467,28 @@ const lines: LyricLine[] = [
     japanese: '届かない言葉',
     group: '入力・演出',
     motif: 'テレパス／昼鳶',
-    summary: '一文字ずつ滲んで現れる、テレパシーと嫉妬の二つの側面を持つ文字演出です。',
+    summary: '一文字ずつ滲んで現れる文字演出。テレパシーと嫉妬の二面に、5種類の出現モーションを重ねられます。',
     detail:
-      'telepath は白い信号が途切れずに揺れる glitch、envy は赤く滲んだ黒塗りの残響です。歌詞をそのまま引用せず、情景だけを借りたオリジナルの文を渡してください。speedMs を小さくすると、早口の囁きになります。',
+      'variant は telepath の白い信号と envy の赤い残響を切り替えます。animation は reveal / ink / flicker / wave / drift の5種類で、滲む・打ち込む・途切れる・波打つ・漂うを表現します。歌詞をそのまま引用せず、情景だけを借りたオリジナルの文を渡してください。カタログでは5種類を同時に確認できます。',
     usage: `import { WhisperText } from '@tatsuyamiura2667/akane-lib';
 
 <WhisperText
   text={'言葉の代わりに、白い信号が降る'}
   variant="telepath"
+  animation="flicker"
   speedMs={48}
 />
 
 <WhisperText
   text={'笑いながら夜景を数える、満たされない胸の音'}
   variant="envy"
+  animation="ink"
   speedMs={62}
 />`,
     props: [
       { name: 'text', type: 'string', default: '必須', description: '表示する一文' },
       { name: 'variant', type: "'telepath' | 'envy'", default: "'telepath'", description: '雪海か嫉妬の演出' },
+      { name: 'animation', type: "'reveal' | 'ink' | 'flicker' | 'wave' | 'drift'", default: "'reveal'", description: '文字の出現モーション' },
       { name: 'speedMs', type: 'number', default: '55', description: '1文字ずつの出現間隔（ミリ秒）' },
       { name: 'className', type: 'string', default: "''", description: '追加クラス名' },
     ],
@@ -1055,6 +1061,11 @@ export const FAQS: { question: string; answer: string }[] = [
     question: '新しいマテリアルのアニメーションを止めたい',
     answer:
       'すべての装飾は prefers-reduced-motion を尊重します。個別に止めたい場合は、FilmGrainOverlay の animated を外す、FireworkBurst の once を外す、BubbleField の release を外すことで静止した表現になります。',
+  },
+  {
+    question: 'テープの種類や文字アニメーションはどこで比較できますか？',
+    answer:
+      'ドキュメントサイトのコンポーネント詳細で CassettePlayer と WhisperText を開くと、5種類のテープ筐体と5種類の出現モーションを並べて確認できます。Storybook にも同じ比較用ストーリーを用意しています。',
   },
 ];
 

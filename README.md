@@ -14,7 +14,7 @@
 - **ドキュメントサイト / インタラクティブデモ**: https://TatsuyaM2667.github.io/akane-lib/
 - **コンポーネントカタログ (Storybook)**: https://TatsuyaM2667.github.io/akane-lib/storybook/
 
-ドキュメントサイトでは、導入方法、8つの空の時間帯、全31コンポーネントの API とライブプレビュー、27ストーリーの Storybook、モチーフ辞典、43作品の MV マテリアル・ギャラリー、モチーフ年表、素材システム、よくある質問を掲載しています。
+ドキュメントサイトでは、導入方法、8つの空の時間帯、全31コンポーネントの API とライブプレビュー、29ストーリーの Storybook、モチーフ辞典、43作品の MV マテリアル・ギャラリー、モチーフ年表、素材システム、よくある質問を掲載しています。
 
 ---
 
@@ -178,16 +178,23 @@ export function App() {
 
 ### 4. `CassettePlayer`
 
-再生中にリールが回転し、テープの進行バーが伸びるアナログ風カセットテーププレイヤーです。`audioSrc` を省略した場合はタイマー駆動のビジュアルプレイヤーとして動作します。
+再生中にリールが回転し、テープの進行バーが伸びるアナログ風カセットテーププレイヤーです。`audioSrc` を省略した場合はタイマー駆動のビジュアルプレイヤーとして動作します。`variant` で5種類のテープ筐体を切り替えられます。
 
 | Prop | 型 | デフォルト | 説明 |
 | --- | --- | --- | --- |
 | `title` | `string` | (必須) | ラベルに表示するタイトル |
 | `side` | `'A' \| 'B'` | `'A'` | テープの面表示 |
+| `variant` | `'normal' \| 'chrome' \| 'metal' \| 'clear' \| 'archive'` | `'normal'` | 紙ラベル・黒艶・銀灰・透明殻・保管用の筐体 |
 | `audioSrc` | `string` | - | 再生する音声ファイルの URL（任意） |
 | `durationSec` | `number` | `180` | `audioSrc` 未指定時の擬似再生時間（秒） |
 | `onTimeUpdate` | `(elapsedSec: number) => void` | - | 経過秒数が更新されるたびに呼ばれるコールバック |
 | `className` | `string` | `''` | 追加クラス名 |
+
+```tsx
+<CassettePlayer title="第一夜 — 夢の記憶" variant="metal" durationSec={180} />
+```
+
+5種類の比較はドキュメントサイトの `CassettePlayer` 詳細と Storybook の `CassettePlayer（5種類のテープ）` で確認できます。
 
 ### 5. `BookmarkRibbon`
 
@@ -318,21 +325,24 @@ import { OilPaintTexture } from '@tatsuyamiura2667/akane-lib';
 
 ### 15. `WhisperText`
 
-一文字ずつ滲んで現れる文字演出です。`telepath` は白い信号の揺らぎ、`envy` は赤く滲んだ黒塗りの残響を表現します。情景だけを借りたオリジナルの文を渡してください。
+一文字ずつ現れる文字演出です。`telepath` は白い信号の揺らぎ、`envy` は赤く滲んだ黒塗りの残響を表現します。`animation` で5種類の出現モーションを選べます。情景だけを借りたオリジナルの文を渡してください。
 
 ```tsx
 import { WhisperText } from '@tatsuyamiura2667/akane-lib';
 
-<WhisperText text="言葉の代わりに、白い信号が降る" variant="telepath" speedMs={45} />
-<WhisperText text="笑いながら夜景を数える、満たされない胸の音" variant="envy" speedMs={55} />
+<WhisperText text="言葉の代わりに、白い信号が降る" animation="flicker" speedMs={45} />
+<WhisperText text="笑いながら夜景を数える、満たされない胸の音" variant="envy" animation="ink" speedMs={55} />
 ```
 
 | Prop | 型 | デフォルト | 説明 |
 | --- | --- | --- | --- |
 | `text` | `string` | (必須) | 表示する一文 |
 | `variant` | `'telepath' \| 'envy'` | `'telepath'` | 雪海か嫉妬の演出 |
+| `animation` | `'reveal' \| 'ink' \| 'flicker' \| 'wave' \| 'drift'` | `'reveal'` | 滲む／打つ／途切れる／波打つ／漂う |
 | `speedMs` | `number` | `55` | 1文字ずつの出現間隔（ミリ秒） |
 | `className` | `string` | `''` | 追加クラス名 |
+
+5種類のモーションはドキュメントサイトの `WhisperText` 詳細と Storybook の `WhisperText（5種類の出現モーション）` で同時に確認できます。
 
 ### 16. `RelicScene`
 
@@ -392,6 +402,13 @@ MV 資料はドキュメントサイトの「MV資料」「年表」「素材シ
 ---
 
 ## リリースノート
+
+### Unreleased
+
+- `CassettePlayer` に `variant` を追加し、`normal` / `chrome` / `metal` / `clear` / `archive` の5種類のテープ筐体を切り替えられるようにしました。
+- `WhisperText` に `animation` を追加し、`reveal` / `ink` / `flicker` / `wave` / `drift` の5種類の出現モーションを選べるようにしました。
+- ドキュメントサイトのコンポーネント詳細と Storybook に、テープ筐体と文字モーションを一覧比較できるプレビューを追加しました。
+- 検閲黒塗りの斜線を水平線へ変更し、背景の斜線模様を排除しました。
 
 ### 0.4.9
 

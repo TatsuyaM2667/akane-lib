@@ -205,6 +205,22 @@ describe("CassettePlayer", () => {
     expect(screen.getByText("00:00 / 00:05")).toBeInTheDocument();
     expect(handleTimeUpdate).toHaveBeenLastCalledWith(0);
   });
+
+  it.each(["normal", "chrome", "metal", "clear", "archive"] as const)(
+    "variant=%s の筐体クラスと種別ラベルを描画する",
+    (variant) => {
+      const { container } = render(
+        <CassettePlayer title="テープ" variant={variant} durationSec={10} />,
+      );
+
+      expect(container.querySelector(".akane-cassette")).toHaveClass(
+        `akane-cassette--${variant}`,
+      );
+      expect(
+        container.querySelector(".akane-cassette__type"),
+      ).toBeInTheDocument();
+    },
+  );
 });
 
 describe("LyricLines", () => {
@@ -332,6 +348,23 @@ describe("WhisperText", () => {
     ).toHaveAttribute("data-text", "白い信号");
     expect(container.querySelectorAll(".akane-whisper__char")).toHaveLength(4);
   });
+
+  it.each(["reveal", "ink", "flicker", "wave", "drift"] as const)(
+    "animation=%s のクラスと data-animation を描画する",
+    (animation) => {
+      const { container } = render(
+        <WhisperText text="届かない言葉" animation={animation} speedMs={1} />,
+      );
+
+      expect(container.querySelector(".akane-whisper")).toHaveClass(
+        `akane-whisper--anim-${animation}`,
+      );
+      expect(container.querySelector(".akane-whisper")).toHaveAttribute(
+        "data-animation",
+        animation,
+      );
+    },
+  );
 });
 
 describe("RelicScene", () => {
